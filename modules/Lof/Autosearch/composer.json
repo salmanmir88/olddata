@@ -1,0 +1,27 @@
+{
+  "name": "landofcoder/module-autosearch",
+  "description": "Our Magento 2 Search Extension offers Ajax Search with Lightening Fast Speed.",
+  "require": {
+    "landofcoder/module-all": "1.*"
+  },
+  "type": "magento2-module",
+  "version": "1.0.1",
+  "authors": [
+    {
+        "name": "Landofcoder",
+        "email": "landofcoder@gmail.com",
+        "role": "Magento 2 Lof Autosearch",
+        "homepage": "https://landofcoder.com"
+    }
+],
+  "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+     "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Lof\\Autosearch\\": ""
+        }
+    }
+}

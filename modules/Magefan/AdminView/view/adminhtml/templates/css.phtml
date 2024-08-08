@@ -1,0 +1,232 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+?>
+
+<?php
+/** @var Magefan\AdminView\Block\Adminhtml\Css $block */
+?>
+
+<style>
+    /** Main Menu */
+    .menu-wrapper:before,
+    .admin__menu [class*='level-']:not(.level-0) a:hover {
+        background-color: <?= $block->escapeHtml($block->getColor('main_menu_bg')) ?>;
+    }
+
+    /** Main Menu (On Hover) */
+    .admin__menu .level-0._active > a,
+    .admin__menu .level-0:hover > a,
+    .admin__menu .action-close:hover::before,
+    .admin__menu .submenu a,
+    .admin__menu .submenu-title,
+    .admin__menu .submenu .parent .submenu-group-title {
+        color: <?= $block->escapeHtml($block->getColor('main_menu_text_on_hover')) ?>;
+    }
+
+    /** Main Menu Text */
+    .admin__menu .level-0 > a,
+    .admin__menu .action-close::before,
+    .abs-menu-separator,
+    .admin__menu .level-0:first-child > a::after,
+    .admin__menu .item-partners > a::after {
+        color: <?= $block->escapeHtml($block->getColor('main_menu_text')) ?>;
+    }
+    .abs-menu-separator,
+    .admin__menu .level-0:first-child > a::after,
+    .admin__menu .item-partners > a::after {
+        background-color: <?= $block->escapeHtml($block->getColor('main_menu_text')) ?>;
+    }
+
+    /** Main Menu Text (On Hover) */
+    .admin__menu .level-0._active > a,
+    .admin__menu .level-0:hover > a,
+    .admin__menu .level-0 > .submenu {
+        background-color: <?= $block->escapeHtml($block->getColor('main_menu_bg_on_hover')) ?>;
+    }
+
+    /** Primary Button */
+    .abs-action-primary,
+    button.primary,
+    .page-actions > button.action-primary,
+    .page-actions .page-actions-buttons > button.action-primary,
+    .page-actions .page-actions-buttons > .action.action-primary,
+    .page-actions > button.primary,
+    .page-actions .page-actions-buttons > button.primary,
+    .page-actions .page-actions-buttons > .action.primary,
+    .page-actions .page-actions.floating-header > button.action-primary,
+    .page-actions .page-actions.floating-header > .action.action-primary,
+    .page-actions .page-actions.floating-header > button.primary,
+    .page-actions .page-actions.floating-header > .action.primary,
+    .block-footer .action-add.primary,
+    .page-actions > .block-footer .action-add.action-primary,
+    .page-actions .page-actions-buttons > .block-footer .action-add.action-primary,
+    .page-actions > .block-footer .action-add.primary,
+    .page-actions .page-actions-buttons > .block-footer .action-add.primary,
+    .action-primary {
+        background-color: <?= $block->escapeHtml($block->getColor('primary_button_bg')) ?>;
+        border-color: <?= $block->escapeHtml($block->getColor('primary_button_bg')) ?>;
+    }
+
+    /** Primary Button (On Hover) */
+    .abs-action-primary:hover,
+    .abs-action-primary:active,
+    .abs-action-primary:focus,
+    button.primary:hover,
+    button.primary:active,
+    button.primary:focus,
+    .page-actions > button.action-primary:hover,
+    .page-actions > button.action-primary:active,
+    .page-actions > button.action-primary:focus,
+    .page-actions .page-actions-buttons > button.action-primary:hover,
+    .page-actions .page-actions-buttons > button.action-primary:active,
+    .page-actions .page-actions-buttons > button.action-primary:focus,
+    .page-actions .page-actions-buttons > .action.action-primary:hover,
+    .page-actions .page-actions-buttons > .action.action-primary:active,
+    .page-actions .page-actions-buttons > .action.action-primary:focus,
+    .page-actions > button.primary:hover,
+    .page-actions > button.primary:active,
+    .page-actions > button.primary:focus,
+    .page-actions .page-actions-buttons > button.primary:hover,
+    .page-actions .page-actions-buttons > button.primary:active,
+    .page-actions .page-actions-buttons > button.primary:focus,
+    .page-actions .page-actions-buttons > .action.primary:hover,
+    .page-actions .page-actions-buttons > .action.primary:active,
+    .page-actions .page-actions-buttons > .action.primary:focus,
+    .page-actions .page-actions.floating-header > button.action-primary:hover,
+    .page-actions .page-actions.floating-header > button.action-primary:active,
+    .page-actions .page-actions.floating-header > button.action-primary:focus,
+    .page-actions .page-actions.floating-header > .action.action-primary:hover,
+    .page-actions .page-actions.floating-header > .action.action-primary:active,
+    .page-actions .page-actions.floating-header > .action.action-primary:focus,
+    .page-actions .page-actions.floating-header > button.primary:hover,
+    .page-actions .page-actions.floating-header > button.primary:active,
+    .page-actions .page-actions.floating-header > button.primary:focus,
+    .page-actions .page-actions.floating-header > .action.primary:hover,
+    .page-actions .page-actions.floating-header > .action.primary:active,
+    .page-actions .page-actions.floating-header > .action.primary:focus,
+    .block-footer .action-add.primary:hover,
+    .block-footer .action-add.primary:active,
+    .block-footer .action-add.primary:focus,
+    .page-actions > .block-footer .action-add.action-primary:hover,
+    .page-actions > .block-footer .action-add.action-primary:active,
+    .page-actions > .block-footer .action-add.action-primary:focus,
+    .page-actions .page-actions-buttons > .block-footer .action-add.action-primary:hover,
+    .page-actions .page-actions-buttons > .block-footer .action-add.action-primary:active,
+    .page-actions .page-actions-buttons > .block-footer .action-add.action-primary:focus,
+    .page-actions > .block-footer .action-add.primary:hover,
+    .page-actions > .block-footer .action-add.primary:active,
+    .page-actions > .block-footer .action-add.primary:focus,
+    .page-actions .page-actions-buttons > .block-footer .action-add.primary:hover,
+    .page-actions .page-actions-buttons > .block-footer .action-add.primary:active,
+    .page-actions .page-actions-buttons > .block-footer .action-add.primary:focus,
+    .action-primary:hover {
+        background-color: <?= $block->escapeHtml($block->getColor('primary_button_bg_on_hover')) ?>;
+        border-color: <?= $block->escapeHtml($block->getColor('primary_button_bg_on_hover')) ?>;
+        box-shadow: 0 0 0 1px <?= $block->escapeHtml($block->getColor('primary_button_bg_on_hover')) ?>;
+    }
+
+    /** Button */
+    .abs-action-secondary,
+    .action-basic,
+    button.secondary,
+    .ui-dialog .ui-button,
+    .ui-dialog .action-primary,
+    .attribute-popup-actions .page-actions-buttons > button.action-default.primary,
+    .modal-popup .modal-footer .action-primary,
+    .page-actions > button.action-secondary,
+    .page-actions .page-actions-buttons > button.action-secondary,
+    .page-actions .page-actions-buttons > .action.action-secondary,
+    .steps-wizard .select-attributes-actions .action-default,
+    .popup-window .magento_buttons .ok_button,
+    .fade .actions .primary,
+    .attribute-popup-actions .page-actions.floating-header > button.action-default.primary,
+    .page-actions .page-actions.floating-header > button.action-secondary,
+    .page-actions .page-actions.floating-header > .action.action-secondary,
+    .block-footer .action-add.secondary,
+    .attribute-popup-actions .page-actions-buttons > .block-footer .action-add.action-default.primary,
+    .page-actions > .block-footer .action-add.action-secondary,
+    .page-actions .page-actions-buttons > .block-footer .action-add.action-secondary {
+        background-color:<?= $block->escapeHtml($block->getColor('button_bg')) ?>;
+        border-color: <?= $block->escapeHtml($block->getColor('button_bg')) ?>;
+    }
+
+    /** Button (On Hover) */
+    .abs-action-secondary:hover,
+    .abs-action-secondary:active,
+    .abs-action-secondary:focus,
+    .action-basic:hover,
+    .action-basic:active,
+    .action-basic:focus,
+    button.secondary:hover,
+    button.secondary:active,
+    button.secondary:focus,
+    .ui-dialog .ui-button:hover,
+    .ui-dialog .ui-button:active,
+    .ui-dialog .ui-button:focus, .ui-dialog .action-primary:hover,
+    .ui-dialog .action-primary:active,
+    .ui-dialog .action-primary:focus,
+    .attribute-popup-actions .page-actions-buttons > button.action-default.primary:hover,
+    .attribute-popup-actions .page-actions-buttons > button.action-default.primary:active,
+    .attribute-popup-actions .page-actions-buttons > button.action-default.primary:focus,
+    .modal-popup .modal-footer .action-primary:hover,
+    .modal-popup .modal-footer .action-primary:active,
+    .modal-popup .modal-footer .action-primary:focus,
+    .page-actions > button.action-secondary:hover,
+    .page-actions > button.action-secondary:active,
+    .page-actions > button.action-secondary:focus,
+    .page-actions .page-actions-buttons > button.action-secondary:hover,
+    .page-actions .page-actions-buttons > button.action-secondary:active,
+    .page-actions .page-actions-buttons > button.action-secondary:focus,
+    .page-actions .page-actions-buttons > .action.action-secondary:hover,
+    .page-actions .page-actions-buttons > .action.action-secondary:active,
+    .page-actions .page-actions-buttons > .action.action-secondary:focus,
+    .steps-wizard .select-attributes-actions .action-default:hover,
+    .steps-wizard .select-attributes-actions .action-default:active,
+    .steps-wizard .select-attributes-actions .action-default:focus,
+    .popup-window .magento_buttons .ok_button:hover,
+    .popup-window .magento_buttons .ok_button:active,
+    .popup-window .magento_buttons .ok_button:focus,
+    .fade .actions .primary:hover,
+    .fade .actions .primary:active,
+    .fade .actions .primary:focus,
+    .attribute-popup-actions .page-actions.floating-header > button.action-default.primary:hover,
+    .attribute-popup-actions .page-actions.floating-header > button.action-default.primary:active,
+    .attribute-popup-actions .page-actions.floating-header > button.action-default.primary:focus,
+    .page-actions .page-actions.floating-header > button.action-secondary:hover,
+    .page-actions .page-actions.floating-header > button.action-secondary:active,
+    .page-actions .page-actions.floating-header > button.action-secondary:focus,
+    .page-actions .page-actions.floating-header > .action.action-secondary:hover,
+    .page-actions .page-actions.floating-header > .action.action-secondary:active,
+    .page-actions .page-actions.floating-header > .action.action-secondary:focus,
+    .block-footer .action-add.secondary:hover,
+    .block-footer .action-add.secondary:active,
+    .block-footer .action-add.secondary:focus,
+    .attribute-popup-actions .page-actions-buttons > .block-footer .action-add.action-default.primary:hover,
+    .attribute-popup-actions .page-actions-buttons > .block-footer .action-add.action-default.primary:active,
+    .attribute-popup-actions .page-actions-buttons > .block-footer .action-add.action-default.primary:focus,
+    .page-actions > .block-footer .action-add.action-secondary:hover,
+    .page-actions > .block-footer .action-add.action-secondary:active,
+    .page-actions > .block-footer .action-add.action-secondary:focus,
+    .page-actions .page-actions-buttons > .block-footer .action-add.action-secondary:hover,
+    .page-actions .page-actions-buttons > .block-footer .action-add.action-secondary:active,
+    .page-actions .page-actions-buttons > .block-footer .action-add.action-secondary:focus {
+        background-color: <?= $block->escapeHtml($block->getColor('button_on_hover')) ?>;
+        border-color: <?= $block->escapeHtml($block->getColor('button_on_hover')) ?>;
+        box-shadow: 0 0 0 1px <?= $block->escapeHtml($block->getColor('button_on_hover')) ?>;
+    }
+
+    /** Grid */
+    .data-grid th {
+        background-color:  <?= $block->escapeHtml($block->getColor('grid_bg')) ?>;
+        border: 0.1rem solid  <?= $block->escapeHtml($block->getColor('grid_bg_on_hover')) ?>;
+    }
+
+    /** Grid (On Hover) */
+    .data-grid .data-grid-th._sortable:focus,
+    .data-grid .data-grid-th._sortable:hover {
+        background-color: <?= $block->escapeHtml($block->getColor('grid_bg_on_hover')) ?>;
+    }
+</style>

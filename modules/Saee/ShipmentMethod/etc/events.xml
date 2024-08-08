@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_save_after">
+        <observer name="save_order_after" instance="Saee\ShipmentMethod\Observer\Orderplaceafter"/>
+    </event>
+    <event name='order_cancel_after'>
+        <observer name='order_cancel_after' instance='Saee\ShipmentMethod\Observer\CancelOrder'/>
+    </event>
+<!--    <event name='admin_sales_order_address_update'>
+        <observer name='admin_sales_order_address_update' instance='Saee\ShipmentMethod\Observer\UpdateAddress'/>
+    </event>-->
+</config>
+
+

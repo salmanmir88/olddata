@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="NewFilterDisablingForExpandedActionGroup" extends="NewFilterEnablingActionGroup">
+        <arguments>
+            <argument name="customFilter"/>
+            <argument name="customFilter2"/>
+            <argument name="customFilter3"/>
+        </arguments>
+        <clearField selector="{{AdminProductProfileSection.NewFromInputField}}" stepKey="fillNewFromField1"/>
+        <unselectOption parameterArray="['Polyester','Microfiber']"
+                        selector="{{AdminProductProfileSection.SelectMaterialOption}}"
+                        stepKey="selectPolyesterOption1"/>
+        <selectOption selector="{{AdminILNSettingsSection.CustomFilterExpandSwitcher('am_is_new')}}"
+                      userInput="{{customFilter2.CustomFilterExpandSwitcher('am_is_new')}}"
+                      stepKey="ExpandNewFilter1"
+                      after="selectDisplayMode1"/>
+        <selectOption selector="{{AdminILNSettingsSection.CustomFilterEnableSwitcher('am_is_new')}}"
+                      userInput="{{customFilter.CustomFilterEnableSwitcher('am_is_new')}}"
+                      stepKey="enableDisableNewFilter1"
+                      after="clickSaveConfig2"/>
+        <click selector="{{AdminILNSettingsSection.Save}}"
+               stepKey="clickSaveConfig3"
+               after="enableDisableNewFilter1"/>
+        <fillField userInput="New"
+                   selector="{{AttributeProfileSection.AttributeNameLabel}}"
+                   stepKey="fillNewAttributeNameField1"/>
+    </actionGroup>
+
+</actionGroups>

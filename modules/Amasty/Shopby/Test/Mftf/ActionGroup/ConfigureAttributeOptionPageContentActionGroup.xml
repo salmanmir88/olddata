@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureAttributeOptionPageContentActionGroup">
+        <arguments>
+            <argument name="Attributes"/>
+        </arguments>
+        <amOnPage url="{{AttributeProfilePage.url(Attributes.Attribute)}}" stepKey="OpenAttributeProfilePagePage"/>
+        <reloadPage stepKey="reloadPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <scrollToTopOfPage stepKey="scrollToTopOfPages1"/>
+        <click selector="{{AttributeProfileSection.OptionAttributeSettingsDeleteButton('settings',Attributes.OptionName)}}"
+               stepKey="clickSettingsButton"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForElement selector="{{AttributeProfileSection.PageTitle}}" stepKey="waitPopup"/>
+        <uncheckOption selector="{{AttributeProfileSection.UseDefaultPageTitle}}" stepKey="UncheckUseDefaultValue"/>
+        <fillField selector="{{AttributeProfileSection.PageTitle}}"
+                   userInput="{{Attributes.PageTitle}}"
+                   stepKey="FillTitle"/>
+        <fillField selector="{{AttributeProfileSection.Description}}"
+                   userInput="{{Attributes.Description}}"
+                   stepKey="FillDescription"/>
+        <attachFile userInput="{{Attributes.Image}}"
+                    selector="{{AttributeProfileSection.Image}}"
+                    stepKey="ConfigureFile1"/>
+        <wait time="3" stepKey="waitSeconds2"/>
+        <selectOption selector="{{AttributeProfileSection.TopCMSBlock}}"
+                      userInput="{{Attributes.TopCMSBlock}}"
+                      stepKey="SetTopCMSBlock1"/>
+        <selectOption selector="{{AttributeProfileSection.BottomCMSBlock}}"
+                      userInput="{{Attributes.BottomCMSBlock}}"
+                      stepKey="SetBottomCMSBlock1"/>
+        <click selector="{{AttributeProfileSection.SaveProperty}}" stepKey="clickSaveButton"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad3"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>
+
+
+

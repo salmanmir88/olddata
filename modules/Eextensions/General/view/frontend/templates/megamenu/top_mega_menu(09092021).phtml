@@ -1,0 +1,66 @@
+<?php
+/****** get all category collection from block ******/
+
+$categories = $block->getCategoryCollection();
+$categorytree = $block->buildTree($categories);
+//pr($categorytree);die;
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+		->getStore()
+		->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+?>
+                        
+<?php 
+if(isset($categorytree) && $categorytree != ''){ 
+	foreach ($categorytree as $maincategory) { 
+		if(isset($maincategory)){
+			$brands = $block->getBrandByCategoryId($maincategory['entity_id']);
+?>
+			<li class="nav-item submenu">
+				<a href="<?php echo $maincategory['url']; ?>" class="nav-link"><?php echo $maincategory['name']; ?></a>	
+                 <a href="javascript:void(0)" class="collapse_toggle"><img src="<?php echo $this->getViewFileUrl('images/dropdown.svg');?>" alt="img"></a> 	
+				<?php if(isset($maincategory['children']) || count($brands) > 0){ ?>
+					<ul class="mCustomScrollbar productitem_ul">
+						<li>
+							<?php if(isset($maincategory['children'])){ ?>
+								<ul class="menu_list">
+									<h3><?php echo __('Categories'); ?></h3> 
+									<?php foreach ($maincategory['children'] as $subcategory) { ?>
+										<li><a href="<?php echo $subcategory['url']; ?>"><?php echo $subcategory['name']; ?></a></li>
+									<?php } ?>
+								</ul>
+							<?php } ?>
+							
+							<?php if(count($brands)>0){ ?>
+								<ul class="top_brands"> 
+									 <h3><?php echo __('Top Brands'); ?></h3>   
+									 <?php $no=1; foreach ($brands as $brand){ ?>
+										 <?php if($no <= 6){ ?>
+											<li>
+												<a href="<?php echo $maincategory['url'].'?mgs_brand='.$brand['option_id']; ?>">
+													<img src="<?php echo $mediaUrl.$brand['small_image']; ?>" alt="<?php echo $brand['name']; ?>" />
+													<?php /* echo $brand['name']; */ ?>
+												</a>
+											</li>
+										<?php } ?>
+									<?php $no++; } ?>
+								</ul>   
+							<?php } ?>
+								
+							<?php 
+								echo $this->getLayout()
+									  ->createBlock('Magento\Cms\Block\Block')
+									  ->setBlockId('top-megamenu-categoty-id-'.$maincategory['entity_id'])
+									  ->toHtml();
+							?>
+						</li>					
+				   </ul>
+				<?php } ?>
+			</li>
+<?php 
+		} 
+	}
+} 
+?>
+<!--menu end-->

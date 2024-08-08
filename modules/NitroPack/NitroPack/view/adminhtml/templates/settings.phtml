@@ -1,0 +1,837 @@
+<?php
+$enabledMagentoCaches = $block->getEnabledCaches();
+$settings = $block->getSettings();
+$saveUrl = $block->getSaveUrl();
+$warmupSaveUrl = $block->getCacheWarmupSaveUrl();
+$warmupStartUrl = $block->getStartWarmupUrl();
+$warmupConfig = $block->getWarmupConfig();
+$warmupPauseUrl = $block->getPauseWarmupUrl();
+$disableCachesUrl = $block->getDisableCachesUrl();
+$storeCurrencies = $block->getAvailableCurrencies();
+$storeLocales = $block->getAvailableLocales();
+$builtInPageRoutes = $block->getBuiltInPageTypeRoutes();
+$builtInPageTypes = array_keys($builtInPageRoutes);
+// if ($settings->cacheWarmup) {
+//	$warmupStats = $block->getWarmupStats();
+// }
+?>
+
+<div class="nitro">
+	<?php if (!empty($enabledMagentoCaches)) {
+	$cacheLabels = $block->getCacheLabels(); ?>
+		<div class="row">
+			<div class="col mb-5">
+				<div class="message" id="system-caches-warning" role="alert">
+					<h4 class="alert-heading">The following system caches are enabled, which will prevent NitroPack from functioning correctly:</h4>
+					<ol class="nitro">
+						<?php foreach ($enabledMagentoCaches as $cacheCode) { ?>
+							<li><?= $cacheLabels[$cacheCode] ?> (<?= $cacheCode ?>)</li>
+						<?php } ?>
+					</ol>
+					<hr>
+					<p>Click the button below to disable them, or go to <a href="<?= $block->getCacheManagementUrl() ?>">Cache Management</a> and disable them yourself.</p>
+					<button id="disable-caches" class="btn btn-default">Disable system caches</button>
+				</div>
+			</div>
+		</div>
+	<?php } ?>
+
+	<form id="nitro_settings">
+		<div class="row">
+			<div class="col-md-4 mb-5">
+				<div class="card">
+					<div class="iframe-container iframe-container-small">
+						<iframe scrolling="no" data-text-loading-invalidate-cache="text_loading_invalidate_cache" data-url-invalidate-cache="invalidate" data-text-loading-purge-cache="text_loading_purge_cache" data-url-purge-cache="purge" id="optimizations" data-src="<?= $block->getIntegrationUrl('optimizations') ?>"></iframe>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-5">
+				<div class="card">
+					<div class="iframe-container iframe-container-small">
+						<iframe scrolling="no" id="plan" data-src="<?= $block->getIntegrationUrl('plan') ?>"></iframe>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-5">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Service Status</h5>
+						<div class="form-group mb-4">
+							<p class="col-form-label">Site ID</p>
+							<div>
+								<p id="site-id"><?= $settings->siteId; ?></p>
+							</div>
+						</div>
+						<div class="form-group mb-4">
+							<p class="col-form-label">Site</p>
+							<div>
+								<p id="site"><?= $block->getStore()->getBaseUrl() ?></p>
+							</div>
+						</div>
+						<div class="form-group mb-4">
+							<p>Cache Warmup Status</p>
+							<?php if ($settings->cacheWarmup): ?>
+							<p><small><span class="warmup-stats"><i class="fa fa-circle text-success"></i> Enabled</span></small></p>
+							<?php else: ?>
+							<p><small><span class="warmup-stats"><i class="fa fa-circle text-danger"></i> Disabled</span></small></p>
+							<?php endif; ?>
+						</div>
+					</div>
+					<div class="card-footer">
+						<small class="pull-left">
+							<span data-connection="connected" class="text-secondary" style="display: inline;">
+								<i class="fa fa-circle text-success"></i> Extension Active
+							</span>
+							<span data-connection="disabled" class="text-secondary" style="display: none;">
+								<i class="fa fa-circle text-danger"></i> Extension Disabled
+							</span>
+						</small>
+						<small class="pull-right">
+							<a href="javascript:void(0);" id="disconnect" data-loading-text="Disconnecting..." class="card-link text-secondary">
+								<i class="fa fa-power-off"></i> Disconnect
+							</a>
+						</small>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 mb-5">
+				<div class="card">
+					<div class="iframe-container iframe-container-small">
+						<iframe scrolling="no" id="quicksetup" data-src="<?= $block->getIntegrationUrl('quicksetup') ?>"></iframe>
+					</div>
+				</div>
+
+				<div class="card mt-5">
+					<div class="iframe-container iframe-container-medium">
+						<iframe scrolling="no" id="beforeafter" data-src="<?= $block->getIntegrationUrl('beforeafter') ?>"></iframe>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">General Settings</h5>
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Extension Status<br>
+								<small class="text-secondary">Master ON/OFF switch for the extension.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="status" type="checkbox" name="enabled" value="<?= ($settings->enabled ? 1 : 0) ?>" <?= ($settings->enabled ? 'checked' :'') ?>>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Cache Warmup<br>
+								<small class="text-secondary">Automatically re-optimizes purged/invalidated pages.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<!-- Button trigger Cache Warmup Configuration modal -->
+								<button id="button-configure-warmup" data-toggle="tooltip" data-original-title="Configure" class="btn btn-sm btn-light"><i class="fa fa-gear"></i></button>
+								<label class="switch">
+									<input id="cache_warmup" type="checkbox" name="cacheWarmup" <?= ($settings->cacheWarmup ? 'checked': '') ?>/>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								GZIP Compression<br>
+								<small class="text-secondary">ON/OFF switch for HTML compression by NitroPack.io.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="compression" type="checkbox" name="compression" value="<?= ($settings->compression ? 1 : 0) ?>" <?= ($settings->compression ? 'checked' :'') ?>>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card my-5">
+					<div class="card-body">
+						<h5 class="card-title">Page Types</h5>
+						<div class="form-group row">
+							<table class="table table-hover mt-4">
+								<thead>
+									<tr>
+										<td colspan="3">
+											Standard Page Types
+										</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Home</td>
+										<td class="text-muted"><?= $builtInPageRoutes['home'] ?></td>
+										<td class="text-right">
+											<label class="switch">
+												<input id="page_type_home" type="checkbox" name="pageTypes-home" <?= ($settings->pageTypes->home ? 'checked' : '') ?> />
+												<span class="slider round"></span>
+											</label>
+										</td>
+									</tr>
+									<tr>
+										<td>Product</td>
+										<td class="text-muted"><?= $builtInPageRoutes['product'] ?></td>
+										<td class="text-right">
+											<label class="switch">
+												<input id="page_type_product" type="checkbox" name="pageTypes-product" <?= ($settings->pageTypes->product ? 'checked' : '') ?> />
+												<span class="slider round"></span>
+											</label>
+										</td>
+									</tr>
+									<tr>
+										<td>Category</td>
+										<td class="text-muted"><?= $builtInPageRoutes['category'] ?></td>
+										<td class="text-right">
+											<label class="switch">
+												<input id="page_type_category" type="checkbox" name="pageTypes-category" <?= ($settings->pageTypes->category ? 'checked' : '') ?> />
+												<span class="slider round"></span>
+											</label>
+										</td>
+									</tr>
+									<tr>
+										<td>Info pages</td>
+										<td class="text-muted"><?= $builtInPageRoutes['info'] ?></td>
+										<td class="text-right">
+											<label class="switch">
+												<input id="page_type_info" type="checkbox" name="pageTypes-info" <?= ($settings->pageTypes->info ? 'checked' : '') ?> />
+												<span class="slider round"></span>
+											</label>
+										</td>
+									</tr>
+									<tr>
+										<td>Contact</td>
+										<td class="text-muted"><?= $builtInPageRoutes['contact'] ?></td>
+										<td class="text-right">
+											<label class="switch">
+												<input id="page_type_contact" type="checkbox" name="pageTypes-contact" <?= ($settings->pageTypes->contact ? 'checked': '') ?> />
+												<span class="slider round"></span>
+											</label>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="form-group row">
+							<table class="table table-hover mt-4">
+								<thead>
+									<tr>
+										<td colspan="3">Custom Page Types</td>
+									</tr>
+								</thead>
+								<tbody id="custom_route_container">
+									<?php foreach ($settings->pageTypes->custom as $route): ?>
+									<tr class="custom_route">
+										<td class="text-muted"><?= $route ?></td>
+										<td data-route="<?= $route ?>">
+											<button class="btn btn-light btn-sm route_remove_btn">
+												<div class="tooltip">
+													<div class="tooltip-inner">Delete</div>
+												</div>
+												<i class="fa fa-times"></i>
+											</button>
+											<button class="btn btn-warning btn-sm">
+												<div class="tooltip">
+													<div class="tooltip-inner">Invalidate Cache</div>
+												</div>
+												<i class="fa fa-recycle"></i>
+											</button>
+											<button class="btn btn-danger btn-sm">
+												<div class="tooltip">
+													<div class="tooltip-inner">Purge Cache</div>
+												</div>
+												<i class="fa fa-recycle"></i>
+											</button>
+										</td>
+										<td class="text-right">
+											<label class="switch">
+												<input id="" type="checkbox" name="new_route" />
+												<span class="slider round"></span>
+											</label>
+										</td>
+									</tr>
+									<?php endforeach; ?>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="4" class="text-right">
+											<div id="add_route_container">
+												<div id="add_route_form" class="form-row" style="display: none;">
+													<div class="col col-md-9">
+														<input id="new_route" class="form-control" name="new_route" type="text"/>
+													</div>
+													<div class="col col-md-3">
+														<button class="btn btn-primary btn-block" id="add_route_btn">Add</button>
+													</div>
+												</div>
+												<div id="add_route_prompt" style="display: block;">
+													<button id="prompt_add_route_btn" class="btn btn-light btn-outline-secondary"><i class="fa fa-plus"></i> Include Page Type</button>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+							<div id="custom_route_template" style="display: none;">
+								<templatetr class="custom_route">
+									<templatetd>
+										<span class="route_label">%ROUTE%</span>
+									</templatetd>
+									<templatetd class="text-muted">path/to/route</templatetd>
+									<templatetd data-route="%ROUTE%">
+										<button class="btn btn-light btn-sm route_remove_btn">
+											<div class="tooltip">
+												<div class="tooltip-inner">Delete</div>
+											</div>
+											<i class="fa fa-times"></i>
+										</button>
+										<button class="btn btn-warning btn-sm">
+											<div class="tooltip">
+												<div class="tooltip-inner">Invalidate Cache</div>
+											</div>
+											<i class="fa fa-recycle"></i>
+										</button>
+										<button class="btn btn-danger btn-sm">
+											<div class="tooltip">
+												<div class="tooltip-inner">Purge Cache</div>
+											</div>
+											<i class="fa fa-recycle"></i>
+										</button>
+									</templatetd>
+									<templatetd class="text-right">
+										<label class="switch">
+											<input id="" type="checkbox" name="new_route" />
+											<span class="slider round"></span>
+										</label>
+									</templatetd>
+								</templatetr>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Automatic Cache Clear</h5>
+
+						<div class="form-group row">
+							<div class="message">
+								Clear relevant cache after specific events in the admin panel and the front-end. Depending on the event, the cache will be either invalidated or purged. More information can be found <a href="https://docs.isenselabs.com/nitropack.io" target="_blank">in the documentation. <sup><small><i class="fa fa-external-link"></i></small></sup></a>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Products<br>
+								<small class="text-secondary">After Add/Edit/Delete.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="auto_clear_products" type="checkbox" name="autoClear-products" <?= ($settings->autoClear->products ? 'checked' :'') ?>/>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Categories<br>
+								<small class="text-secondary">After Add/Edit/Delete.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="auto_clear_categories" type="checkbox" name="autoClear-categories" <?= ($settings->autoClear->categories ? 'checked' :'') ?>/>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Attributes<br>
+								<small class="text-secondary">After Add/Edit/Delete.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="auto_clear_attributes" type="checkbox" name="autoClear-attributes" <?= ($settings->autoClear->attributes ? 'checked' :'') ?>/>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Attribute Sets<br>
+								<small class="text-secondary">After Add/Edit/Delete.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="auto_clear_attibuteSets" type="checkbox" name="autoClear-attributeSets" <?= ($settings->autoClear->attributeSets ? 'checked' :'') ?>/>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Reviews<br>
+								<small class="text-secondary">After Add/Edit/Delete. Clears cache of the reviewed product.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="auto_clear_reviews" type="checkbox" name="autoClear-reviews" <?= ($settings->autoClear->reviews ? 'checked' :'') ?>/>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Pages<br>
+								<small class="text-secondary">After Add/Edit/Delete.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="auto_clear_pages" type="checkbox" name="autoClear-pages" <?= ($settings->autoClear->pages ? 'checked' :'') ?>/>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Blocks<br>
+								<small class="text-secondary">After Add/Edit/Delete.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="auto_clear_blocks" type="checkbox" name="autoClear-blocks" <?= ($settings->autoClear->blocks ? 'checked' :'') ?>/>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Widgets<br>
+								<small class="text-secondary">After Add/Edit/Delete.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="auto_clear_widgets" type="checkbox" name="autoClear-widgets" <?= ($settings->autoClear->widgets ? 'checked' :'') ?>/>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-8 col-form-label pl-0">
+								Orders<br>
+								<small class="text-secondary">After order history is added, and after an order is created. Clears cache of ordered products.</small>
+							</label>
+							<div class="col-xs-4 text-right">
+								<label class="switch">
+									<input id="auto_clear_orders" type="checkbox" name="autoClear-orders" <?= ($settings->autoClear->orders ? 'checked' :'') ?>/>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<script id="template-nitropack-notification-success" type="text/template">
+		<div id="nitropack-notification" class="nitro" data-type="success">
+			<div class="alert alert-success" id="nitropack-notification-message">{message}</div>
+		</div>
+	</script>
+	<script id="template-nitropack-notification-danger" type="text/template">
+		<div id="nitropack-notification" class="nitro" data-type="danger">
+			<div class="alert alert-danger" id="nitropack-notification-message">{message}</div>
+		</div>
+	</script>
+	<script id="template-nitropack-notification-warning" type="text/template">
+		<div id="nitropack-notification" class="nitro" data-type="warning">
+			<div class="alert alert-warning" id="nitropack-notification-message">{message}</div>
+		</div>
+	</script>
+	<script id="template-nitropack-notification-info" type="text/template">
+		<div id="nitropack-notification" class="nitro" data-type="info">
+			<div class="alert alert-info" id="nitropack-notification-message">{message}</div>
+		</div>
+	</script>
+</div>
+
+<div id="cacheWarmupTemplates" style="display: none">
+	<div id="cacheWarmupModal">
+		<div class="modal-body">
+			<div class="form-group">
+				<h5 class="modal-heading mb-2">Store Views</h5>
+				{%STORE_VIEWS%}
+				<hr>
+				<h5 class="modal-heading mb-2">Currencies</h5>
+				<div class="cacheWarmupCurrencyContainer">
+					{%CURRENCIES%}
+				</div>
+				<hr>
+				<h5 class="modal-heading mb-2">Pages</h5>
+				{%PAGE_TYPES%}
+			</div>
+		</div>
+	</div>
+	<div id="cacheWarmupStoreView">
+		<div class="row mb-3">
+			<div class="col-xs-8 col-form-label">
+				{%STORE_NAME%}
+				{%STORE_CODE%}
+			</div>
+			<div class="col-xs-4 text-right">
+				{%STORE_SWITCH%}
+			</div>
+		</div>
+	</div>
+	<div id="cacheWarmupCurrency">
+		<div class="row mb-3">
+			<div class="col-xs-8 col-form-label">
+				{%CURRENCY_LABEL%}
+				{%STORE_CODES%}
+			</div>
+			<div class="col-xs-4 text-right">
+				{%CURRENCY_SWITCH%}
+			</div>
+		</div>
+	</div>
+	<div id="cacheWarmupEmptyCurrencies">
+		<div class="row mb-3">
+			<div class="col-xs-8 col-form-label">
+				Enable the warmup for at least one store view to select currencies.
+			</div>
+			<div class="col-xs-4 text-right">
+				<!-- no switch -->
+			</div>
+		</div>
+	</div>
+	<div id="cacheWarmupPageType">
+		<div class="row mb-2">
+			<div class="col-xs-8 col-form-label">{%PAGE_LABEL%}</div>
+			<div class="col-xs-4 text-right">
+				{%PAGE_SWITCH%}
+			</div>
+		</div>
+	</div>
+	<div id="cacheWarmupStoreCodeBadge">
+		<span class="badge" customstyle="">{%STORE_CODE%}</span>
+	</div>
+	<div id="cacheWarmupSwitch">
+		<label class="switch">
+			<input type="checkbox" class="cacheWarmupSwitch" value="1" customattributes="">
+			<span class="slider round" data-toggle="tooltip" title="{%SWITCH_TITLE%}"></span>
+		</label>
+	</div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'Magento_Ui/js/modal/alert'], function ($, magentoAlert) {
+	$(document).ready(function() {
+		let currentStoreCode = <?= json_encode($block->getStore()->getCode()) ?>;
+		let builtInPageTypes = <?= json_encode($builtInPageTypes) ?>;
+		let cacheWarmupConfig = <?= json_encode($warmupConfig) ?>;
+
+		$('iframe[data-src]').each((index, iframe) => {
+			$(iframe).attr('src', $(iframe).attr('data-src'));
+		});
+
+		let extensionStatus = $('input[name=enabled]').val();
+		if (extensionStatus == 1) {
+			$('span[data-connection="connected"]').show();
+			$('span[data-connection="disabled"]').hide();
+		} else {
+			$('span[data-connection="connected"]').hide();
+			$('span[data-connection="disabled"]').show();
+		}
+
+		$(document).on('change', '#nitro_settings input[type=checkbox]', function() {
+			let value = $(this).is(':checked') ? 1 : 0;
+			let setting = $(this).attr('name');
+
+			let data = {};
+			data[setting] = value;
+
+			if (setting == 'cacheWarmup') {
+				updateCacheWarmupStatus(!!value);
+				for (let i=0;i<cacheWarmupConfig.storeViews.length;++i) {
+					if (cacheWarmupConfig.storeViews[i].code == currentStoreCode) {
+						cacheWarmupConfig.storeViews[i].enabled = !!value;
+					}
+				}
+			}
+
+			if (setting == 'enabled') {
+				if (data[setting] == 1) {
+					$('span[data-connection="connected"]').show();
+					$('span[data-connection="disabled"]').hide();
+				} else {
+					$('span[data-connection="connected"]').hide();
+					$('span[data-connection="disabled"]').show();
+				}
+			}
+
+			$.ajax({
+				url: '<?= $saveUrl ?>',
+				method: 'POST',
+				dataType: 'json',
+				data: data,
+				success: function (response) {
+					if (response.saved) {
+						Notification.success('Saved successfully');
+					} else {
+						Notification.danger('Something went wrong');
+					}
+				}
+			})
+		});
+
+		$('#add_route_prompt').click(function (event) {
+			event.preventDefault();
+			$(this).hide();
+			$('#add_route_form').show();
+		});
+
+		$('#add_route_btn').click(function (event) {
+			event.preventDefault();
+
+			let newRoute = $('#new_route').val().toLowerCase();
+
+			if (!newRoute || newRoute.length == 0) {
+				Notification.danger('Route cannot be empty');
+				return;
+			}
+
+			let separatorCount = (newRoute.match(/_/g) || []).length;
+
+			if (separatorCount < 2) {
+				Notification.danger('Route must include module router front name, controller, and action name, even if index');
+				return;
+			}
+
+			if (builtInPageTypes.includes(newRoute)) {
+				Notification.danger('There is already a setting for this route');
+				return;
+			}
+
+			let existingRoutes = getAllCustomRoutes();
+
+			if (existingRoutes.includes(newRoute)) {
+				Notification.danger('Custom route already exists');
+				return;
+			}
+
+			let template = $('#custom_route_template').html();
+			template = template.split('%ROUTE%').join(newRoute).split('templatetr').join('tr').split('templatetd').join('td');
+			$('#custom_route_container').append(template);
+
+			saveCustomRoutes();
+			$('#new_route').val('');
+		});
+
+		$('#custom_route_container').on('click', '.route_remove_btn', function (event) {
+			event.preventDefault();
+			let route = $(this).parent().data('route');
+			$(this).closest('tr').remove();
+			saveCustomRoutes();
+		});
+
+		$('#button-configure-warmup').on('click', function(event) {
+			event.preventDefault();
+			CacheWarmup.showModal(cacheWarmupConfig, currentStoreCode, persistCacheWarmup, toggleActiveStoreCacheWarmup);
+		});
+
+		var persistCacheWarmup = (config, success, fail) => {
+			$.ajax({
+				url: '<?= $warmupSaveUrl ?>',
+				method: 'POST',
+				dataType: 'json',
+				data: config,
+				success: function (response) {
+					if (response.saved) {
+						cacheWarmupConfig = Object.assign({}, config);
+						success(config);
+						Notification.success('Successfully saved cache warmup settings for all store views');
+					} else {
+						fail(config, ['@TODO: errors']);
+					}
+				}
+			});
+		};
+
+		var toggleActiveStoreCacheWarmup = (newState) => {
+			$('#cache_warmup').prop('checked', newState);
+			updateCacheWarmupStatus(newState);
+		};
+
+		var updateCacheWarmupStatus = (newState) => {
+			if (newState) {
+				$('.warmup-stats').html('<small><span class="warmup-stats"><i class="fa fa-circle text-success"></i> Enabled</span></small>');
+			} else {
+				$('.warmup-stats').html('<small><span class="warmup-stats"><i class="fa fa-circle text-danger"></i> Disabled</span></small>');
+			}
+		}
+
+		$('#cache_warmup').change(function() {
+			let warmupEnabled = $(this).is(':checked');
+			setCacheWarmupTypes(warmupEnabled);
+			setRunWarmupButtonStatus(warmupEnabled);
+		});
+
+		$('#disconnect').on('click', function(event) {
+			event.preventDefault();
+			$(this).html($(this).attr('data-loading-text'));
+			debugger;
+			if (confirm('NitroPack will be disconnected. Are you sure?')) {
+				$.ajax({
+					url: '<?= $block->getDisconnectUrl() ?>',
+					method: 'GET',
+					success: function(response) {
+						if (response.disconnected == true) {
+							window.location = '<?= $block->getConnectUrl() ?>';
+						}
+					}
+				});
+			} else {
+				$(this).html('<a href="javascript:void(0);" id="disconnect" data-loading-text="Disconnecting..." class="card-link text-secondary"> <i class="fa fa-power-off"></i> Disconnect </a>');
+			}
+		});
+
+		$('#start-warmup').click(function(event) {
+			event.preventDefault();
+			$.ajax({
+				url: '<?= $warmupStartUrl ?>',
+				method: 'POST',
+				dataType: 'json',
+				data: { run: 1 },
+				success: function(response) {
+					// @TODO proper response handling
+					if (response.success) {
+						console.log('Successfully started warmup', response);
+						$('#start-warmup').css('display', 'none').attr('disabled', true);
+						$('#pause-warmup').css('display', 'block').attr('disabled', false);
+					} else {
+						console.log('[Un]Successfully did not start warmup', response);
+					}
+				}
+			});
+		});
+
+		$('#pause-warmup').click(function(event) {
+			event.preventDefault();
+			$.ajax({
+				url: '<?= $warmupPauseUrl ?>',
+				method: 'POST',
+				dataType: 'json',
+				data: { run: 1 },
+				success: function(response) {
+					// @TODO proper response handling
+					if (response.paused) {
+						console.log('Successfully paused warmup', response);
+						$('#pause-warmup').css('display', 'none').attr('disabled', true);
+						$('#start-warmup').css('display', 'block').attr('disabled', false);
+					} else {
+						console.log('Pause failed', response);
+					}
+				}
+			});
+		});
+
+		$('#disable-caches').click(function(event) {
+			event.preventDefault();
+			$.ajax({
+				url: '<?= $disableCachesUrl ?>',
+				method: 'POST',
+				dataType: 'json',
+				data: { run: 1 },
+				success: function(response) {
+					// @TODO proper response handling
+					if (response.disabled) { // we expect disabled to be true if we have successfully disabled the system caches
+						Notification.success('Successfully disabled system caches');
+						$('#system-caches-warning').remove();
+					} else {
+						Notification.danger('Failed disabling the system caches');
+					}
+				}
+			});
+		})
+
+		function saveCustomRoutes(operation) {
+			let routes = getAllCustomRoutes();
+
+			if (routes.length == 0) {
+				routes = '___NITRO_CLEAR_ARRAY';
+			}
+
+			$.ajax({
+				url: '<?= $saveUrl ?>',
+				method: 'POST',
+				dataType: 'json',
+				data: {
+					"pageTypes-custom": routes
+				},
+				success: function (response) {
+					if (response.saved) {
+						if (operation == 'added') {
+							$('#add_route_form').hide();
+							$('#add_route_prompt').show();
+						}
+						Notification.success('Synced custom page types successfully');
+					} else {
+						Notification.danger('Something went wrong');
+					}
+				}
+			});
+		}
+
+		function getAllCustomRoutes() {
+			let routes = [];
+
+			$('[data-route]').each(function(i, e) {
+				let route = $(e).data('route');
+				if (route != '%ROUTE%') {
+					routes.push(route);
+				}
+			});
+
+			return routes;
+		}
+
+		function setCacheWarmupTypes(enabled) {
+			$('[name^="warmupTypes-"]').attr('disabled', !enabled);
+		}
+
+		function setRunWarmupButtonStatus(enabled) {
+			if (enabled) {
+				$('#start-warmup').attr('disabled', false);
+				$('#start-warmup').css('display', 'block');
+				$('#pause-warmup').css('display', 'none');
+			} else {
+				$('#start-warmup').attr('disabled', true);
+				$('#start-warmup').css('display', 'none');
+				$('#pause-warmup').css('display', 'none');
+			}
+		}
+
+		function pushAlertNotification(msg, status) {
+			$('#container > .nitro').prepend('<div class="row"><div class="col"><div class="alert alert-' + status + ' alert-dismissible fade show" role="alert">' + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div></div></div>');
+		}
+
+	});
+});
+</script>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureClickablePaginationAutoplayDelayActionGroup"
+                 extends="ConfigureBrandSliderElementsActionGroup">
+        <arguments>
+            <argument name="brandSlider2"/>
+        </arguments>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.ClickablePaginationSwitcher}}"
+                      userInput="{{brandSlider2.ClickablePaginationSwitcher}}"
+                      stepKey="setClickablePagination1"
+                      after="setShowPagination1"/>
+        <fillField selector="{{AdminILNBrandsSettingsSection.AutoplayDelay}}"
+                   userInput="{{brandSlider2.AutoplayDelay}}"
+                   stepKey="setAutoplayDelay1"
+                   after="setAutoplay1"/>
+    </actionGroup>
+
+</actionGroups>

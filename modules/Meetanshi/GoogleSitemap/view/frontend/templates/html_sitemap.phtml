@@ -1,0 +1,121 @@
+<?php $displayPartsCount=0; ?>
+
+<div class="html-sitemap">
+    <div class="grid-container">
+        <?php if (count($block->getCategoryUrls())): $displayPartsCount++; ?>
+        <div class="hs-header">
+            Category Pages
+        </div>
+        <?php endif; ?>
+        <?php if (count($block->getProductUrls())): $displayPartsCount++; ?>
+        <div class="hs-header">
+            Product Pages
+        </div>
+        <?php endif; ?>
+        <?php if (count($block->getCmsUrls())): $displayPartsCount++; ?>
+        <div class="hs-header">
+            CMS Pages
+        </div>
+        <?php endif; ?>
+        <?php if (count($block->getAdditionalLinks())): $displayPartsCount++; ?>
+        <div class="hs-header">
+            Additional Links
+        </div>
+        <?php endif; ?>
+        <?php if (count($block->getCategoryUrls())): ?>
+
+        <div>
+            <?php
+            foreach ($block->getCategoryUrls() as $url) {
+                ?>
+                <a href="<?php echo $url ?>"><?php echo $url ?></a><br>
+                <?php
+            }
+            ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if (count($block->getProductUrls())): ?>
+
+        <div>
+            <?php
+
+            foreach ($block->getProductUrls() as $url) {
+                ?>
+                <a href="<?php echo $url ?>"><?php echo $url ?></a><br>
+                <?php
+            }
+            ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if (count($block->getCmsUrls())): ?>
+
+        <div>
+            <?php
+
+            foreach ($block->getCmsUrls() as $url) {
+                ?>
+                <a href="<?php echo $url ?>"><?php echo $url ?></a><br>
+                <?php
+            }
+            ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if (count($block->getAdditionalLinks())): ?>
+
+        <div>
+            <?php
+
+            foreach ($block->getAdditionalLinks() as $url) {
+                ?>
+                <a href="<?php echo $url ?>"><?php echo $url ?></a><br>
+                <?php
+            }
+            ?>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>
+<?php
+$gridTemplateColumns='';
+for ($cnt=1; $cnt<=$displayPartsCount; $cnt++) {
+    $gridTemplateColumns.=' auto';
+}
+?>
+
+<style>
+    .html-sitemap .grid-container
+    {
+        display: grid;
+        grid-template-columns: <?php echo $gridTemplateColumns ?>;
+        grid-gap: 10px;
+        padding: 10px;
+    }
+
+    .html-sitemap .grid-container > div
+    {
+        text-align: left;
+    }
+
+    .html-sitemap .grid-container .hs-header
+    {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .html-sitemap .grid-container > div:not(.hs-header)
+    {
+        padding-left: 13px;
+        float: left;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .html-sitemap .grid-container > div:not(.hs-header) a
+    {
+        margin-bottom: 4px;
+        float: left;
+        width: 100%;
+    }
+</style>

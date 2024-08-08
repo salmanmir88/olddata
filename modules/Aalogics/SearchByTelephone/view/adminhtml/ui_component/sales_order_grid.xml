@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+   <columns name="sales_order_columns">
+       <column name="telephone" class="Aalogics\SearchByTelephone\Ui\Component\Listing\Column\TelephoneColumn">
+           <settings>
+               <visible>true</visible>
+               <dataType>text</dataType>
+               <label translate="true">Telephone</label>
+               <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+               <sortable>true</sortable>
+               <filter>text</filter>
+           </settings>
+       </column>
+   </columns>
+</listing>

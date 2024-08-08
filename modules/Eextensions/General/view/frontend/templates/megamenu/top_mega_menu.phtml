@@ -1,0 +1,53 @@
+<?php
+/****** get all category collection from block ******/
+
+$categories = $block->getCategoryCollection();
+$categorytree = $block->buildTree($categories);
+//pr($categorytree);die;
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+		->getStore()
+		->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+?>
+                        
+<?php 
+if(isset($categorytree) && $categorytree != ''){ 
+	foreach ($categorytree as $maincategory) { 
+		if(isset($maincategory)){
+?>
+			<li class="nav-item submenu">
+				<a class="nav-link" href="<?php echo $maincategory['url']; ?>">
+					<?php echo $maincategory['name']; ?>
+				</a>
+				<a class="custom-dropdown" href="javascript:void(0)">
+					<?php if(isset($maincategory['children'])){ ?><img src="<?php echo $this->getViewFileUrl('images/arrow-down.svg');?>" alt="img" /><?php } ?>
+				</a>	
+				<?php if(isset($maincategory['children'])){ ?>
+					<div class="menu-dropdown">
+						<div class="dropdown-row">
+							<?php foreach ($maincategory['children'] as $subcategory) { ?>
+								<div class="dropdown-column acordianlist">
+									<h4><a href="<?php echo $subcategory['url']; ?>"><?php echo $subcategory['name']; ?></a></h4>
+									<?php if(isset($subcategory['children'])){ ?>
+										<div class="menu_list">
+											<ul>
+												<?php foreach ($subcategory['children'] as $levelcategory) { ?>
+													<li class="submenu-list"><a href="<?php echo $levelcategory['url']; ?>"><?php echo $levelcategory['name']; ?></a></li>
+												<?php } ?>		
+											</ul>
+										</div>
+									<?php } ?>		
+								</div>	
+							<?php } ?>		
+						</div>
+					</div>
+				<?php } ?>
+			</li>
+<?php 
+		} 
+	}
+} 
+?>
+<!--menu end-->
+

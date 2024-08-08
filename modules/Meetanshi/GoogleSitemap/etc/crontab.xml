@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="generate_sitemap" instance="Meetanshi\GoogleSitemap\Cron\SitemapCron" method="scheduledGenerateSitemaps">
+            <schedule>0 1 * * * *</schedule>
+        </job>
+    </group>
+</config>

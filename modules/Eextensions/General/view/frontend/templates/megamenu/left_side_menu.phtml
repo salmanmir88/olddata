@@ -1,0 +1,46 @@
+<?php
+/****** get all category collection from block ******/
+
+$categories = $block->getCategoryCollection();
+$categorytree = $block->buildTree($categories);
+// pr($categorytree);die; 
+?>
+<?php if(isset($categorytree) && $categorytree != ''){ ?>
+<ul class="mCustomScrollbar productitem_ul menu-dropdown">
+	<li>
+		<div class="all_category_block">
+			<ul class="menu_list nav nav-pills">
+				<?php $mk=1; foreach ($categorytree as $maincategory) { ?>
+					<?php if(isset($maincategory)){ ?>
+						<li>
+							<a href="#tab-<?php echo $mk; ?>" data-toggle="tab"><?php echo $maincategory['name']; ?></a>
+						</li>
+					<?php } ?>
+				<?php $mk++; } ?>
+			</ul>  
+		</div>
+		<div class="tab-content all_category_section">
+			<?php $mj=1;  foreach ($categorytree as $maincategory) { ?>	
+				<div class="tab-pane <?php if($mj == 1){ echo "active"; } ?>" id="tab-<?php echo $mj; ?>">		
+					<h3><a href="<?php echo $maincategory['url']; ?>" class="tab-cat-title"><?php echo $maincategory['name']; ?></a></h3>    
+					<?php if(isset($maincategory['children'])){ ?>
+						<?php foreach ($maincategory['children'] as $subcategory) { ?>
+							<ul class="tab-cat-sub-title">
+								<h4><a href="<?php echo $subcategory['url']; ?>"><?php echo $subcategory['name']; ?></a></h4>
+								<?php if(isset($subcategory['children'])){ ?>
+									<?php foreach ($subcategory['children'] as $levelcategory) { ?>
+										<li>
+											<a href="<?php echo $levelcategory['url']; ?>"><?php echo $levelcategory['name']; ?></a>
+										</li>
+									<?php } ?>
+								<?php } ?>
+							</ul>
+						<?php } ?>
+					<?php } ?>
+				</div>
+			<?php $mj++;  } ?>
+		</div>
+	</li>
+</ul>
+<?php } ?>
+<!--menu end-->

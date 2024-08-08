@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureTooltipContentActionGroup" extends="ConfigureTooltipBrandLogoActionGroup">
+        <arguments>
+            <argument name="brandLogoTooltip1"/>
+        </arguments>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.DisplayTooltip}}"
+                      parameterArray="['{{brandLogoTooltip1.DisplayTooltip}}']"
+                      stepKey="setDisplayTooltip1"/>
+        <remove keyForRemoval="setDisplayTooltip2"/>
+        <uncheckOption selector="{{AdminILNBrandsSettingsSection.TooltipContentLocker}}"
+                       stepKey="uncheckTooltipContentCheckbox1"
+                       after="setDisplayTooltip1"/>
+        <fillField selector="{{AdminILNBrandsSettingsSection.TooltipContent}}"
+                   userInput="{{brandLogoTooltip1.TooltipContent}}"
+                   stepKey="fillBrandItemLabelField1"
+                   after="uncheckTooltipContentCheckbox1"/>
+    </actionGroup>
+
+</actionGroups>

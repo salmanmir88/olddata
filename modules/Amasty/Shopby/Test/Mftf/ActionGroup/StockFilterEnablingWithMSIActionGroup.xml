@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="StockFilterEnablingWithMSIActionGroup" extends="StockFilterEnablingActionGroup">
+        <arguments>
+            <argument name="customFilter"/>
+            <argument name="customFilter3"/>
+            <argument name="customFilter4"/>
+            <argument name="filter_selector"/>
+            <argument name="filter_value1"/>
+            <argument name="filter_value2"/>
+            <argument name="filter_value3"/>
+            <argument name="filter_value4"/>
+        </arguments>
+        <waitForElement selector="{{AdminProductSourcesSection.assignSources}}" stepKey="waitForElement1"/>
+        <click selector="{{AdminProductSourcesSection.assignSources}}"
+               stepKey="clickOnAssignSources1"
+               after="waitForElement1"/>
+        <waitForPageLoad time="30"
+                         stepKey="waitForPageLoad3"
+                         after="clickOnAssignSources1"/>
+        <conditionalClick selector="{{AdminGridFilterControls.clearAll}}"
+                          dependentSelector=".admin__data-grid-header[data-bind='afterRender: \$data.setToolbarNode'] .admin__data-grid-filters-current._show"
+                          visible="true"
+                          stepKey="clearTheFiltersIfPresent1"
+                          after="waitForPageLoad3"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"
+                         after="clearTheFiltersIfPresent1"/>
+        <click selector="{{AdminGridFilterControls.filters}}"
+               stepKey="clickOnFilters1"
+               after="waitForPageLoad4"/>
+        <fillField userInput="{{filter_value1}}"
+                   selector="{{filter_selector}}"
+                   stepKey="fillCodeField1"
+                   after="clickOnFilters1"/>
+        <click selector="{{AdminGridFilterControls.applyFilters}}"
+               stepKey="clickOnApplyFilters1"
+               after="fillCodeField1"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"
+                         after="clickOnApplyFilters1"/>
+        <click selector="{{AdminAssignSourcesSlideOutGridSection.checkboxByCode(filter_value1)}}"
+               stepKey="clickOnCheckbox1"
+               after="waitForPageLoad5"/>
+        <wait time="3" stepKey="wait1" after="clickOnCheckbox1"/>
+        <click selector="{{AdminAssignSourcesSlideOutSection.done}}"
+               stepKey="clickOnDone1"
+               after="wait1"/>
+        <click selector="{{AdminProductSourcesSection.assignSources}}"
+               stepKey="clickOnAssignSources2"
+               after="clickOnDone1"/>
+        <waitForPageLoad time="30"
+                         stepKey="waitForPageLoad6"
+                         after="clickOnAssignSources2"/>
+        <conditionalClick selector="{{AdminGridFilterControls.clearAll}}"
+                          dependentSelector=".admin__data-grid-header[data-bind='afterRender: \$data.setToolbarNode'] .admin__data-grid-filters-current._show"
+                          visible="true"
+                          stepKey="clearTheFiltersIfPresent2"
+                          after="waitForPageLoad6"/>
+        <waitForPageLoad stepKey="waitForPageLoad7"
+                         after="clearTheFiltersIfPresent2"/>
+        <click selector="{{AdminGridFilterControls.filters}}"
+               stepKey="clickOnFilters2"
+               after="waitForPageLoad7"/>
+        <fillField userInput="{{filter_value2}}"
+                   selector="{{filter_selector}}"
+                   stepKey="fillCodeField3"
+                   after="clickOnFilters2"/>
+        <click selector="{{AdminGridFilterControls.applyFilters}}"
+               stepKey="clickOnApplyFilters2"
+               after="fillCodeField3"/>
+        <waitForPageLoad stepKey="waitForPageLoad8"
+                         after="clickOnApplyFilters2"/>
+        <click selector="{{AdminAssignSourcesSlideOutGridSection.checkboxByCode(filter_value2)}}"
+               stepKey="clickOnCheckbox2"
+               after="waitForPageLoad8"/>
+        <wait time="3" stepKey="wait2" after="clickOnCheckbox2"/>
+        <click selector="{{AdminAssignSourcesSlideOutSection.done}}"
+               stepKey="clickOnDone2"
+               after="wait2"/>
+        <selectOption selector="{{AdminProductProfileSection.StockStatusMSI(filter_value3)}}"
+                      userInput="{{customFilter4.Stock1}}"
+                      stepKey="switchToOutOfStockSelectedProduct1"
+                      after="clickOnDone1"/>
+        <selectOption selector="{{AdminProductProfileSection.StockStatusMSI(filter_value4)}}"
+                      userInput="{{customFilter4.Stock2}}"
+                      stepKey="switchToOutOfStockSelectedProduct2"
+                      after="switchToOutOfStockSelectedProduct1"/>
+        <fillField userInput="100"
+                   selector="{{AdminProductProfileSection.QtyMSIField(filter_value3)}}"
+                   stepKey="fillMSIQtyField1"
+                   after="switchToOutOfStockSelectedProduct2"/>
+        <fillField userInput="100"
+                   selector="{{AdminProductProfileSection.QtyMSIField(filter_value4)}}"
+                   stepKey="fillMSIQtyField2"
+                   after="fillMSIQtyField1"/>
+    </actionGroup>
+
+</actionGroups>

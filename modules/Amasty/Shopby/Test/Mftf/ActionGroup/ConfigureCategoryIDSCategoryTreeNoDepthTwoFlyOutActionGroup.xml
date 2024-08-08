@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureCategoryIDSCategoryTreeNoDepthTwoFlyOutActionGroup"
+                 extends="ConfigureCategoryIDSCategoryTreeDefaultActionGroup">
+        <arguments>
+            <argument name="categoryIDS3"/>
+        </arguments>
+        <fillField selector="{{AttributeProfileSection.CategoryTreeDepthField}}"
+                   userInput="{{categoryIDS3.CategoryTreeDepthField}}"
+                   stepKey="SetCategoryTreeDepth1"
+                   after="SetRenderAllCategoryTree1"/>
+        <pressKey selector="{{AttributeProfileSection.CategoryTreeDepthField}}"
+                  parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]"
+                  stepKey="pressEnter1"
+                  after="SetCategoryTreeDepth1"/>
+        <waitForElement selector="{{AttributeProfileSection.RenderCategoriesLevelSwitcher}}"
+                        stepKey="waitForElement1"
+                        after="pressEnter1"/>
+        <selectOption selector="{{AttributeProfileSection.RenderCategoriesLevelSwitcher}}"
+                      userInput="{{categoryIDS3.RenderCategoriesLevelSwitcher}}"
+                      stepKey="SetRenderCategoriesLevel1"
+                      after="waitForElement1"/>
+        <remove keyForRemoval="SetExpandSubcategories1"/>
+    </actionGroup>
+
+</actionGroups>
+
+
+

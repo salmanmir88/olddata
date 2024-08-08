@@ -1,0 +1,17 @@
+/**** NitroPack Connect screen CSS ****/
+.nitro .card-welcome {
+    padding: 32px;
+}
+
+.nitro .alert-welcome {
+    margin-bottom: 32px !important;
+    padding: 24px 32px !important;
+}
+
+.opacity-0-9 {
+    opacity: 0.9;
+}
+
+.opacity-0-2 {
+    opacity: 0.2;
+}

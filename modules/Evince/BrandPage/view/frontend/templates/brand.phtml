@@ -1,0 +1,307 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use \Magento\Framework\App\Action\Action;
+
+?>
+<?php
+$getBrandCategoryImage = $block->getBrandCategoryImg();
+//$categories = $this->getBrandCategory();
+$categories = $this->getBt21Category();
+$homePageProductBlock = $block->getLayout()->createBlock('Evince\HomeProducts\Block\Homeproducts');
+$newArrivalProduct = $block->getLayout()->createBlock('Evince\HomeProducts\Block\Homeproducts')->getNewArrivalProducts();
+$bestSellerProduct = $block->getLayout()->createBlock('Evince\HomeProducts\Block\Homeproducts')->getBestSellerProducts();
+
+$helper = $this->helper('Evince\HomeProducts\Helper\Data');
+$productRatingsHelper = $this->helper('Evince\ProductRatings\Helper\Data');
+$viewMode = 'grid';
+$viewAllHelper = $this->helper('Evince\ViewAll\Helper\Data');
+$bestSellerViewAll = $viewAllHelper->getConfigValues('all/brand/bestseller_url');
+$newArrivalViewAll =  $viewAllHelper->getConfigValues('all/brand/newarrival_url');
+
+if(empty($bestSellerViewAll))
+{
+    $bestSellerViewAll = '#';
+}
+
+if(empty($newArrivalViewAll))
+{
+    $newArrivalViewAll = '#';
+}
+?>
+
+<?php //foreach ($categories as $category):?>
+    <?php //echo "<pre>"; ?>
+    <?php //var_dump($category->getData()); ?>
+    <?php //echo "</pre>"; ?>
+<?php //endforeach; ?>
+<div class="brand-main">
+    
+
+        <div class="brand-image">
+            <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('brand_top_image')->toHtml(); ?>
+        </div>
+    
+
+    <?php if ($categories->getSize()): ?>
+        <div class="shop-by-title"><h2><?php echo __('Shop By Category') ?></h2></div>
+        <div class="products wrapper <?= /* @noEscape */ $viewMode ?> products-<?= /* @noEscape */ $viewMode ?>">
+        <ol class="products list items product-items">
+            <?php foreach ($categories as $category):?>  
+                <?php if($category->getIsActive() == 1): ?>
+                    <li class="item product product-item">
+                        <div class="product-item-info" data-container="product-<?= /* @noEscape */ $viewMode ?>">
+                            <a href="<?php echo $category->getUrl(); ?>" class="product photo product-item-photo" tabindex="-1">
+                                <?php
+                                    $categoryImg = $helper->getCategoryImage($category->getId());
+                                    if ($categoryImg) {
+                                ?>    
+                                        <img src="<?php echo $categoryImg; ?>" />
+                                <?php } else { ?>    
+                                        <img src="<?php echo $helper->getPlaceHolderImage(); ?>" />
+                                <?php } ?>
+                            </a>
+                            <div class="brand-cate-name">
+                                <strong class="product name product-item-name">
+                                    <a class="product-item-link" href="<?php echo $category->getUrl(); ?>">
+                                        <?php echo $category->getName(); ?>
+                                    </a>
+                                </strong>    
+                            </div>
+                        </div>
+                        </li>
+                       <?php endif; ?> 
+            <?php endforeach; ?>
+            </ol>
+          </div>                  
+    <?php endif; ?>
+    
+    <?php if ($newArrivalProduct->getSize()): ?>
+    <div class="best-seller-main">
+        <div class="best-seller-title">
+            <div class="slider-heading"><h2><?php echo __('NEW ARRIVAL') ?></h2></div>
+            <div class="view-all-link">
+                <a href="<?php echo $newArrivalViewAll ?>"><?= __('View All') ?></a>
+            </div>
+        </div>
+        <div id="owl-demo-brand-new-arrival" class="owl-carousel owl-theme">
+
+            <?php foreach ($newArrivalProduct as $product): ?>
+
+                <div class="item">
+                    <div class="product-item-info">
+                        <a href="<?php echo $product->getProductUrl(); ?>" class="product-item-photo">
+                            <img src="<?php echo $helper->getProductImageUrl($product); ?>" />
+                        </a>
+                        <div class="product-item-details">
+                            <strong class="product-item-name">  
+                                <a href="<?php echo $product->getProductUrl() ?>" class="product-item-link">
+                                    <?php echo $product->getName(); ?>
+                                </a>
+                            </strong>  
+                            <div class="best-seller-ratings">
+                                <?php /* product ratings start here */ ?>
+                                <?php
+                                $_ratingSummary = $productRatingsHelper->getRatingSummary($product);
+                                $_reviewCount = ($product->getRatingSummary()->getReviewsCount() ? $product->getRatingSummary()->getReviewsCount() : '0')
+                                ?>
+                                <div class="product-reviews-summary short">
+                                    <div class="rating-summary">
+                                        <div title="<?php echo (int) $_ratingSummary; ?>%" class="rating-result">
+                                            <span style="width:<?php echo (int) $_ratingSummary; ?>%"><span><?php echo (int) $_ratingSummary; ?>%</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="reviews-actions">
+                                        <?php echo __('' . $_reviewCount . ' Review(s)'); ?>
+                                    </div>
+                                </div>
+                                <?php /* product ratings end here */ ?>
+                            </div>
+                            <div class="best-seller-price">
+                                <?php echo $this->getProductPriceHtml($product); ?>
+                            </div>
+                            <div class="product-item-inner">
+                                <input type="hidden" class="popup-checkout-url" value="<?php echo $block->getUrl('checkout', ['_secure' => true]);?>" />
+                            <div class="product actions product-item-actions">
+                        <?php if ($product->isSaleable()) :?>
+                            <?php $postParams = $homePageProductBlock->getAddToCartParams($product); ?>
+                            <form data-role="tocart-form"
+                                  data-product-sku="<?= $block->escapeHtmlAttr($product->getSku()) ?>"
+                                  action="<?= $block->escapeUrl($postParams['action']) ?>"
+                                  method="post">
+                                <input type="hidden"
+                                       name="product"
+                                       value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
+                                <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                                   value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <button type="submit"
+                                        title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                        class="action tocart primary">
+                                            <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                </button>
+                            </form>
+                        <?php else: ?>
+                                <?php if ($product->isAvailable()) :?>
+                                        <div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+                                <?php else :?>
+                                        <div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
+                                <?php endif; ?>    
+                        <?php endif; ?>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {
+                    "product_sku": "<?= $block->escapeJs($product->getSku()) ?>"
+                }
+            }
+        }
+    </script>
+<?php endif; ?>
+    <div class="brand-static-content">
+        <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('shop_by_brand')->toHtml(); ?>
+    </div>
+    
+    <?php if ($bestSellerProduct->getSize()): ?>
+    <div class="brand-best-seller">
+        <div class="best-seller-title">
+            <div class="slider-heading"><h2><?php echo __('Best Sellers') ?></h2></div>
+            <div class="view-all-link">
+                <a href="<?php echo $bestSellerViewAll ?>"><?= __('View All') ?></a>
+            </div>
+        </div>
+        <div id="owl-demo-brand-best-seller" class="owl-carousel owl-theme">
+
+            <?php foreach ($bestSellerProduct as $_product): ?>
+
+                <div class="item">
+                    <div class="product-item-info">
+                        <a href="<?php echo $_product->getProductUrl(); ?>" class="product-item-photo">
+                            <img src="<?php echo $helper->getProductImageUrl($_product); ?>" />
+                        </a>
+                        <div class="product-item-details">
+                            <strong class="product-item-name">  
+                                <a href="<?php echo $_product->getProductUrl() ?>" class="product-item-link">
+                                    <?php echo $_product->getName(); ?>
+                                </a>
+                            </strong>  
+                            <div class="best-seller-ratings">
+                                <?php /* product ratings start here */ ?>
+                                <?php
+                                $_ratingSummary = $productRatingsHelper->getRatingSummary($_product);
+                                $_reviewCount = ($_product->getRatingSummary()->getReviewsCount() ? $_product->getRatingSummary()->getReviewsCount() : '0')
+                                ?>
+                                <div class="product-reviews-summary short">
+                                    <div class="rating-summary">
+                                        <div title="<?php echo (int) $_ratingSummary; ?>%" class="rating-result">
+                                            <span style="width:<?php echo (int) $_ratingSummary; ?>%"><span><?php echo (int) $_ratingSummary; ?>%</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="reviews-actions">
+                                        <?php echo __('' . $_reviewCount . ' Review(s)'); ?>
+                                    </div>
+                                </div>
+                                <?php /* product ratings end here */ ?>
+                            </div>
+                            <div class="best-seller-price">
+                                <?php echo $this->getProductPriceHtml($_product); ?>
+                            </div>
+                            <div class="product-item-inner">
+                                <input type="hidden" class="popup-checkout-url" value="<?php echo $block->getUrl('checkout', ['_secure' => true]);?>" />
+                            <div class="product actions product-item-actions">
+                        <?php if ($product->isSaleable()) :?>
+                            <?php $postParams = $homePageProductBlock->getAddToCartParams($_product); ?>
+                            <form data-role="tocart-form"
+                                  data-product-sku="<?= $block->escapeHtmlAttr($product->getSku()) ?>"
+                                  action="<?= $block->escapeUrl($postParams['action']) ?>"
+                                  method="post">
+                                <input type="hidden"
+                                       name="product"
+                                       value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
+                                <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                                   value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <button type="submit"
+                                        title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                        class="action tocart primary">
+                                            <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                </button>
+                            </form>
+                        <?php else: ?>
+                                <?php if ($product->isAvailable()) :?>
+                                        <div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+                                <?php else :?>
+                                        <div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
+                                <?php endif; ?>    
+                        <?php endif; ?>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {
+                    "product_sku": "<?= $block->escapeJs($_product->getSku()) ?>"
+                }
+            }
+        }
+    </script>
+    <?php endif; ?>
+</div>
+
+
+<script type="text/javascript" xml="space">// <![CDATA[
+    //require(['jquery', 'OwlCarousel'], function () {
+        require(['jquery', 'mageplaza/core/owl.carousel'], function ($) {
+            var isRTL = $("body").hasClass('rtl');
+            $("#owl-demo-brand-new-arrival, #owl-demo-brand-best-seller").owlCarousel({
+                margin:10,
+                items: 6,
+                //itemsDesktop: [1080, 4],
+                //itemsDesktopSmall: [860, 3],
+                //itemsTablet: [768, 3],
+                //itemsTabletSmall: [639, 3],
+                //itemsMobile: [479, 2],
+                dots: false,
+                rtl: isRTL,
+                navigationText: ['<div class="lft-btn"><i class="fa fa-angle-left"></i></div>', '<div class="rgt-btn"><i class="fa fa-angle-right"></div>'],
+                nav: true,
+                loop: true,
+                responsive:{
+                    0:{margin:5,
+                        items:2.5
+                    },
+                    480:{margin:5,
+                        items:2.5
+                    },
+                    768:{margin:5,
+                        items:2.5
+                    },
+                    992:{margin:5,
+                        items:6
+                    },
+                    1200:{
+                        items:6
+                    }
+                },
+            });
+        });
+    //});
+// ]]></script>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureBrandSliderQtySortColorTitleSizeActionGroup">
+        <arguments>
+            <argument name="brandSlider1"/>
+        </arguments>
+        <amOnPage url="{{AdminIlnBrandsSettingsPage.url}}" stepKey="navigateToILNBrandsSettingsPage1"/>
+        <conditionalClick stepKey="expandBrandSliderSettingsTab1"
+                          selector="{{AdminILNBrandsSettingsSection.BrandSliderSettingsTab}}"
+                          dependentSelector="{{AdminILNBrandsSettingsSection.VisibleItemsQuantity}}"
+                          visible="false"/>
+        <grabTextFrom selector="{{AdminILNBrandsSettingsSection.BrandSliderWidgetCode}}"
+                      stepKey="grabBrandSliderWidgetCode1"/>
+        <setCookie userInput="setBrandSliderWidgetCodeInCookie"
+                   value="{$grabBrandSliderWidgetCode1}"
+                   stepKey="setBrandSliderWidgetCodeInCookie1"/>
+        <fillField selector="{{AdminILNBrandsSettingsSection.VisibleItemsQuantity}}"
+                   userInput="{{brandSlider1.VisibleItemsQuantity}}"
+                   stepKey="setVisibleItemsQuantity1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.SortBySwitcher}}"
+                      userInput="{{brandSlider1.SortBySwitcher}}"
+                      stepKey="setSortBy1"/>
+        <fillField selector="{{AdminILNBrandsSettingsSection.HeaderBackgroundColor}}"
+                   userInput="{{brandSlider1.HeaderBackgroundColor}}"
+                   stepKey="setHeaderBackgroundColor1"/>
+        <fillField selector="{{AdminILNBrandsSettingsSection.HeaderTextColor}}"
+                   userInput="{{brandSlider1.HeaderTextColor}}"
+                   stepKey="setHeaderTextColor1"/>
+        <fillField selector="{{AdminILNBrandsSettingsSection.HeaderTitle}}"
+                   userInput="{{brandSlider1.HeaderTitle}}"
+                   stepKey="setHeaderTitle1"/>
+        <fillField selector="{{AdminILNBrandsSettingsSection.SliderMaxWidth}}"
+                   userInput="{{brandSlider1.SliderMaxWidth}}"
+                   stepKey="setSliderMaxWidth1"/>
+        <fillField selector="{{AdminILNBrandsSettingsSection.ImageMaxWidthSlider}}"
+                   userInput="{{brandSlider1.ImageMaxWidthSlider}}"
+                   stepKey="setImageMaxWidth1"/>
+        <fillField selector="{{AdminILNBrandsSettingsSection.ImageMaxHeightSlider}}"
+                   userInput="{{brandSlider1.ImageMaxHeightSlider}}"
+                   stepKey="setImageMaxHeight1"/>
+        <click selector="{{AdminILNBrandsSettingsSection.Save}}" stepKey="clickSaveConfig1"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>

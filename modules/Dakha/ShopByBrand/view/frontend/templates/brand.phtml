@@ -1,0 +1,66 @@
+<?php
+/**
+ * @var $block \Dakha\ShopByBrand\Block\Brand
+ */
+?>
+<?php $brandArr = [];?>
+<?php $items = $block->getIndex();?>
+<?php if ($items): ?>
+<?php foreach ($items as $letters): ?>
+<?php foreach ($letters as $letter => $options): ?>
+<?php foreach ($options as $option): ?>
+<?php $brandArr[] = [
+	                'url'=>$option['url'],
+	                'image'=>$option['img'] 
+                    ];?>	
+<?php endforeach; ?>	
+<?php endforeach; ?>	
+<?php endforeach; ?>
+<?php endif;?>
+<?php if($brandArr){?>
+<div class="brand-title"><?php //echo __('Shop By Brands'); ?></div>
+<div class="new-home-page-slider-3section owl-carousel owl-theme">
+<?php $i=1;?>	
+<?php foreach($brandArr as $brand){?>
+<?php if($i<=10){?>
+<?php if ($brand['image']) { ?>
+	<div class="brands <?php if($i!=1){?>brands-item<?php }?>">
+		<?php if ($brand['image']) { ?>
+			<a href="<?php echo $brand['url']?>"><img src="<?php echo $brand['image']?>" alt="" /></a>
+		<?php }else{ ?>
+			<a href="<?php echo $brand['url']?>"><img src="<?php echo "http://stage.kpopiashop.com/pub/media/brand/rm251-mind-instgram-03.jpg"?>" alt="" /></a>
+		<?php } ?>
+	</div>
+<?php } ?>
+<?php $i++;?>
+<?php } ?>
+<?php } ?>
+</div>
+<?php }?>
+
+
+
+<script type="text/javascript">
+require(["jquery","mageplaza/core/owl.carousel"],function($){
+    $('.new-home-page-slider-3section').owlCarousel({
+	    loop:true,
+	    margin:0,
+	    items:8,
+	    nav:true,
+	    autoplay:true,
+	    slider:false,
+	    dots:false,
+	    /*rtl:true,*/
+	    responsive:{
+	        0:{
+	            items:4,
+	            slider:true
+	        },
+	        767:{
+	            items:8,
+	            slider:true
+	        }
+	    }
+    });
+});
+</script>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @author Amasty Team
+* @copyright Copyright (c) 2022 Amasty (https://www.amasty.com)
+* @package Affiliate for Magento 2
+*/-->
+
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <container name="root" label="Root">
+        <block class="Amasty\Affiliate\Block\Adminhtml\Customer\Tab\Form" name="amasty_affiliate.edit.tab.account"/>
+    </container>
+</layout>

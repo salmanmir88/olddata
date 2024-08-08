@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+	<event name="my_fatoorah_my_fatoorahpaymentgateway_success">
+		<observer name="dakha_sendmessageafterpayment_observer_my_fatoorahmyfatoorahpaymentgatewaysuccess_my_fatoorah_my_fatoorahpaymentgateway_success" instance="Dakha\SendMessageAfterPayment\Observer\My\FatoorahMyFatoorahpaymentgatewaySuccess"/>
+	</event>
+</config>

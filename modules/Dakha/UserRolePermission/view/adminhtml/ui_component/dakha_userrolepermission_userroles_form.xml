@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">dakha_userrolepermission_userroles_form.userroles_form_data_source</item>
+		</item>
+		<item name="label" xsi:type="string" translate="true">General Information</item>
+		<item name="template" xsi:type="string">templates/form/collapsible</item>
+	</argument>
+	<settings>
+		<buttons>
+			<button name="back" class="Dakha\UserRolePermission\Block\Adminhtml\Userroles\Edit\BackButton"/>
+			<!-- <button name="delete" class="Dakha\UserRolePermission\Block\Adminhtml\Userroles\Edit\DeleteButton"/> -->
+			<button name="save" class="Dakha\UserRolePermission\Block\Adminhtml\Userroles\Edit\SaveButton"/>
+			<button name="save_and_continue" class="Dakha\UserRolePermission\Block\Adminhtml\Userroles\Edit\SaveAndContinueButton"/>
+		</buttons>
+		<namespace>dakha_userrolepermission_userroles_form</namespace>
+		<dataScope>data</dataScope>
+		<deps>
+			<dep>dakha_userrolepermission_userroles_form.userroles_form_data_source</dep>
+		</deps>
+	</settings>
+	<dataSource name="userroles_form_data_source">
+		<argument name="data" xsi:type="array">
+			<item name="js_config" xsi:type="array">
+				<item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+			</item>
+		</argument>
+		<settings>
+			<submitUrl path="*/*/save"/>
+		</settings>
+		<dataProvider name="userroles_form_data_source" class="Dakha\UserRolePermission\Model\Userroles\DataProvider">
+			<settings>
+				<requestFieldName>userroles_id</requestFieldName>
+				<primaryFieldName>userroles_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<fieldset name="general">
+		<settings>
+			<label>General</label>
+		</settings>
+		<field name="allowed" sortOrder="40" formElement="multiselect">
+            <settings>
+                <label translate="true">allowed</label>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options>
+                            <option name="all_users" xsi:type="array">
+                                <item name="value" xsi:type="string">all_users</item>
+                                <item name="label" xsi:type="string">All users</item>
+                            </option>
+                            <option name="not_invoice" xsi:type="array">
+                                <item name="value" xsi:type="string">not_invoice</item>
+                                <item name="label" xsi:type="string">Invoice hide</item>
+                            </option>
+                            <option name="shipment_after" xsi:type="array">
+                                <item name="value" xsi:type="string">shipment_after</item>
+                                <item name="label" xsi:type="string">Shipment hide</item>
+                            </option>
+                            <option name="album" xsi:type="array">
+                                <item name="value" xsi:type="string">album</item>
+                                <item name="label" xsi:type="string">Album</item>
+                            </option>
+                        </options>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+	</fieldset>
+</form>

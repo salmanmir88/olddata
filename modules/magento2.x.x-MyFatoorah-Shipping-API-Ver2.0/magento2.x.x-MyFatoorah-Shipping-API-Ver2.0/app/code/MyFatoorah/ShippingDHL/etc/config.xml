@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <myfatoorah_shippingDHL>
+                <active>1</active>
+                <sallowspecific>0</sallowspecific>
+                <model>MyFatoorah\ShippingDHL\Model\Carrier\ShippingDHL</model>
+                <title>MyFatoorah</title>
+                <name>DHL</name>
+                <specificerrmsg>MyFatoorah DHL Shipping provider API ver2 is not available. To use this shipping method, please contact us.</specificerrmsg>
+                <is_testing>1</is_testing>
+            </myfatoorah_shippingDHL>
+        </carriers>
+    </default>
+</config>
+

@@ -1,0 +1,42 @@
+<?php
+/**
+ * @var $block \Dakha\ShopByBrand\Block\Brand
+ */
+?>
+<?php $brandId = $block->getData('brand');?>
+<?php $brandArr = [];?>
+<?php $items = $block->getIndex();?>
+<?php if ($items): ?>
+<?php foreach ($items as $letters): ?>
+<?php foreach ($letters as $letter => $options): ?>
+<?php foreach ($options as $option):?>
+<?php if($option['brand_id']==$brandId){?>	
+<?php $brandArr = [
+	                'description'=>$option['description'],
+	                'url'=>$option['url'],
+	                'img'=>$option['img'] 
+                    ];?>
+
+<?php } ?>
+<?php endforeach; ?>	
+<?php endforeach; ?>	
+<?php endforeach; ?>
+<?php endif;?>
+
+<?php if(count($brandArr)>0){?>
+<div class="brand-section">
+	<div class="brand-section-content">
+		<div class="brand-image"><a href="<?php echo $brandArr['url']?>"><img src="<?php echo $brandArr['img']?>"></a></div>	
+	</div>
+</div>	
+<?php } ?>	
+<style type="text/css">
+.catalog-product-view .brand-image {
+    position: relative;
+    margin-top: 15px;
+    margin-bottom: 11px;
+    width: 117px;
+    overflow: hidden;
+    height: auto;
+}
+</style>	

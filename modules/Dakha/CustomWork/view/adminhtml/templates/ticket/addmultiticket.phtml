@@ -1,0 +1,79 @@
+<?php 
+/**
+ *  @var Dakha\CustomWork\Block\Adminhtml\AddMultiTicket
+ *  
+ */
+?>
+<?php $orderId = $block->getOrderIds();?>
+<div class="entry-edit form-inline">
+        <form name="addData" method="post" id="addData" class="MultiFile-intercepted"
+              action="<?php echo $this->getUrl('customwork/index/submittickets'); ?>"
+              data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+              data-mage-init='{"validation":{}}'>
+              <input type="hidden" name="order_ids" value="<?=/* @noEscape */ $orderId?>">
+              <input type="hidden" name="form_key" value="<?=/* @noEscape */ $block->getFormKey()?>">
+              <span><?= $block->escapeHtmlAttr(__('Ticket create')) ?></span>
+              <div class="admin__field">
+                 <div class="admin__field-control required">
+                  <label class="label" for="title"><span><?= $block->escapeHtmlAttr(__('Subject')) ?></span></label>
+                     <div class="admin__field-control">
+                     <?php $subjectsList = $block->getSubjects();?>
+                     <?php if($subjectsList):?>
+                     <select class="admin__control-select" name="subject">
+                         <?php foreach($subjectsList as $subjects):?>
+                          <option value="<?=/* @noEscape */ $subjects['english']?>"><?=/* @noEscape */ $subjects['english']?></option>   
+                         <?php endforeach;?>   
+                     </select>
+                     <?php else:?>
+                     <input type="text" name="subject">   
+                     <?php endif;?>   
+                     </div>
+                   </div>
+              </div>
+              <div class="admin__field">
+                 <div class="admin__field-control required">
+                  <label class="label" for="title"><span><?= $block->escapeHtmlAttr(__('Status')) ?></span></label>
+                     <div class="admin__field-control">
+                     <?php $statusList = $block->getStatus();?>
+                     <select class="admin__control-select" name="status_id">
+                         <?php foreach($statusList as $status):?>
+                          <option value="<?=/* @noEscape */ $status->getStatusId()?>"><?=/* @noEscape */ $status->getName()?></option>   
+                         <?php endforeach;?>   
+                     </select>   
+                     </div>
+                   </div>
+              </div>
+              <div class="admin__field">
+                 <div class="admin__field-control required">
+                  <label class="label" for="title"><span><?= $block->escapeHtmlAttr(__('Priority')) ?></span></label>
+                     <div class="admin__field-control">
+                     <?php $priorityList = $block->getPriority();?>
+                     <select class="admin__control-select" name="priority_id">
+                         <?php foreach($priorityList as $priority):?>
+                          <option value="<?=/* @noEscape */ $priority->getPriorityId()?>"><?=/* @noEscape */ $priority->getName()?></option>   
+                         <?php endforeach;?>   
+                     </select>   
+                     </div>
+                   </div>
+              </div>
+              <div class="admin__field">
+                 <div class="admin__field-control required">
+                  <label class="label" for="title"><span><?= $block->escapeHtmlAttr(__('Assignee')) ?></span></label>
+                     <div class="admin__field-control">
+                     <?php $assigneeList = $block->getAssignee();?>
+                     <select class="admin__control-select" name="owner">
+                         <?php foreach($assigneeList as $assigneekey=>$assignee):?>
+                          <option value="<?=/* @noEscape */ $assigneekey?>"><?=/* @noEscape */ $assignee?></option>   
+                         <?php endforeach;?>   
+                     </select>   
+                     </div>
+                   </div>
+              </div>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" class="action-default primary" title="Save"><span><?= $block->
+                        escapeHtmlAttr(__('Save')) ?></span></button>
+                </div>
+            </div>
+        </form>
+</div>

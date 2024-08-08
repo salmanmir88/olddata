@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBase
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="DeleteCatPriceRuleActionGroup">
+        <arguments>
+            <argument name="searchInput" type="string"/>
+        </arguments>
+        <amOnPage url="{{CatalogRulePage.url}}"
+                  stepKey="navigateToCatPriceRuleGridPage1"/>
+        <fillField stepKey="fillIdentifier"
+                   selector="{{searchInput}}"
+                   userInput="{{ruleInformation.name}}"/>
+        <click stepKey="searchForName" selector="{{AdminSecondaryGridSection.searchButton}}"/>
+        <click stepKey="clickResult" selector="{{AdminSecondaryGridSection.firstRow}}"/>
+        <waitForPageLoad stepKey="waitForTaxRateLoad"/>
+        <click stepKey="clickDelete" selector="{{AdminStoresMainActionsSection.deleteButton}}"/>
+        <click stepKey="clickOk" selector="{{AdminConfirmationModalSection.ok}}"/>
+        <see stepKey="seeSuccess"
+             selector="{{AdminCategoryMessagesSection.SuccessMessage}}"
+             userInput="deleted"/>
+    </actionGroup>
+
+</actionGroups>

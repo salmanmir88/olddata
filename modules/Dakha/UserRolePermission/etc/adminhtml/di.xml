@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<plugin name="Dakha_UserRolePermission_Plugin_Backend_Magento_Sales_Model_ResourceModel_Order_CollectionFactory" type="Dakha\UserRolePermission\Plugin\Backend\Magento\Sales\Model\ResourceModel\Order\CollectionFactory" sortOrder="10" disabled="false"/>
+	</type>
+</config>

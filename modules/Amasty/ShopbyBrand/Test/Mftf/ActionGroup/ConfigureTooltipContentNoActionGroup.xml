@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureTooltipContentNoActionGroup" extends="ConfigureTooltipBrandLogoActionGroup">
+        <arguments>
+            <argument name="brandLogoTooltip1"/>
+        </arguments>
+        <remove keyForRemoval="setDisplayTooltip2"/>
+    </actionGroup>
+
+</actionGroups>

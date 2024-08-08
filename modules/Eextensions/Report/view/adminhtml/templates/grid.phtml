@@ -1,0 +1,222 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php 
+	$moduleName = $this->getRequest()->getModuleName();
+	$controller = $this->getRequest()->getControllerName();
+	$action     = $this->getRequest()->getActionName();
+	
+	$actionPath = $moduleName.'_'.$controller.'_'.$action;
+?>
+<?php
+/** @var $block \Magento\Reports\Block\Adminhtml\Grid */
+?>
+<style>
+.admin__data-grid-export{
+	width: 25%;
+	display: inline-block;
+	margin-top: 40px;
+	float: right;
+}
+.admin__data-grid-export label,
+.admin__data-grid-export select,
+.admin__data-grid-export button{
+	float:left;
+}
+.field-row.admin__field.field.admin__control-filter {
+	margin-bottom: 30px;
+	margin-top: 15px;
+}
+</style>
+<?php if ($block->getCollection()) : ?>
+    <?php if ($block->canDisplayContainer()) : ?>
+    <div id="<?= $block->escapeHtmlAttr($block->getId()) ?>">
+        <?php else : ?>
+            <?= $block->getLayout()->getMessagesBlock()->getGroupedHtml() ?>
+        <?php endif; ?>
+        <?php if ($block->getStoreSwitcherVisibility() || $block->getDateFilterVisibility()) : ?>
+            <div class="admin__data-grid-header admin__data-grid-toolbar">
+                <div class="admin__data-grid-header-row">
+                    <?php if ($block->getDateFilterVisibility()) : ?>
+                        <div class="admin__filter-actions" data-role="filter-form" id="<?= $block->escapeHtmlAttr($block->getSuffixId('period_date_range')) ?>">
+							<fieldset class="fieldset admin__fieldset" style="width: 470px;">
+								<span class="field-row">
+									<label for="<?= $block->escapeHtmlAttr($block->getSuffixId('period_date_from')) ?>"
+										   class="admin__control-support-text">
+										<span><?= $block->escapeHtml(__('From')) ?>:</span>
+									</label>
+									<input class="input-text no-changes required-entry admin__control-text"
+										   type="text"
+										   id="<?= $block->escapeHtmlAttr($block->getSuffixId('period_date_from')) ?>"
+										   name="report_from"
+										   value="<?= $block->escapeHtmlAttr($block->getFilter('report_from')) ?>">
+									<span id="<?= $block->escapeHtmlAttr($block->getSuffixId('period_date_from_advice')) ?>"></span>
+								</span>
+
+								<span class="field-row">
+									<label for="<?= $block->escapeHtmlAttr($block->getSuffixId('period_date_to')) ?>"
+										   class="admin__control-support-text">
+										<span><?= $block->escapeHtml(__('To')) ?>:</span>
+									</label>
+									<input class="input-text no-changes required-entry admin__control-text"
+										   type="text"
+										   id="<?= $block->escapeHtmlAttr($block->getSuffixId('period_date_to')) ?>"
+										   name="report_to"
+										   value="<?= $block->escapeHtmlAttr($block->getFilter('report_to')) ?>"/>
+									<span id="<?= $block->escapeHtmlAttr($block->getSuffixId('period_date_to_advice')) ?>"></span>
+								</span>
+								
+						<?php 
+						
+							if($actionPath == 'reports_report_product_sold'){
+							
+								// pr($block->getPeriods());
+								// pr($block->getStatus()); 
+								// pr($block->getAllCategories());
+								// echo "Hello my module";
+						?>
+								
+								<div class="admin__field field field-report_type  with-note" data-ui-id="grid-filter-form-fieldset-element-form-field-report-type" style="margin-top:30px;">
+									<label class="label admin__field-label" for="<?= $block->escapeHtmlAttr($block->getSuffixId('order_status')) ?>" data-ui-id="grid-filter-form-fieldset-element-select-report-type-label"><span><?= $block->escapeHtml(__('Order Status')) ?>:</span></label>
+									<div class="admin__field-control control">
+										<select id="<?= $block->escapeHtmlAttr($block->getSuffixId('order_status')) ?>" name="order_status" class=" select admin__control-select" data-ui-id="grid-filter-form-fieldset-element-select-report-type">
+											<?php /* <option value="0"><?php echo __('Please Select Order Status'); ?></option> */ ?>
+											<?php foreach ($block->getStatus() as $_value => $_label) : ?>
+												<option value="<?= $block->escapeHtmlAttr($_value) ?>" <?php if ($block->getFilter('order_status') == $_value) : ?> selected<?php endif; ?>><?= $block->escapeHtml($_label) ?></option>
+											<?php endforeach; ?>
+										</select>
+										<div class="note admin__field-note" id="report_type-note"><?php echo __('Applies the Specified Status.'); ?></div>
+									</div>
+								</div>
+								
+								<div class="admin__field field field-report_type  with-note" data-ui-id="grid-filter-form-fieldset-element-form-field-report-type" style="margin-top:30px;">
+									<label class="label admin__field-label" for="<?= $block->escapeHtmlAttr($block->getSuffixId('order_category')) ?>" data-ui-id="grid-filter-form-fieldset-element-select-report-type-label"><span><?= $block->escapeHtml(__('Category')) ?>:</span></label>
+									<div class="admin__field-control control">
+										<select id="<?= $block->escapeHtmlAttr($block->getSuffixId('order_category')) ?>" name="order_category" class=" select admin__control-select" data-ui-id="grid-filter-form-fieldset-element-select-report-type" multiple>
+											<?php /* <option value="0"><?php echo __('Please Select Category'); ?></option> */ ?>
+											<?php foreach ($block->getAllCategories() as $_value => $_label) : ?>
+												<option value="<?= $block->escapeHtmlAttr($_value) ?>" <?php if ($block->getFilter('order_category') == $_value) : ?> selected<?php endif; ?>><?= $block->escapeHtml($_label) ?></option>
+											<?php endforeach; ?>
+										</select>
+										<div class="note admin__field-note" id="report_type-note"><?php echo __('Select the Specified Category.'); ?></div>
+									</div>
+								</div>
+								
+						<?php } ?>
+								
+								<div class="field-row admin__field field  admin__control-filter" style="margin-bottom:30px;">
+									 <label for="<?= $block->escapeHtmlAttr($block->getSuffixId('report_period')) ?>"
+											class="admin__control-support-text label admin__field-label">
+										 <span><?= $block->escapeHtml(__('Show By')) ?>:</span>
+									 </label>
+									 <div class="admin__field-control control">
+										<select name="report_period" id="<?= $block->escapeHtmlAttr($block->getSuffixId('report_period')) ?>" class="admin__control-select">
+											<?php foreach ($block->getPeriods() as $_value => $_label) : ?>
+												<option value="<?= $block->escapeHtmlAttr($_value) ?>" <?php if ($block->getFilter('report_period') == $_value) : ?> selected<?php endif; ?>><?= $block->escapeHtml($_label) ?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+								</div>
+								<?= $block->getRefreshButtonHtml() ?>
+								<script>
+									require([
+										"jquery",
+										"mage/calendar"
+									], function($){
+
+										$("#<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('period_date_range'))) ?>").dateRange({
+											dateFormat:"<?= $block->escapeJs($block->escapeHtml($block->getDateFormat())) ?>",
+											buttonText:"<?= $block->escapeJs($block->escapeHtml(__('Select Date'))) ?>",
+											from:{
+												id:"<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('period_date_from'))) ?>"
+											},
+											to:{
+												id:"<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('period_date_to'))) ?>"
+											}
+										});
+									});
+								</script>
+							</fieldset>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($block->getChildBlock('grid.export')) : ?>
+                        <?= $block->getChildHtml('grid.export') ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+        <div class="admin__data-grid-wrap admin__data-grid-wrap-static">
+            <table class="data-grid" id="<?= $block->escapeHtmlAttr($block->getId()) ?>_table">
+                <?= $block->getChildHtml('grid.columnSet') ?>
+            </table>
+        </div>
+    </div>
+    <?php if ($block->canDisplayContainer()) : ?>
+        <script>
+            require([
+                "jquery",
+                "validation",
+                "mage/mage",
+                "mage/adminhtml/grid"
+            ], function(jQuery){
+
+                //<![CDATA[
+                <?= $block->escapeJs($block->escapeHtml($block->getJsObjectName())) ?> = new varienGrid('<?= $block->escapeJs($block->escapeHtml($block->getId())) ?>', '<?= $block->escapeJs($block->escapeUrl($block->getGridUrl())) ?>', '<?= $block->escapeJs($block->escapeHtml($block->getVarNamePage())) ?>', '<?= $block->escapeJs($block->escapeHtml($block->getVarNameSort())) ?>', '<?= $block->escapeJs($block->escapeHtml($block->getVarNameDir())) ?>', '<?= $block->escapeJs($block->escapeHtml($block->getVarNameFilter())) ?>');
+                <?= $block->escapeJs($block->escapeHtml($block->getJsObjectName())) ?>.useAjax = '<?php if ($block->getUseAjax()) :
+                        echo $block->escapeJs($block->escapeHtml($block->getUseAjax()));
+                    endif; ?>';
+                <?php if ($block->getDateFilterVisibility()) : ?>
+                    <?= $block->escapeJs($block->escapeHtml($block->getJsObjectName())) ?>.doFilterCallback = validateFilterDate;
+                    var period_date_from = $('<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('period_date_from'))) ?>');
+                    var period_date_to = $('<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('period_date_to'))) ?>');
+                    period_date_from.adviceContainer = $('<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('period_date_from_advice'))) ?>');
+                    period_date_to.adviceContainer = $('<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('period_date_to_advice'))) ?>');
+
+                    var validateFilterDate = function() {
+                        if (period_date_from && period_date_to) {
+                            var valid = true;
+                            jQuery(period_date_from).add(period_date_to).each(function() {
+                                valid = Validation.validate(this) && valid;
+                            });
+                            return valid;
+                        }
+                        else {
+                            return true;
+                        }
+                    }
+                <?php endif;?>
+                <?php if ($block->getStoreSwitcherVisibility()) : ?>
+                /* Overwrite function from switcher.phtml widget*/
+                switchStore = function(obj) {
+                    if (obj.options[obj.selectedIndex].getAttribute('website') == 'true') {
+                        var selectionType = 'website';
+                    } else if (obj.options[obj.selectedIndex].getAttribute('group') == 'true') {
+                        var selectionType = 'group';
+                    } else {
+                        var selectionType = 'store';
+                    }
+                    var storeParam = obj.value ? selectionType + '/' + obj.value + '/' : '';
+                    if (obj.switchParams) {
+                        storeParam += obj.switchParams;
+                    }
+                    var formParam = new Array('<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('period_date_from'))) ?>', '<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('period_date_to'))) ?>', '<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('order_status'))) ?>', '<?= $block->escapeJs($block->escapeHtml($block->getSuffixId('report_period'))) ?>');
+                    var paramURL = '';
+                    var switchURL = '<?= $block->escapeUrl($block->getAbsoluteGridUrl(['_current' => false])) ?>'.replace(/(store|group|website)\/\d+\//, '');
+
+                    for (var i = 0; i < formParam.length; i++) {
+                        if ($(formParam[i]).value && $(formParam[i]).name) {
+                            paramURL += $(formParam[i]).name + '=' + escape($(formParam[i]).value) + '&';
+                        }
+                    }
+                    setLocation(switchURL + storeParam + '?' + paramURL);
+                }
+                <?php endif; ?>
+                //]]>
+
+            });
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

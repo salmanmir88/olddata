@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureAllBrandsPageSearchQuantityEmptyBrandsActionGroup">
+        <arguments>
+            <argument name="elementsAllBrandsPage1"/>
+        </arguments>
+        <amOnPage url="{{AdminIlnBrandsSettingsPage.url}}" stepKey="navigateToILNBrandsSettingsPage1"/>
+        <conditionalClick stepKey="expandAllBrandsPageSettingsTab1"
+                          selector="{{AdminILNBrandsSettingsSection.AllBrandsPageSettingsTab}}"
+                          dependentSelector="{{AdminILNBrandsSettingsSection.AllBrandsPageWidgetCode}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.EnableSearchSwitcher}}"
+                      userInput="{{elementsAllBrandsPage1.EnableSearchSwitcher}}"
+                      stepKey="setEnableSearch1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.EnableFilterCharacterSwitcher}}"
+                      userInput="{{elementsAllBrandsPage1.EnableFilterCharacterSwitcher}}"
+                      stepKey="setEnableFilterCharacter1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.ShowProductsQuantitySwitcher}}"
+                      userInput="{{elementsAllBrandsPage1.ShowProductsQuantitySwitcher}}"
+                      stepKey="setShowProductsQuantity1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.ShowBrandsWithoutProductsSwitcher}}"
+                      userInput="{{elementsAllBrandsPage1.ShowBrandsWithoutProductsSwitcher}}"
+                      stepKey="setShowBrandsWithoutProducts1"/>
+        <click selector="{{AdminILNBrandsSettingsSection.Save}}" stepKey="clickSaveConfig1"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>

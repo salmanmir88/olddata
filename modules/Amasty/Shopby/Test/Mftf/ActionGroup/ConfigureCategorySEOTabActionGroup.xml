@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureCategorySEOTabActionGroup">
+        <arguments>
+            <argument name="Category"/>
+        </arguments>
+        <amOnPage url="{{AdminMagentoCategoryPage.url(Category.CategoryID)}}" stepKey="OpenCategoryPage1"/>
+        <conditionalClick stepKey="ExpandSearchEngineOptimizationTab1"
+                          selector="{{CategoriesSection.CategorySettingsTab('Search Engine Optimization')}}"
+                          dependentSelector="{{CategoriesSection.CatMetaTitle}}"
+                          visible="false"/>
+        <fillField selector="{{CategoriesSection.CatMetaTitle}}"
+                   userInput="{{Category.CatMetaTitle}}"
+                   stepKey="SetMetaTitle3"/>
+        <waitForElement selector="{{CategoriesSection.MetaKeywords}}" stepKey="waitForElement2"/>
+        <fillField selector="{{CategoriesSection.MetaKeywords}}"
+                   userInput="{{Category.MetaKeywords}}"
+                   stepKey="SetMetaKeywords3"/>
+        <fillField selector="{{CategoriesSection.MetaDescription}}"
+                   userInput="{{Category.MetaDescription}}"
+                   stepKey="SetMetaDescription3"/>
+        <click selector="{{CategoriesSection.Save}}" stepKey="clickSaveCategories3"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache3"/>
+    </actionGroup>
+
+</actionGroups>
+
+

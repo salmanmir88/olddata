@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+        <referenceBlock name="footer_links">
+                <block class="Magento\Framework\View\Element\Html\Link\Current"
+                       name="2custom-link"
+                       ifconfig="google_sitemap/html_settings/sitemap_link_to_footer">
+                    <arguments>
+                        <argument name="label" xsi:type="string">Sitemap</argument>
+                        <argument name="path" xsi:type="string">google_sitemap/htmlsitemap</argument>
+                    </arguments>
+                </block>
+        </referenceBlock>
+</page>

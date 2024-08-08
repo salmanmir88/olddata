@@ -1,0 +1,26 @@
+{
+    "name": "saee/shipment-method",
+    "description": "Shipment Method for Saee Courier Services",
+    "type": "magento2-module",
+    "minimum-stability": "stable",
+    "version": "2.3.1",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "waqas",
+            "email": "waqas@swift-logix.com"
+        }
+    ],
+    "require": {
+        "ext-json": "*",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Saee\\ShipmentMethod\\": ""
+        }
+    }
+}

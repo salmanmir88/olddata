@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbySeo
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="SeoSettingsConfigurationActionGroup" extends="ConfigureSeoAndSuffixActionGroup">
+        <arguments>
+            <argument name="seoScenario2"/>
+        </arguments>
+        <amOnPage url="{{AdminILNSeoSettingsPage.url}}" stepKey="navigateToSeoSettingsPage1"/>
+        <selectOption selector="{{AdminILNSeoSettingsSection.IncludeAttrNameSwitcher}}"
+                      userInput="{{seoScenario2.IncludeAttrNameSwitcher}}"
+                      stepKey="enableAttributeName1"/>
+        <fillField userInput="{{seoScenario2.FilterKeyField}}" selector="{{AdminILNSeoSettingsSection.FilterKeyField}}"
+                   stepKey="setFilterKey1"/>
+        <selectOption selector="{{AdminILNSeoSettingsSection.AddSuffixSwitcher}}"
+                      userInput="{{seoScenario2.AddSuffixSwitcher}}"
+                      stepKey="enableSuffix1"/>
+        <selectOption selector="{{AdminILNSeoSettingsSection.ReplaceSpecChar}}"
+                      userInput="{{seoScenario2.ReplaceSpecChar}}"
+                      stepKey="setSpecialCharacter1"/>
+        <selectOption selector="{{AdminILNSeoSettingsSection.SeparateAttrOpt}}"
+                      userInput="{{seoScenario2.SeparateAttrOpt}}"
+                      stepKey="setSeparateAttributeOption1"/>
+        <wait time="2" stepKey="waitSeconds1"/>
+        <conditionalClick stepKey="111dfsd"
+                          selector="{{AdminILNSeoSettingsSection.AttentionPopupOKButton}}"
+                          dependentSelector="{{AdminILNSeoSettingsSection.AttentionTitleOnPopup}}"
+                          visible="true"/>
+        <wait time="2" stepKey="waitSeconds2"/>
+        <click selector="{{AdminILNSeoSettingsSection.Save}}" stepKey="clickSaveConfig3"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache2"/>
+    </actionGroup>
+
+</actionGroups>

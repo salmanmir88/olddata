@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyPage
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="DeleteCustomPageActionGroup">
+        <grabCookie userInput="setCustomPageIDInCookie" stepKey="grabCookie1"/>
+        <amOnPage url="{{AdminCustomPagesProfilePage.url('edit/id',{$grabCookie1}/)}}"
+                  stepKey="navigateToCustomPageProfilePage2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad2"/>
+        <waitForElement selector="{{CustomPageProfileSection.DeleteButton}}" stepKey="waitForElement3"/>
+        <click selector="{{CustomPageProfileSection.DeleteButton}}" stepKey="clickOnDeleteButton1"/>
+        <waitForElement selector="{{CustomPageProfileSection.OkButton('4')}}" stepKey="waitForElement4"/>
+        <wait time="2" stepKey="wait1"/>
+        <pressKey selector="{{CustomPageProfileSection.OkButton('4')}}"
+                  parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressEnter"/>
+        <waitForPageLoad time="25" stepKey="waitForPageLoad"/>
+    </actionGroup>
+
+</actionGroups>

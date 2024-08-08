@@ -1,0 +1,777 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  Apptrian
+ * @package   Apptrian_FacebookPixel
+ * @author    Apptrian
+ * @copyright Copyright (c) Apptrian (http://www.apptrian.com)
+ * @license   http://www.apptrian.com/license Proprietary Software License EULA
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="apptrian_extensions" translate="label" sortOrder="1000000">
+            <label>Apptrian Extensions</label>
+        </tab>
+        <section id="apptrian_facebookpixel" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Facebook Pixel and Conversions API</label>
+            <tab>apptrian_extensions</tab>
+            <resource>Apptrian_FacebookPixel::config_system</resource>
+            <group id="about" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>About</label>
+                <frontend_model>Apptrian\FacebookPixel\Block\Adminhtml\About</frontend_model>
+            </group>
+            <group id="client" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Facebook Pixel (Client-Side Settings)</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <comment>Enables or disables Facebook Pixel.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="pixel_id" translate="label comment tooltip" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Facebook Pixel ID</label>
+                    <comment><![CDATA[Your Facebook Pixel ID or comma-separated IDs. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[You can use multiple pixels and they will track the same information. There is no limit on the number of IDs. However, Facebook does not recommend using multiple pixels on the same page.<br /><strong>"Using the track function on pages that have multiple pixels initialized (either using multiple base codes or even combining it within one base code) could produce over-firing or unexpected behavior and should be applied only in specific situations."</strong>]]></tooltip>
+                    <validate>required-entry validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\PixelId</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="page_handles" translate="label comment tooltip" type="textarea" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add Facebook Pixel To</label>
+                    <comment>Type page handles (full action names) where you want Facebook Pixel.</comment>
+                    <tooltip><![CDATA[The page handles - Synonyms of the page type identifiers. Correspond to "full action names" of controller actions, for example, catalog_product_view<br />In this option you would type all handles where you want Facebook Pixel to appear.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Handles</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="base_code_enabled" translate="label comment tooltip" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Facebook Pixel Base Code</label>
+                    <comment><![CDATA[Enable Facebook Pixel base code. <strong>WARNING! See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables Facebook Pixel base code. The base code is required for Facebook Pixel to function. If you want to use Facebook Conversions API only, you may disable it.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="noscript_enabled" translate="label comment tooltip" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable noscript Tag</label>
+                    <comment><![CDATA[Enable noscript tag. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables noscript tag. The noscript tag defines an alternate content to be displayed to users that have disabled scripts in their browser or have a browser that does not support scripts. There is no need for noscript tag because Magento requires scripts to function.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="addtocart_enabled" translate="label comment tooltip" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable AddToCart Event</label>
+                    <comment><![CDATA[Enable AddToCart event on client-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the client-side firing of the event. This is done with JavaScript in your visitor/customer web browser by the Facebook Pixel.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="addtowishlist_enabled" translate="label comment tooltip" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable AddToWishlist Event</label>
+                    <comment><![CDATA[Enable AddToWishlist event on client-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the client-side firing of the event. This is done with JavaScript in your visitor/customer web browser by the Facebook Pixel.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="completeregistration_enabled" translate="label comment tooltip" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable CompleteRegistration Event</label>
+                    <comment><![CDATA[Enable CompleteRegistration event on client-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the client-side firing of the event. This is done with JavaScript in your visitor/customer web browser by the Facebook Pixel.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="initiatecheckout_enabled" translate="label comment tooltip" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable InitiateCheckout Event</label>
+                    <comment><![CDATA[Enable InitiateCheckout event on client-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the client-side firing of the event. This is done with JavaScript in your visitor/customer web browser by the Facebook Pixel.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="pageview_enabled" translate="label comment tooltip" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable PageView Event</label>
+                    <comment><![CDATA[Enable PageView event on client-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the client-side firing of the event. This is done with JavaScript in your visitor/customer web browser by the Facebook Pixel.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="pageview_all" translate="label comment tooltip" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Fire PageView With All Events</label>
+                    <comment><![CDATA[Fire PageView event with all other events. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option will fire PageView event with all other events: CompleteRegistration, InitiateCheckout, Purchase, Search, and ViewContent.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="purchase_enabled" translate="label comment tooltip" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Purchase Event</label>
+                    <comment><![CDATA[Enable Purchase event on client-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the client-side firing of the event. This is done with JavaScript in your visitor/customer web browser by the Facebook Pixel.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="search_enabled" translate="label comment tooltip" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Search Event</label>
+                    <comment><![CDATA[Enable Search event on client-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the client-side firing of the event. This is done with JavaScript in your visitor/customer web browser by the Facebook Pixel.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="viewcontent_enabled" translate="label comment tooltip" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable ViewContent Event</label>
+                    <comment><![CDATA[Enable ViewContent event on client-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the client-side firing of the event. This is done with JavaScript in your visitor/customer web browser by the Facebook Pixel.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="move_params_outside_contents" translate="label comment tooltip" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Move Parameters Outside Contents</label>
+                    <comment><![CDATA[Move disallowed parameters outside contents. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[<strong>This option should be set to "Yes".</strong> Facebook Conversions API does not allow any other parameter inside <strong>contents</strong> except for <strong>id</strong>, <strong>quantity</strong>, and <strong>item_price</strong>. If the <strong>contents</strong> have only one element this option will try to move disallowed parameters outside <strong>contents</strong>. If the <strong>contents</strong> have more than one element then disallowed parameters will be removed from the <strong>contents</strong>.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="detect_selected_sku" translate="label comment tooltip" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Detect Selected SKU</label>
+                    <comment><![CDATA[Try to detect selected SKU for downloadable, simple, virtual, etc. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[This feature is heavily dependent on the theme you are using and its customization. It is impossible to predict all possible themes and customizations. Because of this detection will not work on every theme. This is why extension default configuration comes with this feature turned off. You can turn it on, try it out if it is working for you and if it does leave it on, otherwise turn it off. If you are a developer you will be pleased to know that everything is conveniently located in <strong>code.phtml</strong> file. To make it work, in some cases only the adjustment of few jQuery selectors is needed in others complete rewrite of detection code is needed. Because of this, <strong>we do not give any warranty for the detection feature, nor it is covered by our support service</strong>.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="detect_selected_sku_bundle" translate="label comment tooltip" type="select" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Detect Selected SKUs (Bundle)</label>
+                    <comment><![CDATA[Try to detect selected SKUs for bundle products. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[This feature is heavily dependent on the theme you are using and its customization. It is impossible to predict all possible themes and customizations. Because of this detection will not work on every theme. This is why extension default configuration comes with this feature turned off. You can turn it on, try it out if it is working for you and if it does leave it on, otherwise turn it off. If you are a developer you will be pleased to know that everything is conveniently located in <strong>code.phtml</strong> file. To make it work, in some cases only the adjustment of few jQuery selectors is needed in others complete rewrite of detection code is needed. Because of this, <strong>we do not give any warranty for the detection feature, nor it is covered by our support service</strong>.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="detect_selected_sku_configurable" translate="label comment tooltip" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Detect Selected SKU (Configurable)</label>
+                    <comment><![CDATA[Try to detect selected SKU for configurable products. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[This feature is heavily dependent on the theme you are using and its customization. It is impossible to predict all possible themes and customizations. Because of this detection will not work on every theme. This is why extension default configuration comes with this feature turned off. You can turn it on, try it out if it is working for you and if it does leave it on, otherwise turn it off. If you are a developer you will be pleased to know that everything is conveniently located in <strong>code.phtml</strong> file. To make it work, in some cases only the adjustment of few jQuery selectors is needed in others complete rewrite of detection code is needed. Because of this, <strong>we do not give any warranty for the detection feature, nor it is covered by our support service</strong>.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="detect_selected_sku_grouped" translate="label comment tooltip" type="select" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Detect Selected SKUs (Grouped)</label>
+                    <comment><![CDATA[Try to detect selected SKUs for grouped products. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[This feature is heavily dependent on the theme you are using and its customization. It is impossible to predict all possible themes and customizations. Because of this detection will not work on every theme. This is why extension default configuration comes with this feature turned off. You can turn it on, try it out if it is working for you and if it does leave it on, otherwise turn it off. If you are a developer you will be pleased to know that everything is conveniently located in <strong>code.phtml</strong> file. To make it work, in some cases only the adjustment of few jQuery selectors is needed in others complete rewrite of detection code is needed. Because of this, <strong>we do not give any warranty for the detection feature, nor it is covered by our support service</strong>.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="server" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Facebook Conversions API (Server-Side Settings)</label>
+                <field id="enabled" translate="label comment tooltip" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Facebook Conversions API</label>
+                    <comment><![CDATA[Enables or disables Facebook Conversions API. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[Facebook Conversions API will not work without valid Access Token and API Version.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="access_token" translate="label comment tooltip" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Facebook Access Token</label>
+                    <comment><![CDATA[Your Facebook Access Token. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[Facebook Conversions API will not work without a valid Access Token.]]></tooltip>
+                    <validate>required-entry validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\AccessToken</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="api_version" translate="label comment tooltip" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Facebook API Version</label>
+                    <comment><![CDATA[Your Facebook API Version. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[Facebook Conversions API will not work without a valid API Version.]]></tooltip>
+                    <validate>required-entry validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\ApiVersion</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="test_event_code" translate="label comment tooltip" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Test Event Code</label>
+                    <comment><![CDATA[Your <strong>test_event_code</strong> for testing events. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[<strong>WARNING! Leave this field empty! Only use it for testing purposes.</strong> Facebook Conversions API allows you to test your events. Be aware Facebook gives priority to Facebook Pixel (client-side) events. If both Facebook Pixel (client-side) and Facebook Conversions API (server-side) events are fired the latter will be disregarded (dropped). The test_event_code is useful if your Magento store is in production and you want to test server-side events without turning off Facebook Pixel (client-side) events. You can see test events in your Facebook Business Manager.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\TestCode</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="log_events" translate="label comment tooltip" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Log Events</label>
+                    <comment><![CDATA[Enable logging of events. <strong>WARNING! See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[<strong>WARNING! Leave this option disabled! Only enable it for debugging purposes.</strong>]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="firing_mode" translate="label comment tooltip" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Event Firing Mode</label>
+                    <comment><![CDATA[Select event firing mode. <strong>WARNING! See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[<strong>Mode 1</strong><br />Events fire via AJAX calls. In this mode, you can fire both the Facebook Pixel event and Facebook Conversions API event simultaneously.<br /><strong>Mode 2 (API Only)</strong><br />Events fire from the server without going to the web browser. In this mode, you cannot send both Facebook Pixel and Facebook Conversions API events simultaneously. If a particular Facebook Conversions API event is enabled, the corresponding Facebook Pixel event is automatically disabled to avoid duplication.]]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\FiringMode</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="addtocart_enabled" translate="label comment tooltip" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable AddToCart Event</label>
+                    <comment><![CDATA[Enable AddToCart event on server-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the server-side firing of the event. This is done with PHP on your server by the Facebook Conversions API.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="addtowishlist_enabled" translate="label comment tooltip" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable AddToWishlist Event</label>
+                    <comment><![CDATA[Enable AddToWishlist event on server-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the server-side firing of the event. This is done with PHP on your server by the Facebook Conversions API.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="completeregistration_enabled" translate="label comment tooltip" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable CompleteRegistration Event</label>
+                    <comment><![CDATA[Enable CompleteRegistration event on server-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the server-side firing of the event. This is done with PHP on your server by the Facebook Conversions API.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="initiatecheckout_enabled" translate="label comment tooltip" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable InitiateCheckout Event</label>
+                    <comment><![CDATA[Enable InitiateCheckout event on server-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the server-side firing of the event. This is done with PHP on your server by the Facebook Conversions API.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="pageview_enabled" translate="label comment tooltip" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable PageView Event</label>
+                    <comment><![CDATA[Enable PageView event on server-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the server-side firing of the event. This is done with PHP on your server by the Facebook Conversions API.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="pageview_all" translate="label comment tooltip" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Fire PageView With All Events</label>
+                    <comment><![CDATA[Fire PageView event with all other events. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option will fire PageView event with all other events: CompleteRegistration, InitiateCheckout, Purchase, Search, and ViewContent.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="purchase_enabled" translate="label comment tooltip" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Purchase Event</label>
+                    <comment><![CDATA[Enable Purchase event on server-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the server-side firing of the event. This is done with PHP on your server by the Facebook Conversions API.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="search_enabled" translate="label comment tooltip" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Search Event</label>
+                    <comment><![CDATA[Enable Search event on server-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the server-side firing of the event. This is done with PHP on your server by the Facebook Conversions API.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="viewcontent_enabled" translate="label comment tooltip" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable ViewContent Event</label>
+                    <comment><![CDATA[Enable ViewContent event on server-side. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option enables the server-side firing of the event. This is done with PHP on your server by the Facebook Conversions API.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="move_params_outside_contents" translate="label comment tooltip" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Move Parameters Outside Contents</label>
+                    <comment><![CDATA[Move disallowed parameters outside contents. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[<strong>This option must be set to "Yes".</strong> Facebook Conversions API does not allow any other parameter inside <strong>contents</strong> except for <strong>id</strong>, <strong>quantity</strong>, and <strong>item_price</strong>. If the <strong>contents</strong> have only one element this option will try to move disallowed parameters outside <strong>contents</strong>. If the <strong>contents</strong> have more than one element then disallowed parameters will be removed from the <strong>contents</strong>.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="detect_selected_sku" translate="label comment tooltip" type="select" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Detect Selected SKU</label>
+                    <comment><![CDATA[Try to detect selected SKU for downloadable, simple, virtual, etc. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[Unlike client-side detection server-side detection is not dependent on a theme and its customization. It is more reliable and precise.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="detect_selected_sku_bundle" translate="label comment tooltip" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Detect Selected SKUs (Bundle)</label>
+                    <comment><![CDATA[Try to detect selected SKUs for bundle products. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[Unlike client-side detection server-side detection is not dependent on a theme and its customization. It is more reliable and precise.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="detect_selected_sku_configurable" translate="label comment tooltip" type="select" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Detect Selected SKU (Configurable)</label>
+                    <comment><![CDATA[Try to detect selected SKU for configurable products. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[Unlike client-side detection server-side detection is not dependent on a theme and its customization. It is more reliable and precise.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="detect_selected_sku_grouped" translate="label comment tooltip" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Detect Selected SKUs (Grouped)</label>
+                    <comment><![CDATA[Try to detect selected SKUs for grouped products. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[Unlike client-side detection server-side detection is not dependent on a theme and its customization. It is more reliable and precise.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="category" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Category (Category Page)</label>
+                <field id="page_handles" translate="label comment tooltip" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add Category-Related Code To</label>
+                    <comment><![CDATA[Type page handles (full action names) where you want category-related code. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[The page handles - Synonyms of the page type identifiers. Correspond to "full action names" of controller actions, for example, catalog_category_view<br />In this option you would type all handles where you want to add category-related code.<br /><strong>This option only works for category page handles where category object is set.</strong>]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Handles</backend_model>
+                </field>
+                <field id="event_name" translate="label comment tooltip" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Event Name</label>
+                    <comment><![CDATA[Type <strong>event name</strong> you want to use for category tracking. See the tooltip.]]></comment>
+                    <tooltip><![CDATA[The proper event should be <strong>ViewCategory</strong> but Facebook specification does not have this (yet) as standard event. You can use <strong>ViewContent</strong>. Leave this option to empty if you want only <strong>PageView</strong> event on category pages. Recommendation is to set this option to empty or use <strong>ViewCategory</strong> as custom event.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\EventName</backend_model>
+                </field>
+                <field id="mapping" translate="label comment tooltip" type="textarea" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category Parameters to Attributes Mapping</label>
+                    <comment>If you want to add custom parameters to categories. Please see the tooltip.</comment>
+                    <tooltip><![CDATA[Example: gpc=gpc|color=color<br />As you can see the format is simple<br /><strong>param1=attribute1|param2=attribute2</strong><br /> Facebook Pixel parameter and Magento category attribute are connected by = sign and pairs are separated by | sign.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Mapping</backend_model>
+                </field>
+            </group>
+            <group id="product" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Product (Product Page - AddToCart, AddToWishlist, ViewContent Events)</label>
+                <field id="page_handles" translate="label comment tooltip" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add Product-Related Code To</label>
+                    <comment><![CDATA[Type page handles (full action names) where you want product-related code. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[The page handles - Synonyms of the page type identifiers. Correspond to "full action names" of controller actions, for example, catalog_product_view<br />In this option you would type all handles where you want to add product-related code.<br /><strong>This option only works for product page handles where product object is set.</strong>]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Handles</backend_model>
+                </field>
+                <field id="ident_bundle" translate="label comment tooltip" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Bundle Products Use</label>
+                    <comment>Select SKU you want to use for bundle products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP', quantity: 1}<br />]<br /><br /><strong>Children SKUs</strong><br />contents: [<br />{id: 'SHBP-6-BL', quantity: 1},<br />{id: 'SHBP-7-BL', quantity: 1},<br />{id: 'SHBP-8-BL', quantity: 1}<br />]<br /><br /><strong>Children SKUs and Product SKU</strong><br />contents: [<br />{id: 'SHBP-6-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-8-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP']<br /><br /><strong>Children SKUs</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL']<br /><br /><strong>Children SKUs and Product SKU</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\IdentPlural</source_model>
+                </field>
+                <field id="content_type_bundle" translate="label comment tooltip" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use product_group Instead of product (Bundle)</label>
+                    <comment><![CDATA[For <strong>content_type</strong> use <strong>product_group</strong> instead of <strong>product</strong>. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[This option shoud be set to "No".<br />There is only one scenario when this option should be set to "Yes". That is when you select <strong>Product SKU</strong> for option <strong>For Bundle Products Use</strong>. Regarding <strong>content_type</strong> read this from Facebook documentation: "If the IDs being passed in <strong>content_ids</strong> or <strong>contents</strong> parameter are IDs of products then the value should be <strong>product</strong>. If product group IDs are being passed, then the value should be <strong>product_group</strong>."]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="ident_bundle">1</field>
+                    </depends>
+                </field>
+                <field id="ident_configurable" translate="label comment tooltip" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Configurable Products Use</label>
+                    <comment>Select SKU you want to use for configurable products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP', quantity: 1}<br />]<br /><br /><strong>Children SKUs</strong><br />contents: [<br />{id: 'SHBP-6-BL', quantity: 1},<br />{id: 'SHBP-7-BL', quantity: 1},<br />{id: 'SHBP-8-BL', quantity: 1}<br />]<br /><br /><strong>Children SKUs and Product SKU</strong><br />contents: [<br />{id: 'SHBP-6-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-8-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP']<br /><br /><strong>Children SKUs</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL']<br /><br /><strong>Children SKUs and Product SKU</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\IdentPlural</source_model>
+                </field>
+                <field id="content_type_configurable" translate="label comment tooltip" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use product_group Instead of product (Configurable)</label>
+                    <comment><![CDATA[For <strong>content_type</strong> use <strong>product_group</strong> instead of <strong>product</strong>. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[This option shoud be set to "No".<br />There is only one scenario when this option should be set to "Yes". That is when you select <strong>Product SKU</strong> for option <strong>For Configurable Products Use</strong>. Regarding <strong>content_type</strong> read this from Facebook documentation: "If the IDs being passed in <strong>content_ids</strong> or <strong>contents</strong> parameter are IDs of products then the value should be <strong>product</strong>. If product group IDs are being passed, then the value should be <strong>product_group</strong>."]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="ident_configurable">1</field>
+                    </depends>
+                </field>
+                <field id="ident_downloadable" translate="label comment tooltip" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Downloadable Products Use</label>
+                    <comment>Select SKU you want to use for downloadable products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Product SKU and Parent SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Product SKU and Parent SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\Ident</source_model>
+                </field>
+                <field id="ident_grouped" translate="label comment tooltip" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Grouped Products Use</label>
+                    <comment>Select SKU you want to use for grouped products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP', quantity: 1}<br />]<br /><br /><strong>Children SKUs</strong><br />contents: [<br />{id: 'SHBP-6-BL', quantity: 1},<br />{id: 'SHBP-7-BL', quantity: 1},<br />{id: 'SHBP-8-BL', quantity: 1}<br />]<br /><br /><strong>Children SKUs and Product SKU</strong><br />contents: [<br />{id: 'SHBP-6-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-8-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP']<br /><br /><strong>Children SKUs</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL']<br /><br /><strong>Children SKUs and Product SKU</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL'],<br />item_group_id: 'SHBP'<br /><br />The <strong>Product SKU</strong> option is not recommended because of the nature of grouped products in Magento. From Magento documentation: "Although they are presented as a group, each product in the group is purchased as a separate item. In the shopping cart, each item and the quantity purchased appears as a separate line item."]]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\IdentPluralGrouped</source_model>
+                </field>
+                <field id="content_type_grouped" translate="label comment tooltip" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use product_group Instead of product (Grouped)</label>
+                    <comment><![CDATA[For <strong>content_type</strong> use <strong>product_group</strong> instead of <strong>product</strong>. <strong>WARNING! See the tooltip!</strong>]]></comment>
+                    <tooltip><![CDATA[This option shoud be set to "No".<br />There is only one scenario when this option should be set to "Yes". That is when you select <strong>Product SKU</strong> for option <strong>For Grouped Products Use</strong>. Regarding <strong>content_type</strong> read this from Facebook documentation: "If the IDs being passed in <strong>content_ids</strong> or <strong>contents</strong> parameter are IDs of products then the value should be <strong>product</strong>. If product group IDs are being passed, then the value should be <strong>product_group</strong>."]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="ident_grouped">1</field>
+                    </depends>
+                </field>
+                <field id="ident_simple" translate="label comment tooltip" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Simple Products Use</label>
+                    <comment>Select SKU you want to use for simple products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Product SKU and Parent SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Product SKU and Parent SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\Ident</source_model>
+                </field>
+                <field id="ident_virtual" translate="label comment tooltip" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Virtual Products Use</label>
+                    <comment>Select SKU you want to use for virtual products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Product SKU and Parent SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Product SKU and Parent SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\Ident</source_model>
+                </field>
+                <field id="use_content_ids" translate="label comment tooltip" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use content_ids instead of contents</label>
+                    <comment><![CDATA[Use <strong>content_ids</strong> instead of <strong>contents</strong> for <strong>ViewContent</strong> event. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[It is recommended to set this option to "No". The <strong>contents</strong> parameter is required for <strong>AddToCart</strong> and <strong>Purchase</strong> events. The <strong>ViewContent</strong> event can use <strong>contents</strong> or <strong>content_ids</strong> parameter. It is better to use <strong>contents</strong> but you can use <strong>content_ids</strong> if you want.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="content_name" translate="label comment tooltip" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Global content_name Use</label>
+                    <comment><![CDATA[Type Magento <strong>product attribute</strong> code you want to use for product global <strong>content_name</strong> field.]]></comment>
+                    <tooltip><![CDATA[Example: name<br />Make sure all of your products have this attribute and all of your products have non-empty value for this attribute.<br />This option is for setting <strong>content_name</strong> outside <strong>contents</strong>. If you want to set <strong>content_name</strong> inside <strong>contents</strong> per each item then use <strong>Product Parameters to Attributes Mapping</strong> option and set this option to empty.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\ContentName</backend_model>
+                </field>
+                <field id="content_category" translate="label comment tooltip" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Global content_category Use</label>
+                    <comment><![CDATA[Type Magento <strong>product attribute</strong> code you want to use for product global <strong>content_category</strong> field.]]></comment>
+                    <tooltip><![CDATA[Example: product_category<br />Make sure all of your products have this attribute and all of your products have non-empty value for this attribute.<br />This option is for setting <strong>content_category</strong> outside <strong>contents</strong>. If you want to set <strong>content_category</strong> inside <strong>contents</strong> per each item then use <strong>Product Parameters to Attributes Mapping</strong> option and set this option to empty.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\ContentCategory</backend_model>
+                </field>
+                <field id="google_product_category" translate="label comment tooltip" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Global google_product_category Use</label>
+                    <comment><![CDATA[Type Magento <strong>product attribute</strong> code you want to use for product global <strong>google_product_category</strong> field.]]></comment>
+                    <tooltip><![CDATA[Example: google_product_category<br />Make sure all of your products have this attribute and all of your products have non-empty value for this attribute.<br />This option is for setting <strong>google_product_category</strong> outside <strong>contents</strong>. If you want to set <strong>google_product_category</strong> inside <strong>contents</strong> per each item then use <strong>Product Parameters to Attributes Mapping</strong> option and set this option to empty.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\GoogleProductCategory</backend_model>
+                </field>
+                <field id="mapping" translate="label comment tooltip" type="textarea" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Parameters to Attributes Mapping</label>
+                    <comment><![CDATA[If you want to add custom parameters to products. <strong>WARNING! Please see the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option depends on <strong>Move Parameters Outside Contents</strong> option. If this option is enabled the parameters will be moved outside contents or removed if contents have more than one item.<br />Example: gpc=gpc|color=color<br />As you can see the format is simple<br /><strong>param1=attribute1|param2=attribute2</strong><br /> Facebook Pixel parameter and Magento product attribute are connected by = sign and pairs are separated by | sign.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Mapping</backend_model>
+                </field>
+            </group>
+            <group id="quote" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Quote (Checkout Page - InitiateCheckout Event)</label>
+                <field id="page_handles" translate="label comment tooltip" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add Quote-Related Code To</label>
+                    <comment><![CDATA[Type page handles (full action names) where you want quote-related code. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[The page handles - Synonyms of the page type identifiers. Correspond to "full action names" of controller actions, for example, checkout_index_index<br />In this option you would type all handles where you want to add quote-related code.<br /><strong>This option only works for checkout page handles where quote object is set.</strong>]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Handles</backend_model>
+                </field>
+                <field id="ident_bundle" translate="label comment tooltip" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Bundle Products Use</label>
+                    <comment>Select SKU you want to use for bundle products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP', quantity: 1}<br />]<br /><br /><strong>Children SKUs</strong><br />contents: [<br />{id: 'SHBP-6-BL', quantity: 1},<br />{id: 'SHBP-7-BL', quantity: 1},<br />{id: 'SHBP-8-BL', quantity: 1}<br />]<br /><br /><strong>Children SKUs and Product SKU</strong><br />contents: [<br />{id: 'SHBP-6-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-8-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP']<br /><br /><strong>Children SKUs</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL']<br /><br /><strong>Children SKUs and Product SKU</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\IdentPlural</source_model>
+                </field>
+                <field id="ident_configurable" translate="label comment tooltip" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Configurable Products Use</label>
+                    <comment>Select SKU you want to use for configurable products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP', quantity: 1}<br />]<br /><br /><strong>Child SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Child SKU and Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP']<br /><br /><strong>Child SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Child SKU and Product SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\IdentSingular</source_model>
+                </field>
+                <field id="ident_downloadable" translate="label comment tooltip" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Downloadable Products Use</label>
+                    <comment>Select SKU you want to use for downloadable products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Product SKU and Parent SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Product SKU and Parent SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\Ident</source_model>
+                </field>
+                <field id="ident_grouped" translate="label comment tooltip" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Grouped Products Use</label>
+                    <comment>Select SKU you want to use for grouped products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Children SKUs</strong><br />contents: [<br />{id: 'SHBP-6-BL', quantity: 1},<br />{id: 'SHBP-7-BL', quantity: 1},<br />{id: 'SHBP-8-BL', quantity: 1}<br />]<br /><br /><strong>Children SKUs and Product SKU</strong><br />contents: [<br />{id: 'SHBP-6-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-8-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Children SKUs</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL']<br /><br /><strong>Children SKUs and Product SKU</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL'],<br />item_group_id: 'SHBP'<br /><br />There is no option for <strong>Product SKU</strong> and that is intentional. From Magento documentation: "Although they are presented as a group, each product in the group is purchased as a separate item. In the shopping cart, each item and the quantity purchased appears as a separate line item."]]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\IdentGrouped</source_model>
+                </field>
+                <field id="ident_simple" translate="label comment tooltip" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Simple Products Use</label>
+                    <comment>Select SKU you want to use for simple products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Product SKU and Parent SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Product SKU and Parent SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\Ident</source_model>
+                </field>
+                <field id="ident_virtual" translate="label comment tooltip" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Virtual Products Use</label>
+                    <comment>Select SKU you want to use for virtual products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Product SKU and Parent SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Product SKU and Parent SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\Ident</source_model>
+                </field>
+                <field id="quote_id_param" translate="label comment tooltip" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Magento Quote ID For Parameter</label>
+                    <comment><![CDATA[Type parameter name for which you want to use Magento quote ID. Example: <strong>quote_id</strong>]]></comment>
+                    <tooltip><![CDATA[Magento quote ID is internal database table auto increment ID.<br />Example: <strong>3275</strong><br /><br /><strong>If you do not want to use parameter for Magento quote ID leave this field empty.</strong>]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\QuoteId</backend_model>
+                </field>
+                <field id="mapping" translate="label comment tooltip" type="textarea" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Parameters to Attributes Mapping</label>
+                    <comment><![CDATA[If you want to add custom parameters to products. <strong>WARNING! Please see a tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option depends on <strong>Move Parameters Outside Contents</strong> option. If this option is enabled the parameters will be moved outside contents or removed if contents have more than one item.<br />Example: gpc=gpc|color=color<br />As you can see the format is simple<br /><strong>param1=attribute1|param2=attribute2</strong><br /> Facebook Pixel parameter and Magento product attribute are connected by = sign and pairs are separated by | sign.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Mapping</backend_model>
+                </field>
+            </group>
+            <group id="order" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Order (Checkout Success Page - Purchase Event)</label>
+                <field id="page_handles" translate="label comment tooltip" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add Order-Related Code To</label>
+                    <comment><![CDATA[Type page handles (full action names) where you want order-related code. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[The page handles - Synonyms of the page type identifiers. Correspond to "full action names" of controller actions, for example, checkout_onepage_success<br />In this option you would type all handles where you want to add order-related code.<br /><strong>This option only works for checkout success page handles where order object is set.</strong>]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Handles</backend_model>
+                </field>
+                <field id="ident_bundle" translate="label comment tooltip" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Bundle Products Use</label>
+                    <comment>Select SKU you want to use for bundle products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP', quantity: 1}<br />]<br /><br /><strong>Children SKUs</strong><br />contents: [<br />{id: 'SHBP-6-BL', quantity: 1},<br />{id: 'SHBP-7-BL', quantity: 1},<br />{id: 'SHBP-8-BL', quantity: 1}<br />]<br /><br /><strong>Children SKUs and Product SKU</strong><br />contents: [<br />{id: 'SHBP-6-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-8-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP']<br /><br /><strong>Children SKUs</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL']<br /><br /><strong>Children SKUs and Product SKU</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\IdentPlural</source_model>
+                </field>
+                <field id="ident_configurable" translate="label comment tooltip" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Configurable Products Use</label>
+                    <comment>Select SKU you want to use for configurable products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP', quantity: 1}<br />]<br /><br /><strong>Child SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Child SKU and Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP']<br /><br /><strong>Child SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Child SKU and Product SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\IdentSingular</source_model>
+                </field>
+                <field id="ident_downloadable" translate="label comment tooltip" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Downloadable Products Use</label>
+                    <comment>Select SKU you want to use for downloadable products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Product SKU and Parent SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Product SKU and Parent SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\Ident</source_model>
+                </field>
+                <field id="ident_grouped" translate="label comment tooltip" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Grouped Products Use</label>
+                    <comment>Select SKU you want to use for grouped products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Children SKUs</strong><br />contents: [<br />{id: 'SHBP-6-BL', quantity: 1},<br />{id: 'SHBP-7-BL', quantity: 1},<br />{id: 'SHBP-8-BL', quantity: 1}<br />]<br /><br /><strong>Children SKUs and Product SKU</strong><br />contents: [<br />{id: 'SHBP-6-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1},<br />{id: 'SHBP-8-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Children SKUs</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL']<br /><br /><strong>Children SKUs and Product SKU</strong><br />content_ids: ['SHBP-6-BL', 'SHBP-7-BL', 'SHBP-8-BL'],<br />item_group_id: 'SHBP'<br /><br />There is no option for <strong>Product SKU</strong> and that is intentional. From Magento documentation: "Although they are presented as a group, each product in the group is purchased as a separate item. In the shopping cart, each item and the quantity purchased appears as a separate line item."]]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\IdentGrouped</source_model>
+                </field>
+                <field id="ident_simple" translate="label comment tooltip" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Simple Products Use</label>
+                    <comment>Select SKU you want to use for simple products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Product SKU and Parent SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Product SKU and Parent SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\Ident</source_model>
+                </field>
+                <field id="ident_virtual" translate="label comment tooltip" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For Virtual Products Use</label>
+                    <comment>Select SKU you want to use for virtual products. See the tooltip.</comment>
+                    <tooltip><![CDATA[Examples with <strong>contents</strong>:<br /><br /><strong>Product SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', quantity: 1}<br />]<br /><br /><strong>Product SKU and Parent SKU</strong><br />contents: [<br />{id: 'SHBP-7-BL', item_group_id: 'SHBP', quantity: 1}<br />]<br /><br/ >Examples with <strong>content_ids</strong>:<br /><br /><strong>Product SKU</strong><br />content_ids: ['SHBP-7-BL']<br /><br /><strong>Product SKU and Parent SKU</strong><br />content_ids: ['SHBP-7-BL'],<br />item_group_id: 'SHBP']]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\Ident</source_model>
+                </field>
+                <field id="order_id_param" translate="label comment tooltip" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Magento Order ID For Parameter</label>
+                    <comment><![CDATA[Type parameter name for which you want to use Magento order ID. Example: <strong>order_id</strong>]]></comment>
+                    <tooltip><![CDATA[Magento order ID is internal database table auto increment ID.<br />Example: <strong>2543</strong><br /><br /><strong>If you do not want to use parameter for Magento order ID leave this field empty.</strong>]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\OrderId</backend_model>
+                </field>
+                <field id="order_increment_id_param" translate="label comment tooltip" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Magento Order Increment ID For Parameter</label>
+                    <comment><![CDATA[Type parameter name for which you want to use Magento order increment ID. Example: <strong>order_id</strong>]]></comment>
+                    <tooltip><![CDATA[Magento order increment ID is what you see in order emails, Magento Admin and which you communicate to your customer.<br />Example: <strong>000001586</strong><br /><br /><strong>If you do not want to use parameter for Magento order increment ID leave this field empty.</strong>]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\OrderIncrementId</backend_model>
+                </field>
+                <field id="quote_id_param" translate="label comment tooltip" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Magento Quote ID For Parameter</label>
+                    <comment><![CDATA[Type parameter name for which you want to use Magento quote ID. Example: <strong>quote_id</strong>]]></comment>
+                    <tooltip><![CDATA[Magento quote ID is internal database table auto increment ID.<br />Example: <strong>3275</strong><br /><br /><strong>If you do not want to use parameter for Magento quote ID leave this field empty.</strong>]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\QuoteId</backend_model>
+                </field>
+                <field id="mapping" translate="label comment tooltip" type="textarea" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Parameters to Attributes Mapping</label>
+                    <comment><![CDATA[If you want to add custom parameters to products. <strong>WARNING! Please see a tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[This option depends on <strong>Move Parameters Outside Contents</strong> option. If this option is enabled the parameters will be moved outside contents or removed if contents have more than one item.<br />Example: gpc=gpc|color=color<br />As you can see the format is simple<br /><strong>param1=attribute1|param2=attribute2</strong><br /> Facebook Pixel parameter and Magento product attribute are connected by = sign and pairs are separated by | sign.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Mapping</backend_model>
+                </field>
+            </group>
+            <group id="search" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Search (Search Result Page - Search Event)</label>
+                <field id="page_handles" translate="label comment tooltip" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add Search-Related Code To</label>
+                    <comment><![CDATA[Type page handles (full action names) where you want search-related code. <strong>See the tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[The page handles - Synonyms of the page type identifiers. Correspond to "full action names" of controller actions, for example, catalogsearch_result_index<br />In this option you would type all handles where you want to add search-related code.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Handles</backend_model>
+                </field>
+                <field id="event_name" translate="label comment tooltip" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Event Name</label>
+                    <comment><![CDATA[Type <strong>event name</strong> you want to use for search tracking. See the tooltip.]]></comment>
+                    <tooltip><![CDATA[The proper event name is <strong>Search</strong>.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\EventName</backend_model>
+                </field>
+                <field id="param_name" translate="label comment tooltip" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Parameter Name</label>
+                    <comment><![CDATA[Type <strong>parameter name</strong> you want to use for search tracking. See the tooltip.]]></comment>
+                    <tooltip><![CDATA[The proper parameter name is <strong>search_string</strong>.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\ParamName</backend_model>
+                </field>
+                <field id="request_params" translate="label comment tooltip" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Request Parameters</label>
+                    <comment><![CDATA[Type <strong>request parameters</strong> you want to include for search tracking. See the tooltip.]]></comment>
+                    <tooltip><![CDATA[Example: <strong>q,name,sku,description,<br />short_description</strong>.<br />If only <strong>q</strong> request parameter exists then only its value will be used. If multiple request parameters exist their values will be concatenated with a comma sign in between.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\RequestParams</backend_model>
+                </field>
+            </group>
+            <group id="data_processing_options" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Data Processing Options</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <comment>Enables or disables Data Processing Options.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="dpo" translate="label comment tooltip" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Data Processing Options</label>
+                    <comment><![CDATA[Type Data Processing Options you want to use. See the tooltip.]]></comment>
+                    <tooltip><![CDATA[To explicitly <strong>not</strong> enable Limited Data Use (LDU) mode leave this field empty.<br />To enable Limited Data Use (LDU) mode type <strong>LDU</strong>]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\Dpo</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="dpo_country" translate="label comment tooltip" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Data Processing Options Country</label>
+                    <comment><![CDATA[Type Data Processing Options Country you want to use. See the tooltip.]]></comment>
+                    <tooltip><![CDATA[A country that you want to associate to the data processing option. Currently accepted values are 1, for the United States of America, or 0, to request that we geolocate that event. Default is <strong>0</strong>.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\DpoCountry</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="dpo_state" translate="label comment tooltip" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Data Processing Options State</label>
+                    <comment><![CDATA[Type Data Processing Options State you want to use. See the tooltip.]]></comment>
+                    <tooltip><![CDATA[A state that you want to associate to the data processing option. Currently accepted values are 1000, for California, or 0, to request that we geolocate that event. Default is <strong>0</strong>.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\DpoState</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="miscellaneous" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Miscellaneous</label>
+                <field id="product_identifier" translate="label comment tooltip" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Identifier</label>
+                    <comment><![CDATA[Select Product Identifier. <strong>WARNING!</strong> See the tooltip!]]></comment>
+                    <tooltip><![CDATA[Please do <strong>NOT</strong> change this option unless you know what you are doing.<br /> Default is <strong>SKU</strong>.<br />Magento has two product identifiers for every product.<br />- Magento Product <strong>SKU</strong> (Example: TSHIRT-BLU-XL)<br />- Magento Product <strong>ID</strong> (Example: 175378)<br />It is recommended to use Magento Product <strong>SKU</strong> because it is more descriptive and meaningful.]]></tooltip>
+                    <source_model>Apptrian\FacebookPixel\Model\Config\Identifier</source_model>
+                </field>
+                <field id="matching" translate="label comment tooltip" type="textarea" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Advanced Matching Mapping</label>
+                    <comment><![CDATA[Mapping of customer data used for Advanced Matching. <strong>WARNING! Please see a tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[Available data keys are: em, ph, fn, ln, ge, db, ct, st, zp, country, and external_id.<br />Example: external_id=external_id|em=em|ph=ph<br />As you can see the format is simple<br /><strong>param1=key1|param2=key2</strong><br /> Facebook parameter and data key are connected by = sign and pairs are separated by | sign.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\MatchingMapping</backend_model>
+                </field>
+                <field id="cookie_consent_enabled" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Cookie Consent</label>
+                    <comment><![CDATA[Enables or disables cookie consent feature. <strong>WARNING! Please see a tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[The Cookie Consent feature is using a cookie to determine whether visitor/customer granted consent for Facebook tracking. In the browser, Facebook Pixel is using fbq('consent', 'revoke'); and fbq('consent', 'grant'); to pause sending Pixel events to Facebook, and once cookie consent is granted, send Pixel events to Facebook. On the server, Facebook Conversions API is using consent cookie to determine whether visitor/customer granted consent and will not send any event unless consent was granted.<br />The Cookie Consent is a subject of its own and falls outside the scope of our extension. There are many third-party extensions and theme customizations that add this functionality. Our extension's Cookie Consent options (Enable Cookie Consent, Consent Cookie Name, Consent Cookie Key, Consent Cookie Value, and Consent Button) will not provide you with the cookie, popup, and button. They are a universal solution to connect any third-party Cookie Consent extension or theme customization with our extension.<br />By default, Cookie Consent options are configured to use the default Magento "Cookie Restriction Mode" cookie and its popup and button.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="consent_cookie_name" translate="label comment tooltip" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Consent Cookie Name</label>
+                    <comment><![CDATA[The name of your consent cookie. <strong>WARNING! Please see a tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[Default is <strong>user_allowed_save_cookie</strong>.<br />1. If you are using the default Magento feature <strong>Cookie Restriction Mode</strong> and you use this cookie to determine whether tracking is allowed, then set this option to <strong>user_allowed_save_cookie</strong> and leave <strong>Consent Cookie Key</strong> and <strong>Consent Cookie Value</strong> options empty.<br />2. If you use some other cookie for consent then type the name of the cookie.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\CookieName</backend_model>
+                    <depends>
+                        <field id="cookie_consent_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="consent_cookie_key" translate="label comment tooltip" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Consent Cookie Key</label>
+                    <comment><![CDATA[If your cookie has key-value pairs in it. <strong>WARNING! Please see a tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[Default is empty.<br />1. If your consent cookie is simple (Example: default Magento <strong>Cookie Restriction Mode</strong> cookie) and you want to check only for the presence or absence of the cookie leave this empty.<br />2. If you want to check for a particular key and its value, type the key you want to check.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\CookieKey</backend_model>
+                    <depends>
+                        <field id="cookie_consent_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="consent_cookie_value" translate="label comment tooltip" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Consent Cookie Value</label>
+                    <comment><![CDATA[If you want to check for a specific value. <strong>WARNING! Please see a tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[Default is empty.<br />1. If your consent cookie is simple (Example: default Magento <strong>Cookie Restriction Mode</strong> cookie) and you want to check only for the presence or absence of the cookie leave this empty.<br />2. If you want to check for a particular key and its value, type the value you want to check for.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\CookieValue</backend_model>
+                    <depends>
+                        <field id="cookie_consent_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="consent_button" translate="label comment tooltip" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Consent Button</label>
+                    <comment><![CDATA[Consent button selector. <strong>WARNING! Please see a tooltip.</strong>]]></comment>
+                    <tooltip><![CDATA[Default is <strong>#btn-cookie-allow</strong>.<br />The selector above is for the default Magento <strong>Cookie Restriction Mode</strong> cookie and its popup up button "Allow Cookies".<br />Basically, this is a button in your popup where you ask visitors/customers to grant consent to Facebook tracking. The selector is used for click handler and every time it is clicked, consent will be checked. By design, consent is checked once on page load and then the button is observed. On every click, consent is checked.]]></tooltip>
+                    <validate>validate-no-html-tags</validate>
+                    <backend_model>Apptrian\FacebookPixel\Model\Config\ConsentButton</backend_model>
+                    <depends>
+                        <field id="cookie_consent_enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

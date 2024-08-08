@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Dotsqures_CustomInvoiceButton::index_index" title="index index" module="Dotsqures_CustomInvoiceButton" sortOrder="9999" resource="Dotsqures_CustomInvoiceButton::index_index" parent="Dotsqures::top_level" action="custinvoice/index/index"/>
+	</menu>
+</config>

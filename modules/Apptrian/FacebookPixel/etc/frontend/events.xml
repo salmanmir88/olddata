@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  Apptrian
+ * @package   Apptrian_FacebookPixel
+ * @author    Apptrian
+ * @copyright Copyright (c) Apptrian (http://www.apptrian.com)
+ * @license   http://www.apptrian.com/license Proprietary Software License EULA
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_add_product_complete">
+        <observer name="apptrian_facebookpixel_checkout_cart_add_product_complete" instance="Apptrian\FacebookPixel\Observer\AddToCart" />
+    </event>
+    <event name="wishlist_product_add_after">
+        <observer name="apptrian_facebookpixel_wishlist_product_add_after" instance="Apptrian\FacebookPixel\Observer\AddToWishlist" />
+    </event>
+    <event name="controller_action_postdispatch_checkout_index_index">
+        <observer name="apptrian_facebookpixel_controller_action_postdispatch_checkout_index_index" instance="Apptrian\FacebookPixel\Observer\Checkout" />
+    </event>
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="apptrian_facebookpixel_checkout_onepage_controller_success_action" instance="Apptrian\FacebookPixel\Observer\CheckoutSuccess" />
+    </event>
+    <event name="customer_register_success">
+        <observer name="apptrian_facebookpixel_customer_register_success" instance="Apptrian\FacebookPixel\Observer\CustomerRegister" />
+    </event>
+    <event name="customer_session_init">
+        <observer name="apptrian_facebookpixel_customer_session_init" instance="Apptrian\FacebookPixel\Observer\CustomerInit" />
+    </event>
+    <event name="catalog_controller_product_init_after">
+        <observer name="apptrian_facebookpixel_catalog_controller_product_init_after" instance="Apptrian\FacebookPixel\Observer\ProductInit" />
+    </event>
+    <event name="catalog_controller_category_init_after">
+        <observer name="apptrian_facebookpixel_catalog_controller_category_init_after" instance="Apptrian\FacebookPixel\Observer\CategoryInit" />
+    </event>
+    <event name="controller_front_send_response_before">
+        <observer name="apptrian_facebookpixel_controller_front_send_response_before" instance="Apptrian\FacebookPixel\Observer\FpcPage" />
+    </event>
+</config>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="developerswing_createawb_index_createawb" class="Magento\Sales\Ui\Component\Control\PdfAction">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="pdfAction" xsi:type="string">developerswing_createawb/index/createawb</item>
+                    </item>
+                </argument>
+                <settings>
+                    <type>developerswing_createawb_index_createawb</type>
+                    <label translate="true">awb</label>
+                </settings>
+            </action>
+        </massaction>
+    </listingToolbar>
+    <columns name="sales_order_shipment_columns">
+        <actionsColumn name="awb_link" class="Developerswing\Createawb\Ui\Component\Listing\Column\Link">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">awb link</item>
+                </item>
+            </argument>
+        </actionsColumn>   
+    </columns>    
+</listing>

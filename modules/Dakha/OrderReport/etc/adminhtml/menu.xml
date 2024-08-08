@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Dakha_OrderReport::parent" title="OrderReport" module="Dakha_OrderReport" sortOrder="100" resource="Dakha_OrderReport::parent"/>
+		<add id="Dakha_OrderReport::salesitem" title="OrderReport Salesitem" module="Dakha_OrderReport" sortOrder="20" parent="Dakha_OrderReport::parent" action="orderreport/salesitem" resource="Dakha_OrderReport::salesitem"/>
+
+    </menu>
+</config>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureTooltipBrandLogoActionGroup">
+        <arguments>
+            <argument name="brandLogoTooltip1"/>
+            <argument name="attributeSeoScenario4"/>
+        </arguments>
+        <amOnPage url="{{AdminIlnBrandsSettingsPage.url}}" stepKey="navigateToILNBrandsSettingsPage1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.DisplayTooltip}}"
+                        userInput="{{brandLogoTooltip1.DisplayTooltip}}"
+                      stepKey="setDisplayTooltip1"/>
+        <unselectOption selector="{{AdminILNBrandsSettingsSection.DisplayTooltip}}"
+                      userInput="{{brandLogoTooltip1.DisplayTooltip}}"
+                      stepKey="setDisplayTooltip2"/>
+        <click selector="{{AdminILNBrandsSettingsSection.Save}}" stepKey="clickSaveConfig1"/>
+        <amOnPage url="{{AttributeProfilePage.url(attributeSeoScenario4.MaterialID)}}"
+                  stepKey="navigateToMaterialBrandAttributePage1"/>
+        <scrollToTopOfPage stepKey="scrollToTopOfPages1"/>
+        <click selector="{{AttributeProfileSection.StorefrontPropertiesTab}}"
+               stepKey="clickOnStoreFrontPropertiesTab4"/>
+        <selectOption selector="{{AdminNewAttributePanel.useInProductListing}}"
+                      userInput="{{brandLogoTooltip1.useInProductListing}}"
+                      stepKey="useInProductListing1"/>
+        <click selector="{{AttributeProfileSection.Save}}" stepKey="clickSaveButton4"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>

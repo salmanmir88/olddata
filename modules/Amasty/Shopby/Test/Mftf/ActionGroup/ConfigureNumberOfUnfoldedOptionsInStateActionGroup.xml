@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureNumberOfUnfoldedOptionsInStateActionGroup">
+        <arguments>
+            <argument name="generalILNSettings4"/>
+        </arguments>
+        <amOnPage url="{{AdminIlnSettingsPage.url}}" stepKey="navigateToILNSettingsPage1"/>
+        <conditionalClick stepKey="expandGeneralSettings1"
+                          selector="{{AdminILNSettingsSection.GeneralSettingsTab}}"
+                          dependentSelector="{{AdminILNSettingsSection.AjaxSwitcher}}"
+                          visible="false"/>
+        <fillField userInput="{{generalILNSettings4.NumberOfUnfoldedOptionsInState}}"
+                   selector="{{AdminILNSettingsSection.NumberOfUnfoldedOptionsInState}}"
+                   stepKey="SetNumberOfUnfoldedOptionsInState"/>
+        <click selector="{{AdminILNSettingsSection.Save}}" stepKey="clickSaveConfig1"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>
+
+
+
+
+
+
+
+

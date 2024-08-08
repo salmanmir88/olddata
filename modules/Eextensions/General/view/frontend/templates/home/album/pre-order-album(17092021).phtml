@@ -1,0 +1,201 @@
+<?php /** pre-order albums product on Home page **/
+$objectManager      = \Magento\Framework\App\ObjectManager::getInstance();
+$listBlock          = $objectManager->get('\Magento\Catalog\Block\Product\ListProduct');
+$priceHelper        = $objectManager->create('\Magento\Framework\Pricing\Helper\Data');
+
+$generalHelper = $objectManager->create('Eextensions\General\Helper\Data');
+$wishRemoveBlock = $block->getLayout()->createBlock('Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Remove');
+
+$collection = $block->getProducts();
+$image = 'pre-order-albums-product-home';
+$showWishlist = true;
+$showCompare = false;
+$viewProduct = false;
+$showCart = true;
+$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::DEFAULT_VIEW;
+
+?>
+<?php if(count($collection)): ?>
+<div class="best-sellers">
+    <div class="container">
+        <div class="best-seller-inner">
+			<div class="heading">
+				<h2><?php echo $block->getTitle(); ?></h2>
+				<?php /* <span><?php echo $block->getDescription(); ?></span> */ ?>
+				
+				<?php /* 
+				<a href="<?php echo $this->getUrl('').'best-seller.html'; ?>"><?php echo __('View all'); ?> <img src="<?php echo $this->getViewFileUrl('images/arrow-right.png'); ?>" alt="img"></a>
+				*/ ?>
+			</div>	
+			<div class="pre-order-slider owl-carousel owl-theme">
+				<?php $i = 1; foreach ($collection as $_item): ?>
+					<div class="best-seller-slide">
+						<div class="product-box">
+							<?php 	$imageUrl = $this->helper('Magento\Catalog\Helper\Image')
+											->init($_item, $image)
+											->setImageFile($_item->getFile())
+											->getUrl();
+											
+									$price = ceil($_item->getPrice());
+									$finalPrice = ceil($_item->getFinalPrice());
+									$minimalPrice = ceil($_item->getMinimalPrice());
+									if($finalPrice == 0){ $finalPrice = $minimalPrice; }
+							?>
+							<div class="product-img">
+								<?php  if(($price > $finalPrice) && ($price != 0)){  $savingPercent = 100 - round(($finalPrice / $price)*100); ?>
+									<div class="border_offer_tag">
+										<div class="offer_tag"><?php echo $savingPercent; ?>% <small><?php echo __('OFF'); ?></small></div>
+									</div>
+								<?php } ?>
+									
+								<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow() && $showWishlist): ?>	
+									<?php						
+									   $isInWishlist = $generalHelper->getCheckWishlist($_item->getId());                                                              
+									   if($isInWishlist == true) {
+									?>
+										<span class="wishlist favactive">
+											<a href="javascript:void(0)" data-role="remove-from-wishlist" data-post='<?php  echo $this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_item) ?>' title="Already in Wishlist" class="wish-icon  delete wishlist-on-image towishlist" data-action="add-to-wishlist">
+												<img src="<?php echo $this->getViewFileUrl('images/wishlist-hover.svg');?>" alt="img" />
+												<img class="show_hover" src="<?php echo $this->getViewFileUrl('images/wishlist-hover.svg'); ?>" alt="wishlist-hover">
+											</a>
+										</span>
+									<?php }else{ ?>
+										<div class="wishlist">
+											<a href="javascript:void(0)" data-post='<?php  echo $this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_item) ?>' class="towishlist wish-icon" data-action="add-to-wishlist" title="Add To Wishlist">
+												<img src="<?php echo $this->getViewFileUrl('images/wishlist-black.svg');?>" alt="wishlist-black" />
+												<img class="show_hover" src="<?php echo $this->getViewFileUrl('images/wishlist-hover.svg'); ?>" alt="wishlist-hover">
+											</a>
+										</div>
+									<?php } ?>
+								<?php endif; ?>
+								
+								<a href="<?= /* @escapeNotVerified */ $block->getProductUrl($_item) ?>" title="<?php echo $_item->getName() ?>">
+									<img src="<?php echo $imageUrl; ?>" alt="<?php echo $_item->getName() ?>" />
+								</a>
+							</div>
+							
+							<div class="prodcut-content">
+								<a href="<?= /* @escapeNotVerified */ $block->getProductUrl($_item) ?>" title="<?php echo $_item->getName() ?>" class="prodcut-title"><?= $block->escapeHtml($_item->getName()) ?></a>
+								<?php /* <div class="rating"> <img src="<?php echo $this->getViewFileUrl('images/rating.png'); ?>" alt="img"> <span>585 Review(s)</span></div> */ ?>
+								<?php
+									$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+									$storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+									$reviewFactory = $objectManager->create('Magento\Review\Model\Review');
+									$storeId = $storeManager->getStore()->getId();
+									$reviewFactory->getEntitySummary($_item, $storeId);
+									$ratingSummary = $_item->getRatingSummary()->getRatingSummary();
+									$reviewCount = $_item->getRatingSummary()->getReviewsCount();
+								?>
+								<div class="rating">
+									<?php if($ratingSummary > 0){ ?>
+										<div class="rating-summary" itemprop="reviewRating" itemscope="" >
+											<div class="rating-result" title="<?php echo $ratingSummary; ?>%">
+												<meta itemprop="worstRating" content="1">
+												<meta itemprop="bestRating" content="100">
+												<span style="width:<?php echo $ratingSummary; ?>%">
+													<span itemprop="ratingValue"><?php echo $ratingSummary; ?>%</span>
+												</span>
+											</div>
+										</div>
+										<span>
+											<?php if($reviewCount > 1){ echo __($reviewCount.' Reviews'); }?>
+											<?php if($reviewCount > 0 && $reviewCount == 1 ){ echo __($reviewCount.' Review(s)'); }?>
+										</span>
+								   <?php }else{ ?>
+										<div class="rating-summary" itemprop="reviewRating" itemscope="" >
+											<div class="rating-result" title="<?php echo $ratingSummary; ?>%">
+												<meta itemprop="worstRating" content="1">
+												<meta itemprop="bestRating" content="100">
+												<span style="width:0%">
+													<span itemprop="ratingValue">0%</span>
+												</span>
+											</div>
+										</div>
+										<span>0 <?php echo __('Review(s)'); ?></span>
+								   <?php } ?>
+								</div>
+							   
+								<div class="product-price">
+									<b><?php echo ($finalPrice != 0) ? $priceHelper->currency($finalPrice, true, false) : $priceHelper->currency($minimalPrice, true, false); ?></b>
+									<?php if(($price > $finalPrice) && ($price != 0)){ ?>
+										<del><?php echo $priceHelper->currency($price, true, false); ?></del>
+									<?php } ?>
+								</div>
+							</div>	
+							
+							<?php $releaseDate = $_item->getReleaseDate(); ?>
+							
+							<div class="btn_wrap bg_gray">	
+								<?php if($releaseDate){ ?>
+									<div class="release_date">
+										<strong><?php echo __('Release date'); ?></strong> 
+										<span><?php echo date('d-m-Y',strtotime($releaseDate)); ?></span>
+									</div>
+								<?php } ?>
+								
+								<?php if ($showCart): ?>
+									<?php if ($_item->isSaleable()): ?>
+										<?php $postParams = $listBlock->getAddToCartPostParams($_item); ?>
+										<form data-role="tocart-form" action="<?php echo $postParams['action']; ?>" method="post">
+											<input type="hidden" name="product" value="<?php echo $postParams['data']['product']; ?>">
+											<input type="hidden" name="<?php echo 'uenc'; ?>" value="<?php  echo $postParams['data']['uenc']; ?>">
+											<?php echo $listBlock->getBlockHtml('formkey')?>
+											<button type="submit" title="Add to Cart" class="btn btn-fill action tocart btn-default cart" id="product-addtocart-button">
+												<img src="<?php echo $this->getViewFileUrl('images/cart-small.svg'); ?>" alt="Add to cart">
+												<span><?php echo __('Add to Cart') ?></span>
+											</button>
+										</form>
+									<?php else: ?>
+										<a class="btn btn-fill" href="javascript:void(0)">
+											<img src="<?php echo $this->getViewFileUrl('images/cart-small.svg'); ?>" alt="Out of stock"><?= __('Out of stock') ?>
+										</a>
+									<?php endif; ?> 
+								<?php endif; ?>
+								
+								
+								<?php if ($viewProduct): ?>
+									<a href="<?php echo $_item->getProductUrl() ?>" class="btn btn-success" title="<?= __('Quick view') ?>">
+										<?= __('Quick view') ?>
+									</a>
+								<?php endif; ?>
+							</div>
+							
+						</div>
+					</div>
+				<?php endforeach; ?>
+			</div>
+			<?php /*  <div class="text-center">
+				<a href="<?php echo $this->getUrl('products/indoor-fitness/exercise-workouts.html'); ?>" type="button" class="btn btnprimary"><b><?php echo __('More Products'); ?></b></a>
+			</div> */ ?>	
+		</div>
+	</div>
+</div>
+<?php endif;?>
+<?php  if (!$listBlock->isRedirectToCartEnabled()) : ?>
+    <script type="text/x-magento-init">
+    {
+        "[data-role=tocart-form]": {
+            "catalogAddToCart": {
+                "bindSubmit": {}
+                }
+        }
+    }
+    </script>
+
+<?php endif;  ?>
+
+<?php /* 
+<script>
+require(['jquery','countdown'],function($){	
+	$(document).ready(function(){
+    $('[data-countdown]').each(function() {
+	var $this = $(this), finalDate = $(this).data('countdown');
+		$this.countdown(finalDate, function(event) {
+			$this.html(event.strftime('<div class="date_time"><div class="days"><span>%D</span><strong>Days</strong></div> : <div class="hours"><span>%H</span><strong>hours</strong></div> : <div class="minutes"><span>%M</span><strong>Minutes</strong></div> : <div class="seconds"><span>%S</span><strong>seconds</strong></div></div>'));		
+		});
+	});
+	});
+});
+</script>	
+*/ ?>				
+						

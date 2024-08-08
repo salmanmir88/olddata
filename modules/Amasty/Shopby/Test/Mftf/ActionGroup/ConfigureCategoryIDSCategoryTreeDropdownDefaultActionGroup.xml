@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureCategoryIDSCategoryTreeDropdownDefaultActionGroup">
+        <arguments>
+            <argument name="categoryIDS3"/>
+        </arguments>
+        <amOnPage url="{{AttributeProfilePage.url(categoryIDS3.CategoryIDSID)}}"
+                  stepKey="navigateToCategoryIDSSettingsPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{AttributeProfileSection.ILNTab}}"
+               stepKey="clickOnILNTab1"/>
+        <selectOption selector="{{AttributeProfileSection.RenderAllCategoriesTreeSwitcher}}"
+                      userInput="{{categoryIDS3.RenderAllCategoriesTreeSwitcher}}"
+                      stepKey="SetRenderAllCategoryTree1"/>
+        <click selector="{{AdminILNSettingsSection.Save}}" stepKey="clickSaveConfig1"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>
+
+
+

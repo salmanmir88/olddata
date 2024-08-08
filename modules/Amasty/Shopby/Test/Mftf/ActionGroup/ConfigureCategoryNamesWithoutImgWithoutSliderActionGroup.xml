@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureCategoryNamesWithoutImgWithoutSliderActionGroup">
+        <arguments>
+            <argument name="ChildrenCategories1"/>
+        </arguments>
+        <selectOption selector="{{AdminILNSettingsSection.EnableSlider}}"
+                      userInput="{{ChildrenCategories1.EnableSlider}}"
+                      stepKey="SetEnableSlider"/>
+        <selectOption selector="{{AdminILNSettingsSection.CategoriesSelection}}"
+                      userInput="{{ChildrenCategories1.CategoriesSelection}}"
+                      stepKey="SelectCategories"/>
+        <click selector="{{AdminILNSettingsSection.Save}}" stepKey="clickSaveConfig3"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache3"/>
+    </actionGroup>
+
+</actionGroups>
+
+
+

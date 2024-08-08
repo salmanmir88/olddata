@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Meetanshi_GoogleSitemap::main_menu"
+             title="Google Sitemap"
+             module="Meetanshi_GoogleSitemap"
+             sortOrder="51"
+             resource="Meetanshi_GoogleSitemap::main_menu"
+        />
+
+        <add id="Meetanshi_GoogleSitemap::sitemap"
+             title="Manage XML Sitemaps"
+             module="Meetanshi_GoogleSitemap"
+             sortOrder="10"
+             action="google_sitemap/sitemap"
+             resource="Meetanshi_GoogleSitemap::sitemap"
+             parent="Meetanshi_GoogleSitemap::main_menu"
+        />
+
+        <add id="Meetanshi_GoogleSitemap::configuration"
+             title="Configuration"
+             module="Meetanshi_GoogleSitemap"
+             sortOrder="99"
+             parent="Meetanshi_GoogleSitemap::main_menu"
+             action="adminhtml/system_config/edit/section/google_sitemap"
+             resource="Meetanshi_GoogleSitemap::configuration"
+        />
+    </menu>
+</config>

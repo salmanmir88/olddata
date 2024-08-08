@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mfadminview" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Admin View</label>
+            <tab>magefan</tab>
+            <resource>Magefan_AdminView::mfadminview_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <field id="version" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\Info</frontend_model>
+                </field>
+                <field id="enabled" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Extension</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Product Key</label>
+                    <frontend_model>Magefan\Community\Block\Adminhtml\System\Config\Form\ProductKeyField</frontend_model>
+                </field>
+            </group>
+            <group id="logos" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Logos</label>
+                <field id="main_logo" translate="label" type="image" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Main Logo</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">default</upload_dir>
+                    <base_url type="media" scope_info="1">default</base_url>
+                    <comment><![CDATA[Allowed file types: jpeg, gif, png.]]></comment>
+                </field>
+                <field id="menu_logo" translate="label" type="image" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Menu Logo</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">default</upload_dir>
+                    <base_url type="media" scope_info="1">default</base_url>
+                    <comment><![CDATA[Allowed file types: jpeg, gif, png.]]></comment>
+                </field>
+            </group>
+            <group id="color_schema" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Color Schema</label>
+                <field id="theme" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Select Color Schema</label>
+                    <source_model>Magefan\AdminView\Model\Config\Source\ColorSchema</source_model>
+                </field>
+                <group id="main_menu" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Main Menu</label>
+                    <field id="bg" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Background</label>
+                        <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\ColorPicker</frontend_model>
+                    </field>
+                    <field id="bg_on_hover" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Background (On Hover)</label>
+                        <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\ColorPicker</frontend_model>
+                    </field>
+                    <field id="text" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Text Color</label>
+                        <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\ColorPicker</frontend_model>
+                    </field>
+                    <field id="text_on_hover" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Text Color (On Hover)</label>
+                        <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\ColorPicker</frontend_model>
+                    </field>
+                    <depends>
+                        <field id="mfadminview/color_schema/theme">custom</field>
+                    </depends>
+                </group>
+                <group id="button" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Buttons</label>
+                    <field id="primary_button_bg" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Primary Button Background</label>
+                        <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\ColorPicker</frontend_model>
+                    </field>
+                    <field id="primary_button_bg_on_hover" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Primary Button Background (On Hover)</label>
+                        <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\ColorPicker</frontend_model>
+                    </field>
+                    <field id="button_bg" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Button Background</label>
+                        <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\ColorPicker</frontend_model>
+                    </field>
+                    <field id="button_on_hover" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Button Background (On Hover)</label>
+                        <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\ColorPicker</frontend_model>
+                    </field>
+                    <depends>
+                        <field id="mfadminview/color_schema/theme">custom</field>
+                    </depends>
+                </group>
+                <group id="grid" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Grid</label>
+                    <field id="bg" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Background</label>
+                        <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\ColorPicker</frontend_model>
+                    </field>
+                    <field id="bg_on_hover" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Background (On Hover)</label>
+                        <frontend_model>Magefan\AdminView\Block\Adminhtml\System\Config\Form\ColorPicker</frontend_model>
+                    </field>
+                    <depends>
+                        <field id="mfadminview/color_schema/theme">custom</field>
+                    </depends>
+                </group>
+            </group>
+            <group id="footer" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Footer</label>
+                <field id="copyright" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Display Magento Copyright</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="version" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Display Magento Version</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="buttons" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Display Magento Legal Info</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Mirasvit\Helpdesk\Helper\Process">
+		<plugin name="Dakha_CustomWork_Plugin_Frontend_Mirasvit_Helpdesk_Helper_Process" type="Dakha\CustomWork\Plugin\Frontend\Mirasvit\Helpdesk\Helper\Process" sortOrder="10" disabled="false"/>
+	</type>
+</config>

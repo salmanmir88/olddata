@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="sales_shipment">
+		<column name="courier" nullable="true" xsi:type="varchar" comment="courier" length="255"/>
+	</table>
+	<table name="sales_shipment_grid">
+		<column name="courier" nullable="true" xsi:type="varchar" comment="courier" length="255"/>
+	</table>
+</schema>

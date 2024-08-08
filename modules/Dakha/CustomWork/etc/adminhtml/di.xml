@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Mirasvit\Helpdesk\Helper\Process">
+        <plugin name="Dakha_CustomWork_Plugin_Adminhtml_Mirasvit_Helpdesk_Helper_Process" type="Dakha\CustomWork\Plugin\Adminhtml\Mirasvit\Helpdesk\Helper\Process" sortOrder="10" disabled="false"/>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <plugin name="Dakha_CustomWork_Plugin_Adminhtml_Mirasvit_Helpdesk_Model_ResourceModel_Ticket_CollectionFactory" type="Dakha\CustomWork\Plugin\Adminhtml\Mirasvit\Helpdesk\Model\ResourceModel\Ticket\CollectionFactory" sortOrder="1002" disabled="false"/>
+    </type>
+    <preference for="Mirasvit\Helpdesk\Block\Adminhtml\Ticket\Edit" type="Dakha\CustomWork\Rewrite\Mirasvit\Helpdesk\Block\Adminhtml\Ticket\Edit"/>
+    <preference for="Mirasvit\Helpdesk\Block\Adminhtml\Ticket\Edit" type="Dakha\CustomWork\Rewrite\Mirasvit\Helpdesk\Block\Adminhtml\Ticket\Edit"/>
+    <preference for="Dakha\CustomWork\Api\TicketHistroyRepositoryInterface" type="Dakha\CustomWork\Model\TicketHistroyRepository"/>
+    <preference for="Dakha\CustomWork\Api\Data\TicketHistroyInterface" type="Dakha\CustomWork\Model\TicketHistroy"/>
+    <preference for="Dakha\CustomWork\Api\Data\TicketHistroySearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+</config>

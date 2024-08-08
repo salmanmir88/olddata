@@ -1,0 +1,12 @@
+<?php
+// get current product
+$product = $block->getProduct();
+?>
+<?php if($product->getProductnumber()){?>
+<div class="number-container">
+ <span class="label"><?php echo __('Product Number')?></span>    
+ <span class="productnumber">
+    <?php echo $product->getProductnumber()?>
+ </span>
+</div>    
+<?php } ?>    

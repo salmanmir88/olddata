@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="AllBrandsPageLinkConfigurationActionGroup">
+        <arguments>
+            <argument name="brandsLink1"/>
+        </arguments>
+        <amOnPage url="{{AdminIlnBrandsSettingsPage.url}}" stepKey="navigateToILNBrandsSettingsPage2"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.AddBrandsLinkTopMenu}}"
+                      userInput="{{brandsLink1.AddBrandsLinkTopMenu}}"
+                      stepKey="setAddBrandsLinkTopMenu1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.AddBrandsAccountTopLinks}}"
+                      userInput="{{brandsLink1.AddBrandsAccountTopLinks}}"
+                      stepKey="setAddBrandsAccountTopLinks1"/>
+        <uncheckOption selector="{{AdminILNBrandsSettingsSection.BrandsItemLabelLocker}}"
+                       stepKey="uncheckBrandsItemLabelCheckbox1"/>
+        <fillField userInput="{{brandsLink1.BrandsItemLabel}}"
+                   selector="{{AdminILNBrandsSettingsSection.BrandsItemLabel}}"
+                   stepKey="fillBrandItemLabelField1"/>
+        <click selector="{{AdminILNBrandsSettingsSection.Save}}" stepKey="clickSaveConfig1"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>

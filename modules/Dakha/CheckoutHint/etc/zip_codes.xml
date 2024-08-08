@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Directory:etc/zip_codes.xsd">
+    <!-- <zip countryCode="SA">
+        <codes>
+            <code id="pattern_1" active="true" example="0000">^[a-zA-Z]{2}[0-9]{1}\s[0-9]{1}[a-zA-Z]{2}$</code>
+        </codes>
+    </zip>
+    <zip countryCode="BH">
+        <codes>
+            <code id="pattern_1" active="true" example="0000">^[a-zA-Z]{2}[0-9]{1}\s[0-9]{1}[a-zA-Z]{2}$</code>
+        </codes>
+    </zip>
+    <zip countryCode="KW">
+        <codes>
+            <code id="pattern_1" active="true" example="0000">^[a-zA-Z]{2}[0-9]{1}\s[0-9]{1}[a-zA-Z]{2}$</code>
+        </codes>
+    </zip>
+    <zip countryCode="OM">
+        <codes>
+            <code id="pattern_1" active="true" example="0000">^[a-zA-Z]{2}[0-9]{1}\s[0-9]{1}[a-zA-Z]{2}$</code>
+        </codes>
+    </zip>
+    <zip countryCode="UAE">
+        <codes>
+            <code id="pattern_1" active="true" example="0000">^[a-zA-Z]{2}[0-9]{1}\s[0-9]{1}[a-zA-Z]{2}$</code>
+        </codes>
+    </zip> -->
+</config>

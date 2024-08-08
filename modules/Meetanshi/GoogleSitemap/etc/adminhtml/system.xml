@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="meetanshi" translate="label" class="meetanshi" sortOrder="100">
+            <label><![CDATA[]]></label>
+        </tab>
+        <section id="google_sitemap" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>Google Sitemap</label>
+            <tab>meetanshi</tab>
+            <resource>Meetanshi_GoogleSitemap::google_sitemap_config</resource>
+            <group id="xml_settings" translate="label" type="text" sortOrder="10" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>XML Sitemap Settings</label>
+                <field id="xml_sitemap" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="1" >
+                    <label>XML Sitemap</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="enable_homepage_optimization" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable Homepage Optimization</label>
+                    <comment>Enabling the option will remove the link of the CMS page having “home” from the sitemap.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                    </depends>
+                </field>
+                <field id="enable_additional_links" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable Additional Links</label>
+                    <comment>Set YES to add more custom links into the sitemap XML file.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                    </depends>
+                </field>
+
+                <field id="additional_links" translate="label comment" type="textarea" sortOrder="40" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Additional Links</label>
+                    <comment>Enter one link per line to include in the sitemap XML file.</comment>
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                        <field id="google_sitemap/xml_settings/enable_additional_links">1</field>
+                    </depends>
+                </field>
+
+                <field id="include_images" translate="label comment" type="select" sortOrder="60" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Include Images in Sitemap</label>
+                    <comment>Only for product images. Setting YES includes product image URLs in the sitemap.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                    </depends>
+                </field>
+
+                <field id="maximum_number_url" translate="label" type="text" sortOrder="90" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Maximum Number Of URLs per File</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <comment>Maximum number of URLs included in a single sitemap.</comment>
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                    </depends>
+                </field>
+
+                <field id="maximum_file_size" translate="label comment" type="text" sortOrder="100" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Maximum File Size</label>
+                    <comment>in bytes.</comment>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="auto_generation_settings" translate="label" type="text" sortOrder="30" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Auto Sitemap Generation Settings</label>
+                <depends>
+                    <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                </depends>
+                <field id="sitemap_update_frequency" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Update Frequency (in Days)</label>
+                    <comment>Enter the number of days to update the sitemap on a regular basis</comment>
+
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                    </depends>
+                </field>
+
+                <field id="send_sitemap_error_email" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Send Sitemap Error Email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                    </depends>
+                </field>
+                <field id="email_recipient" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email ID of Recipient</label>
+                    <comment>Enter Email ID to receive any error occurred while generating a sitemap.</comment>
+                    <validate>validate-email</validate>
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                        <field id="google_sitemap/sitemap_update_frequency/send_sitemap_error_email">1</field>
+                    </depends>
+                </field>
+                <field id="email_sender" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Email Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                        <field id="google_sitemap/sitemap_update_frequency/send_sitemap_error_email">1</field>
+                    </depends>
+                </field>
+                <field id="error_email_template" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Error Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="google_sitemap/xml_settings/xml_sitemap">1</field>
+                        <field id="google_sitemap/sitemap_update_frequency/send_sitemap_error_email">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="html_settings" translate="label" type="text" sortOrder="30" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>HTML Sitemap Settings</label>
+                <field id="html_sitemap" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    <label>HTML Sitemap</label>
+                </field>
+                <field id="category_url" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <source_model>Meetanshi\GoogleSitemap\Model\Config\Source\Includeexclude</source_model>
+                    <label>Category URLs in Sitemap</label>
+                    <depends>
+                        <field id="google_sitemap/html_settings/html_sitemap">1</field>
+                    </depends>
+                </field>
+                <field id="product_url" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <source_model>Meetanshi\GoogleSitemap\Model\Config\Source\Includeexclude</source_model>
+                    <label>Product URLs in Sitemap</label>
+                    <depends>
+                        <field id="google_sitemap/html_settings/html_sitemap">1</field>
+                    </depends>
+                </field>
+                <field id="cms_page_url" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <source_model>Meetanshi\GoogleSitemap\Model\Config\Source\Includeexclude</source_model>
+                    <label>CMS Pages URLs in Sitemap</label>
+                    <depends>
+                        <field id="google_sitemap/html_settings/html_sitemap">1</field>
+                    </depends>
+                </field>
+                <field id="exclude_cms_pages" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Exclude CMS Pages</label>
+                    <source_model>\Meetanshi\GoogleSitemap\Model\Config\Source\CmsPages</source_model>
+                    <depends>
+                        <field id="google_sitemap/html_settings/html_sitemap">1</field>
+                        <field id="google_sitemap/html_settings/cms_page_url">1</field>
+                    </depends>
+                </field>
+                <field id="enable_additional_links" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable Additional Links</label>
+                    <comment>Set YES to add more custom links into the sitemap HTML file.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="google_sitemap/html_settings/html_sitemap">1</field>
+                    </depends>
+                </field>
+                <field id="additional_links" translate="label comment" type="textarea" sortOrder="70" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Additional Links</label>
+                    <comment>Enter one link per line to include in the sitemap HTML file.</comment>
+                    <depends>
+                        <field id="google_sitemap/html_settings/html_sitemap">1</field>
+                        <field id="google_sitemap/html_settings/enable_additional_links">1</field>
+                    </depends>
+                </field>
+                <field id="sitemap_link_to_footer" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Sitemap Link To Footer</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="google_sitemap/html_settings/html_sitemap">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

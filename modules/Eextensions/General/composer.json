@@ -1,0 +1,25 @@
+{
+    "name": "eextensions/module-general",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "info@mage2gen.com",
+            "name": "Mage2Gen"
+        },
+        {
+            "email": "17smith.john@gmail.com",
+            "name": "John Smith"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Eextensions\\OrderFeedback\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

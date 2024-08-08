@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="CreateCMSPageWithAllBrandsPageWidgetCodeWidgetActionGroup"
+                 extends="CreateCMSPageWithWidgetCodeActionGroup">
+        <remove keyForRemoval="grabCookie2"/>
+        <remove keyForRemoval="insertWidget1"/>
+        <click selector="{{TinyMCESection.InsertWidgetBtn}}"
+               stepKey="clickInsertWidgetButton1"
+               after="fillFieldContentHeading1"/>
+        <waitForPageLoad stepKey="waitForPageLoad3" after="clickInsertWidgetButton1"/>
+        <selectOption selector="{{WidgetSection.WidgetType}}"
+                      userInput="{{widgetCode.AmWidgetType}}"
+                      stepKey="selectCMSStaticBlock2"
+                      after="waitForPageLoad3"/>
+        <waitForElementVisible stepKey="waitForNumberOfColumns1"
+                               selector="{{AdminILNBrandsSettingsSection.BrandSliderWidgetNumberOfColumnsSwitcher}}"
+                               after="selectCMSStaticBlock2"/>
+        <fillField selector="{{AdminILNBrandsSettingsSection.BrandSliderWidgetNumberOfColumnsSwitcher}}"
+                   userInput="3"
+                   stepKey="fillNumberOfColumnsFiels1"
+                   after="waitForNumberOfColumns1"/>
+        <click selector="{{WidgetSection.InsertWidget}}"
+               stepKey="clickInsertWidgetBtn1"
+               after="fillNumberOfColumnsFiels1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" after="clickInsertWidgetBtn1"/>
+        <waitForPageLoad stepKey="waitForPageLoad4" after="waitForLoading1"/>
+        <waitForElementVisible selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}"
+                               stepKey="waitForSaveButtonVisible1"
+                               after="waitForPageLoad4"/>
+    </actionGroup>
+
+</actionGroups>
+
+

@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use \Magento\Framework\App\Action\Action;
+
+?>
+<?php
+$products = $this->getNewArrivalProducts();
+$categories = $this->getHomePageCategoryCollection();
+$helper = $this->helper('Evince\HomeProducts\Helper\Data');
+$viewAllHelper = $this->helper('Evince\ViewAll\Helper\Data');
+$categoryViewAll = $viewAllHelper->getConfigValues('all/home/category_url');
+?>
+
+<?php if ($categories->getSize()): ?>
+<div class="shop_category_section">
+    <div class="container">
+        <div class="heading">
+            <h2><?php echo __('Shop by category') ?></h2>
+        </div>
+        <div class="shop-category-slider owl-carousel owl-theme">
+            <div class="shop_category_details">
+				<?php $item=1; foreach ($categories as $category): ?>
+					<?php
+						$categoryImg = $helper->getCategoryImage($category->getId());
+						if ($categoryImg) {
+					?> 
+						<div class="shop_category_box fashion_box">
+							<h3><?php echo $category->getName(); ?></h3>
+							<a href="<?php echo $category->getUrl(); ?>"><?= __('View all') ?> 
+								<img src="<?php echo $this->getViewFileUrl('images/arrow-right.png'); ?>" alt="img">
+							</a>
+							<div class="shop_category_product">
+								<figure>
+									<img src="<?php echo $categoryImg; ?>" alt="<?php echo $category->getName(); ?>" />
+								</figure>
+							</div>
+						</div>
+						<?php if($item%2 == 0){ if($categories->getSize() != $item){ ?> </div><div class="shop_category_details"> <?php } } ?>
+					<?php } ?>
+				<?php $item++; endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+

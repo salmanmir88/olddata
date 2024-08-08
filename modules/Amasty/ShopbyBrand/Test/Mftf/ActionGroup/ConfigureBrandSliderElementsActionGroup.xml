@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureBrandSliderElementsActionGroup">
+        <arguments>
+            <argument name="brandSlider2"/>
+        </arguments>
+        <amOnPage url="{{AdminIlnBrandsSettingsPage.url}}" stepKey="navigateToILNBrandsSettingsPage1"/>
+        <conditionalClick stepKey="expandBrandSliderSettingsTab1"
+                          selector="{{AdminILNBrandsSettingsSection.BrandSliderSettingsTab}}"
+                          dependentSelector="{{AdminILNBrandsSettingsSection.VisibleItemsQuantity}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.ShowBrandLabelSwitcher}}"
+                      userInput="{{brandSlider2.ShowBrandLabelSwitcher}}"
+                      stepKey="setBrandLabel1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.ShowButtonsSwitcher}}"
+                      userInput="{{brandSlider2.ShowButtonsSwitcher}}"
+                      stepKey="setShowButtons1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.InfinityLoopSwitcher}}"
+                      userInput="{{brandSlider2.InfinityLoopSwitcher}}"
+                      stepKey="setInfinityLoop1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.SimulateTouchSwitcher}}"
+                      userInput="{{brandSlider2.SimulateTouchSwitcher}}"
+                      stepKey="setSimulateTouch1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.SimulateTouchSwitcher}}"
+                      userInput="{{brandSlider2.SimulateTouchSwitcher}}"
+                      stepKey="setSimulateTouch2"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.ShowPaginationSwitcher}}"
+                      userInput="{{brandSlider2.ShowPaginationSwitcher}}"
+                      stepKey="setShowPagination1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.AutoplaySwitcher}}"
+                      userInput="{{brandSlider2.AutoplaySwitcher}}"
+                      stepKey="setAutoplay1"/>
+        <click selector="{{AdminILNBrandsSettingsSection.Save}}" stepKey="clickSaveConfig1"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>

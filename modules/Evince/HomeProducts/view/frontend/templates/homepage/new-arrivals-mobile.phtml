@@ -1,0 +1,160 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use \Magento\Framework\App\Action\Action;
+
+?>
+<?php
+$products = $this->getNewArrivalProducts();
+$categories = $this->getHomePageCategoryCollection();
+$helper = $this->helper('Evince\HomeProducts\Helper\Data');
+$productRatingsHelper = $this->helper('Evince\ProductRatings\Helper\Data');
+$viewAllHelper = $this->helper('Evince\ViewAll\Helper\Data');
+$categoryViewAll = $viewAllHelper->getConfigValues('all/home/category_url');
+$newArrivalViewAll =  $viewAllHelper->getConfigValues('all/home/newarrival_url');
+if(empty($categoryViewAll))
+{
+    $categoryViewAll = '#';
+}
+
+if(empty($newArrivalViewAll))
+{
+    $newArrivalViewAll = '#';
+}
+?>
+
+<?php if ($products->getSize()): ?>
+    <div class="best-seller-main mobile-new-arrivals-wrapper">
+        <div class="best-seller-title">
+            <div class="slider-heading"><h2><?php echo __('New Arrivals') ?></h2></div>
+            <div class="view-all-link">
+                <a href="<?php echo $newArrivalViewAll ?>"><?= __('View All') ?></a>
+            </div>
+        </div>
+        <div id="owl-new-arrival-mobile" class="owl-carousel owl-theme">
+
+            <?php foreach ($products as $product): ?>
+
+                <div class="item">
+                    <div class="product-item-info">
+                        <a href="<?php echo $product->getProductUrl(); ?>" class="product-item-photo">
+                            <img src="<?php echo $helper->getProductImageUrl($product); ?>" />
+                        </a>
+                        <div class="product-item-details">
+                            <strong class="product-item-name">  
+                                <a href="<?php echo $product->getProductUrl() ?>" class="product-item-link">
+                                    <?php echo $product->getName(); ?>
+                                </a>
+                            </strong>  
+                            <div class="best-seller-ratings">
+                                <?php /* product ratings start here */ ?>
+                                <?php
+                                $_ratingSummary = $productRatingsHelper->getRatingSummary($product);
+                                $_reviewCount = ($product->getRatingSummary()->getReviewsCount() ? $product->getRatingSummary()->getReviewsCount() : '0')
+                                ?>
+                                <div class="product-reviews-summary short">
+                                    <div class="rating-summary">
+                                        <div title="<?php echo (int) $_ratingSummary; ?>%" class="rating-result">
+                                            <span style="width:<?php echo (int) $_ratingSummary; ?>%"><span><?php echo (int) $_ratingSummary; ?>%</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="reviews-actions">
+                                        <?php echo __('' . $_reviewCount . ' Review(s)'); ?>
+                                    </div>
+                                </div>
+                                <?php /* product ratings end here */ ?>
+                            </div>
+                            <div class="best-seller-price">
+                                <?php echo $this->getProductPriceHtml($product); ?>
+                            </div>
+                            <div class="product-item-inner">
+                                <input type="hidden" class="popup-checkout-url" value="<?php echo $block->getUrl('checkout', ['_secure' => true]);?>" />
+                            <div class="product actions product-item-actions">
+                        <?php if ($product->isSaleable()) :?>
+                            <?php $postParams = $block->getAddToCartParams($product); ?>
+                            <form data-role="tocart-form"
+                                  data-product-sku="<?= $block->escapeHtmlAttr($product->getSku()) ?>"
+                                  action="<?= $block->escapeUrl($postParams['action']) ?>"
+                                  method="post">
+                                <input type="hidden"
+                                       name="product"
+                                       value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
+                                <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                                   value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <button type="submit"
+                                        title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                        class="action tocart primary">
+                                            <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                </button>
+                            </form>
+                        <?php else: ?>
+                                <?php if ($product->isAvailable()) :?>
+                                        <div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+                                <?php else :?>
+                                        <div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
+                                <?php endif; ?>    
+                        <?php endif; ?>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="featured-category mobile-feature-image">
+    <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('home_feature_image')->toHtml();?>
+</div>
+
+<script type="text/javascript" xml="space">// <![CDATA[
+    //require(['jquery','owlcarousel'], function () {
+        require(['jquery', 'mageplaza/core/owl.carousel'], function ($) {
+
+            var isRTL = $("body").hasClass('rtl');
+            $("#owl-new-arrival-mobile").owlCarousel({
+                margin:10,
+                items:6,
+                //itemsDesktop: [1080, 6],
+                //itemsDesktopSmall: [860, 3],
+                //itemsTablet: [768, 3],
+                //itemsTabletSmall: [639, 3],
+                //itemsMobile: [479, 2],
+                dots: false,
+                rtl: isRTL,
+                navigationText: ['<div class="lft-btn"><i class="fa fa-angle-left"></i></div>', '<div class="rgt-btn"><i class="fa fa-angle-right"></div>'],
+                nav: true,
+                loop: true,
+                responsive:{
+                    0:{
+                        items:2.5,
+                         margin:0,
+                    },
+                    480:{
+                         margin:0,
+                        items:2.5
+                    },
+                    768:{
+                        items:2.5,
+                         margin:2,
+                    },
+                    992:{
+                        items:4,
+                         margin:2,
+                    },
+                    1200:{
+                        items:5
+                    },
+                    1300:{
+                        items:6
+                    }
+                },
+            });
+        });
+    //});
+// ]]></script>

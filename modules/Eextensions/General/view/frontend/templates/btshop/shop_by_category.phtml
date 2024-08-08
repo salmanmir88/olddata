@@ -1,0 +1,46 @@
+<?php
+/****** get all category collection from block ******/
+$categories = $block->getCategoryCollection();
+
+
+$categorytree = $block->buildTree($categories);
+// pr($categorytree); die;
+// echo count($categorytree);
+?>
+                        
+<?php if(isset($categorytree) && $categorytree != ''){ ?>
+<div class="shop_category_section shopcategory">
+    <div class="container">
+        <div class="heading">
+			<h2><?php echo __('Shop by Categories'); ?></h2>
+		</div>
+		<div class="shop-category-slider owl-carousel owl-theme">
+			<div class="shop_category_details">
+				<?php $i=1; foreach ($categorytree as $maincategory) { ?>
+					<?php if(isset($maincategory) && $maincategory != ''){ ?>
+						<?php if(isset($maincategory['cat_image']) && $maincategory['cat_image'] != ''){ ?>
+							<div class="shop_category_box fashion_box">
+								<?php 
+									$string		= $maincategory['name'];
+									list($second,$first) = explode(' ',$string,2);
+								?>
+								<span><?php echo $second; ?></span>
+								<h3><?php echo $first; ?></h3>
+								<a href="<?php echo $maincategory['url']; ?>">
+									<?= __('View all')?> <img src="<?php echo $this->getViewFileUrl('images/arrow-right.png'); ?>" alt="img" />
+								</a>
+								<div class="shop_category_product">
+									<figure>
+										<img src="<?php echo $maincategory['cat_image']; ?>" alt="category-img" />
+									</figure>
+								</div>
+							</div>
+							<?php if($i%2 == 0){ if(count($categorytree) != $i){ ?> </div><div class="shop_category_details"> <?php } } ?>
+						<?php $i++; } ?>
+					<?php } ?>	
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>
+<?php } ?>

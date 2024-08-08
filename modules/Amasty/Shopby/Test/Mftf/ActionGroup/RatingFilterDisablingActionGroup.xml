@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="RatingFilterDisablingActionGroup" extends="RatingFilterEnablingActionGroup">
+        <arguments>
+            <argument name="customFilter"/>
+            <argument name="customFilter3"/>
+        </arguments>
+        <click selector="{{AdminProductProfileSection.SelectStarRating('4')}}"
+               stepKey="selectOneStarRating1"/>
+        <click selector="{{AdminProductProfileSection.SelectStarRating('2')}}"
+               stepKey="selectOneStarRating2"/>
+        <click selector="{{AdminProductProfileSection.SelectStarRating('6')}}"
+               stepKey="selectOneStarRating3"/>
+        <selectOption selector="{{AdminILNSettingsSection.CustomFilterEnableSwitcher('rating')}}"
+                      userInput="{{customFilter.CustomFilterEnableSwitcher('rating')}}"
+                      stepKey="enableDisableRatingFilter1"
+                      after="fillLabelField1"/>
+    </actionGroup>
+
+</actionGroups>

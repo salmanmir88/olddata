@@ -1,0 +1,18 @@
+<?php
+/**
+ * @var \Magento\Payment\Block\Info $block
+ * @see \Magento\Payment\Block\Info
+ */
+$config = $block->getLayout()->createBlock(\Magento\Config\Block\System\Config\Form::class);
+$url    = $config->getConfigValue('payment/embedpay/is_testing') ? 'https://demo.myfatoorah.com/cardview/v1/session.js' : 'https://portal.myfatoorah.com/cardview/v1/session.js';
+?>
+
+<script>
+    require.config({
+        map: {
+            '*': {
+                'mfSessionFile': '<?php echo $url ?>'
+            }
+        }
+    });
+</script>

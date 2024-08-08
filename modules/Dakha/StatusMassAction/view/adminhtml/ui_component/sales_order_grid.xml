@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="pre_order_status_custom_action">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">mass_custom_action1</item>
+                        <item name="label" xsi:type="string" translate="true">Pre order</item>
+                        <item name="url" xsi:type="url" path="dakha_statusmassaction/index/preorder/"/>
+                        <item name="confirm" xsi:type="array">
+                          <item name="title" xsi:type="string">Pre Order</item>
+                          <item name="message" xsi:type="string" translate="true">Are you sure you wan't to selected orders in pre order?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+            <action name="trasnist_koreastatus_custom_action">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">mass_custom_action2</item>
+                        <item name="label" xsi:type="string" translate="true">Trasnist Korea</item>
+                        <item name="url" xsi:type="url" path="dakha_statusmassaction/index/trasnistkorea/"/>
+                        <item name="confirm" xsi:type="array">
+                          <item name="title" xsi:type="string">Trasnist Korea</item>
+                          <item name="message" xsi:type="string" translate="true">Are you sure you wan't to selected orders in trasnist korea?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+            <action name="shippingmecca_custom_action">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">mass_custom_action3</item>
+                        <item name="label" xsi:type="string" translate="true">2- جاري التجهيز</item>
+                        <item name="url" xsi:type="url" path="dakha_statusmassaction/index/shippingmecca/"/>
+                        <item name="confirm" xsi:type="array">
+                          <item name="title" xsi:type="string">2- جاري التجهيز</item>
+                          <item name="message" xsi:type="string" translate="true">Are you sure you wan't to selected orders in 2- جاري التجهيز?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+            <action name="processing_custom_action">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">mass_custom_action4</item>
+                        <item name="label" xsi:type="string" translate="true">3 -جاري المعالجة</item>
+                        <item name="url" xsi:type="url" path="dakha_statusmassaction/index/processing/"/>
+                        <item name="confirm" xsi:type="array">
+                          <item name="title" xsi:type="string">3 -جاري المعالجة</item>
+                          <item name="message" xsi:type="string" translate="true">Are you sure you wan't to selected orders in 3 -جاري المعالجة?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

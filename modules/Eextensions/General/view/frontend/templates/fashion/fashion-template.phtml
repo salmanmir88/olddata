@@ -1,0 +1,110 @@
+<style>
+.catalog-category-view .breadcrumb_section,
+.catalog-category-view .category-view .amslider-container,
+.catalog-category-view .product_list_detail {
+	display:none !important;height:0px;
+}
+.catalog-category-view #maincontent {
+	margin: 0px;
+	padding: 0px;
+	max-width: 100%;
+}
+</style>
+<?php 
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');//get current category
+    // echo $category->getId();
+    // echo $category->getName();
+       
+	$storeManager  = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+	$storeCode       = $storeManager->getStore()->getCode(); 
+
+?>
+<div class="category_fashion">
+	<?php if($category){ ?>
+		<div class="fashion_heading">
+			<h1><?php echo $category->getName(); ?></h1>
+		</div>
+	<?php } ?>
+	
+	<?php if($storeCode == "ar"){ ?>
+		<?php echo $this->getLayout()->createBlock("Magestore\Bannerslider\Block\SliderItem")->setSliderId(4)->toHtml();  ?>
+	<?php }else{ ?>
+		<?php echo $this->getLayout()->createBlock("Magestore\Bannerslider\Block\SliderItem")->setSliderId(3)->toHtml();  ?>
+	<?php } ?>
+</div>
+<!--Brand-logo-section-->
+<?php
+	echo $this->getLayout()
+		  ->createBlock('MGS\Brand\Block\Brand\Featured')
+		  ->setTemplate('MGS_Brand::brand/fashion/featured.phtml')
+		  ->toHtml();
+?>
+<!--Brand-logo-section end-->
+<?php
+	echo $this->getLayout()
+		  ->createBlock('Magento\Cms\Block\Block')
+		  ->setBlockId('fashion-page-category-block')
+		  ->toHtml();
+?>
+<!--New Arrivals section-->
+<?php
+	echo $this->getLayout()
+          ->createBlock('Eextensions\General\Block\AttributeType')
+          ->setTitle(__('New Arrivals'))
+          ->setDescription(__('New Arrivals'))
+          ->setAttibuteCode('new_arrival')
+          ->setPageSize('10')
+          ->setTemplate('Eextensions_General::fashion/new-arrival-product.phtml')
+          ->toHtml();
+?>
+<!--New Arrivals section end-->
+<!--Top designs section-->
+<?php
+	echo $this->getLayout()
+		  ->createBlock('Magento\Cms\Block\Block')
+		  ->setBlockId('fashion-page-after-new-arrival-block')
+		  ->toHtml();
+?>
+<!--Top designs section end-->
+<!--The bestsellers section-->
+<?php
+	echo $this->getLayout()
+          ->createBlock('Eextensions\General\Block\AttributeType')
+          ->setTitle(__('The bestsellers'))
+          ->setDescription(__('The bestsellers'))
+          ->setAttibuteCode('best_seller')
+          ->setPageSize('10')
+          ->setTemplate('Eextensions_General::fashion/best-sellers-product.phtml')
+          ->toHtml();
+?>
+<!--Top selling products section end-->
+<!--New Arrival PhotoCard section-->
+<?php
+	echo $this->getLayout()
+		  ->createBlock('Magento\Cms\Block\Block')
+		  ->setBlockId('fashion-page-after-bestseller-block')
+		  ->toHtml();
+?>
+<!--New Arrival PhotoCard section end-->
+<!--The bestsellers section-->
+<?php
+	echo $this->getLayout()
+          ->createBlock('Eextensions\General\Block\AttributeType')
+          ->setTitle(__('Featured products'))
+          ->setDescription(__('Featured products'))
+          ->setAttibuteCode('featured')
+          ->setPageSize('10')
+          ->setTemplate('Eextensions_General::fashion/featured-product.phtml')
+          ->toHtml();
+?>
+<!--Top selling products section end-->
+<!--Bestsellers section--> 
+<?php
+	echo $this->getLayout()
+		  ->createBlock('Magento\Cms\Block\Block')
+		  ->setBlockId('fashion-page-after-featured-block')
+		  ->toHtml();
+?>
+<!--Bestsellers section end-->
+

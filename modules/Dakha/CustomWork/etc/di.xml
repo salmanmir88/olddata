@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+   <type name="Magento\Framework\View\Element\UiComponent\DataProvider\FilterApplierInterface">
+        <plugin name="amasty_report_sales_order_items_listing_modifier"
+                type="Dakha\CustomWork\Plugin\UiComponent\DataProvider\FilterApplier"
+                sortOrder="1"/>
+    </type>
+    <type name="Mirasvit\Helpdesk\Helper\StringUtil">
+        <plugin name="Dakha_CustomWork_Plugin_Frontend_Mirasvit_Helpdesk_Helper_StringUtil" type="Dakha\CustomWork\Plugin\Frontend\Mirasvit\Helpdesk\Helper\StringUtil" sortOrder="10" disabled="false"/>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+             <item name="helpdesk_ticket_adminlisting_data_source" xsi:type="string">Mirasvit\Helpdesk\Model\ResourceModel\Ticket\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

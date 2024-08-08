@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dakha_CustomWork::crm_admin_tickets_customwork" title="CRM Admin Ticket" module="Dakha_CustomWork" sortOrder="05" action="helpdesk/ticket/index" resource="Dakha_CustomWork::customwork"/>
+        <add id="Dakha_CustomWork::crm_customer_tickets" title="CRM Customer Ticket" module="Dakha_CustomWork" sortOrder="06" action="customwork/index/admintickets" resource="Dakha_CustomWork::customwork"/>
+    </menu>
+</config>

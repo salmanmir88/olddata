@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  Apptrian
+ * @package   Apptrian_FacebookPixel
+ * @author    Apptrian
+ * @copyright Copyright (c) Apptrian (http://www.apptrian.com)
+ * @license   http://www.apptrian.com/license Proprietary Software License EULA
+ */
+-->
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <value id="apptrian-script-src" type="host">www.apptrian.com</value>
+                <value id="apptrian-facebook-pixel-script-src" type="host">facebook.com</value>
+                <value id="apptrian-facebook-pixel-script-src-www" type="host">www.facebook.com</value>
+                <value id="apptrian-facebook-pixel-script-src-connect" type="host">connect.facebook.net</value>
+                <value id="apptrian-facebook-pixel-script-src-graph" type="host">graph.facebook.com</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="apptrian-connect-src" type="host">www.apptrian.com</value>
+                <value id="apptrian-facebook-pixel-connect-src" type="host">facebook.com</value>
+                <value id="apptrian-facebook-pixel-connect-src-www" type="host">www.facebook.com</value>
+                <value id="apptrian-facebook-pixel-connect-src-connect" type="host">connect.facebook.net</value>
+                <value id="apptrian-facebook-pixel-connect-src-graph" type="host">graph.facebook.com</value>
+            </values>
+        </policy>
+        <policy id="img-src">
+            <values>
+                <value id="apptrian-img-src" type="host">www.apptrian.com</value>
+                <value id="apptrian-facebook-pixel-img-src" type="host">facebook.com</value>
+                <value id="apptrian-facebook-pixel-img-src-www" type="host">www.facebook.com</value>
+                <value id="apptrian-facebook-pixel-img-src-connect" type="host">connect.facebook.net</value>
+                <value id="apptrian-facebook-pixel-img-src-graph" type="host">graph.facebook.com</value>
+            </values>
+        </policy>
+        <policy id="media-src">
+            <values>
+                <value id="apptrian-media-src" type="host">www.apptrian.com</value>
+                <value id="apptrian-facebook-pixel-media-src" type="host">facebook.com</value>
+                <value id="apptrian-facebook-pixel-media-src-www" type="host">www.facebook.com</value>
+                <value id="apptrian-facebook-pixel-media-src-connect" type="host">connect.facebook.net</value>
+                <value id="apptrian-facebook-pixel-media-src-graph" type="host">graph.facebook.com</value>
+            </values>
+        </policy>
+        
+        <policy id="form-action">
+            <values>
+                <value id="apptrian-form-action" type="host">www.apptrian.com</value>
+                <value id="apptrian-facebook-pixel-form-action" type="host">facebook.com</value>
+                <value id="apptrian-facebook-pixel-form-action-www" type="host">www.facebook.com</value>
+                <value id="apptrian-facebook-pixel-form-action-connect" type="host">connect.facebook.net</value>
+                <value id="apptrian-facebook-pixel-form-action-graph" type="host">graph.facebook.com</value>
+            </values>
+        </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="apptrian-frame-src" type="host">www.apptrian.com</value>
+                <value id="apptrian-facebook-pixel-frame-src" type="host">facebook.com</value>
+                <value id="apptrian-facebook-pixel-frame-src-www" type="host">www.facebook.com</value>
+                <value id="apptrian-facebook-pixel-frame-src-connect" type="host">connect.facebook.net</value>
+                <value id="apptrian-facebook-pixel-frame-src-graph" type="host">graph.facebook.com</value>
+            </values>
+        </policy>
+        
+    </policies>
+</csp_whitelist>

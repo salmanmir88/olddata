@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureCategoryIDSDisplayModeActionGroup">
+        <arguments>
+            <argument name="categoryIDS1"/>
+        </arguments>
+        <amOnPage url="{{AttributeProfilePage.url(categoryIDS1.CategoryIDSID)}}" stepKey="navigateToCategoryIDSSettingsPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{AttributeProfileSection.ILNTab}}"
+               stepKey="clickOnILNTab1"/>
+        <selectOption selector="{{AttributeProfileSection.DisplayModeSwitcher}}"
+                      userInput="{{categoryIDS1.DisplayModeSwitcher}}"
+                      stepKey="SetDisplayMode1"/>
+        <selectOption selector="{{AttributeProfileSection.ShowInTheBlockSwitcher}}"
+                      userInput="{{categoryIDS1.ShowInTheBlockSwitcher}}"
+                      stepKey="SetLocation1"/>
+        <click selector="{{AdminILNSettingsSection.Save}}" stepKey="clickSaveConfig1"/>
+        <magentoCLI command="indexer:reindex" stepKey="reindex1"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>
+
+
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="NewFilterExpandActionGroup" extends="NewFilterEnablingActionGroup">
+        <arguments>
+            <argument name="customFilter"/>
+            <argument name="customFilter2"/>
+            <argument name="customFilter3"/>
+        </arguments>
+        <selectOption selector="{{AdminILNSettingsSection.CustomFilterExpandSwitcher('am_is_new')}}"
+                      userInput="{{customFilter2.CustomFilterExpandSwitcher('am_is_new')}}"
+                      stepKey="ExpandNewFilter1"
+                      after="selectDisplayMode1"/>
+    </actionGroup>
+
+</actionGroups>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="BrandAttributeConfigurationActionGroup">
+        <arguments>
+            <argument name="brandAttribute"/>
+        </arguments>
+        <amOnPage url="{{AdminIlnBrandsSettingsPage.url}}" stepKey="navigateToILNBrandsSettingsPage1"/>
+        <conditionalClick stepKey="expandGeneralSettingsTab1"
+                          selector="{{AdminILNBrandsSettingsSection.GeneralSettingsTab}}"
+                          dependentSelector="{{AdminILNBrandsSettingsSection.SelectBrandAttributeOption}}"
+                          visible="false"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.SelectBrandAttributeOption}}"
+                      userInput="{{brandAttribute.SelectBrandAttributeOption}}"
+                      stepKey="selectMaterialAsBrandAttribute1"/>
+        <fillField userInput="{{brandAttribute.BrandUrlKeyField}}"
+                   selector="{{AdminILNBrandsSettingsSection.BrandUrlKeyField}}" stepKey="fillBrandUrlKeyField1"/>
+        <click selector="{{AdminILNBrandsSettingsSection.Save}}" stepKey="clickSaveConfig1"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>

@@ -1,0 +1,67 @@
+<?php
+/****** get all category collection from block ******/
+/* $brands = $block->getBrandByCategoryId($categoryId = 46);
+pr($brands); */
+
+$categories = $block->getCategoryCollection();
+$categorytree = $block->buildTree($categories);
+// pr($categorytree);die;
+?>
+<li class="nav-item all-categories submenu">
+	<a href="javascript:void(0)"> 
+		<img src="<?php echo $this->getViewFileUrl('images/all-cate.png');?>" alt="All Categories" class="img-1">
+		<span><?php echo __('All Categories'); ?></span>
+		<img src="<?php echo $this->getViewFileUrl('images/arrow-down.png');?>" alt="All Categories">
+	</a>
+    <a href="javascript:void(0)" class="collapse_toggle"><img src="<?php echo $this->getViewFileUrl('images/dropdown.svg');?>" alt="img"></a>         
+	<?php if(isset($categorytree) && $categorytree != ''){ ?>
+	<ul class="mCustomScrollbar productitem_ul">
+		<li>
+			<div class="all_category_block">
+				<ul class="menu_list nav nav-pills">
+					<?php $mk=1; foreach ($categorytree as $maincategory) { ?>
+						<?php if(isset($maincategory)){ ?>
+							<li>
+								<a href="#tab-<?php echo $mk; ?>" data-toggle="tab"><?php echo $maincategory['name']; ?></a>
+							</li>
+						<?php } ?>
+					<?php $mk++; } ?>
+				</ul>  
+			</div>
+			<div class="tab-content all_category_section">
+				<?php $mj=1;  foreach ($categorytree as $maincategory) { ?>	
+					<div class="tab-pane <?php if($mj == 1){ echo "active"; } ?>" id="tab-<?php echo $mj; ?>">		
+						<h3><a href="<?php echo $maincategory['url']; ?>" class="tab-cat-title"><?php echo $maincategory['name']; ?></a></h3>    
+						<?php if(isset($maincategory['children'])){ ?>
+							<ul>
+								<h4><?php echo __('Most Popular'); ?></h4>
+								<?php foreach ($maincategory['children'] as $subcategory) { ?>
+									<li>
+										<a href="<?php echo $subcategory['url']; ?>"><?php echo $subcategory['name']; ?></a>
+									</li>
+								<?php } ?>
+							</ul>
+						<?php } ?>
+						<?php 
+						if(isset($maincategory)){
+							$brands = $block->getBrandByCategoryId($maincategory['entity_id']);
+							if(isset($brands) && $brands != '' && count($brands)>0){
+						?>
+							<ul data-category-id="<?php echo $maincategory['entity_id']; ?>" >
+								<h4><?php echo __('Top Brands'); ?></h4>
+								<?php foreach ($brands as $brand){ ?>
+								<li>
+									<a href="<?php echo $maincategory['url'].'?mgs_brand='.$brand['option_id']; ?>"><?php echo $brand['name']; ?></a>
+								</li>
+								<?php } ?>
+							</ul>
+							<?php } ?>
+						<?php } ?>
+					</div>
+				<?php $mj++;  } ?>
+			</div>
+		</li>
+	</ul>
+	<?php } ?>
+</li> 
+<!--menu end-->

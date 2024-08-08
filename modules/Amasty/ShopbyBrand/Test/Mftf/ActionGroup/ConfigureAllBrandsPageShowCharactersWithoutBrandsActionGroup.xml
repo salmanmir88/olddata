@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureAllBrandsPageShowCharactersWithoutBrandsActionGroup"
+                 extends="ConfigureAllBrandsPageSearchQuantityEmptyBrandsActionGroup">
+        <arguments>
+            <argument name="elementsAllBrandsPage1"/>
+        </arguments>
+        <grabTextFrom selector="{{AdminILNBrandsSettingsSection.AllBrandsPageWidgetCode}}"
+                      stepKey="grabAllBrandsPageWidgetCode1"
+                      after="expandAllBrandsPageSettingsTab1"/>
+        <setCookie userInput="setAllBrandsPageWidgetCodeInCookie"
+                   value="{$grabAllBrandsPageWidgetCode1}"
+                   stepKey="setAllBrandsPageWidgetCodeInCookie1"
+                   after="grabAllBrandsPageWidgetCode1"/>
+        <selectOption selector="{{AdminILNBrandsSettingsSection.ShowCharactersWithoutBrandsSwitcher}}"
+                      userInput="{{elementsAllBrandsPage1.ShowCharactersWithoutBrandsSwitcher}}"
+                      stepKey="setShowCharactersWithoutBrands1"
+                      after="setEnableFilterCharacter1"/>
+    </actionGroup>
+
+</actionGroups>

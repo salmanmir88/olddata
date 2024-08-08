@@ -1,0 +1,15 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="header.links">
+            <!-- Contact us Link -->
+            <block class="Magento\Framework\View\Element\Html\Link" name="tracking.link" after="register-link">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="false">Track Order</argument>
+                    <argument name="path" xsi:type="string" translate="false">tracking</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+        <referenceBlock name="wishlist_sidebar" remove="true" />
+    </body>
+</page>

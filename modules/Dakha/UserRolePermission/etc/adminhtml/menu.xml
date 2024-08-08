@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Dakha::top_level" title="User roles Manage" module="Dakha_UserRolePermission" sortOrder="10" resource="Magento_Backend::content"/>
+		<add id="Dakha_UserRolePermission::dakha_userrolepermission_userroles" title="userroles" module="Dakha_UserRolePermission" sortOrder="111" resource="Magento_Backend::content" parent="Dakha::top_level" action="dakha_userrolepermission/userroles/index"/>
+	</menu>
+</config>

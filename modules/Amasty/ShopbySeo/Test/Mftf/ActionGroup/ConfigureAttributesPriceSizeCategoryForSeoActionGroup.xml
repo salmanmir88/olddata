@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbySeo
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureAttributesPriceSizeCategoryForSeoActionGroup"
+                 extends="ConfigureAttributesForSeoActionGroup">
+        <arguments>
+            <argument name="attributeSeoScenario1"/>
+            <argument name="attributeSeoScenario2"/>
+            <argument name="attributeSeoScenario3"/>
+            <argument name="RTC"/>
+        </arguments>
+        <amOnPage url="{{AttributeProfilePage.url(IndexFollowRelNoFollowDefaultCategory.ID)}}"
+                  stepKey="navigateToClimateAttributePage1"/>
+        <remove keyForRemoval="enableSeoFriendly1"/>
+        <amOnPage url="{{AttributeProfilePage.url(IndexFollowRelNoFollowDefaultPrice.ID)}}"
+                  stepKey="navigateToPatternAttributePage1"/>
+        <remove keyForRemoval="allowSingleSelect1"/>
+        <remove keyForRemoval="enableSeoFriendly2"/>
+        <amOnPage url="{{AttributeProfilePage.url(IndexFollowRelNoFollowDefaultSize.ID)}}"
+                  stepKey="navigateToStyleGeneralAttributePage1"/>
+    </actionGroup>
+
+</actionGroups>

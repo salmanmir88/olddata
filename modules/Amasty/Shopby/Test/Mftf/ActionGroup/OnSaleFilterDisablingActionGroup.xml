@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="OnSaleFilterDisablingActionGroup" extends="OnSaleFilterEnablingActionGroup">
+        <arguments>
+            <argument name="customFilter"/>
+            <argument name="customFilter3"/>
+        </arguments>
+        <clearField selector="{{AdminProductProfileSection.SpecialPriceField}}" stepKey="configureSpecPrice1"/>
+        <selectOption selector="{{AdminILNSettingsSection.CustomFilterEnableSwitcher('am_on_sale')}}"
+                      userInput="{{customFilter.CustomFilterEnableSwitcher('am_on_sale')}}"
+                      stepKey="enableDisableOnSaleFilter1"
+                      after="fillLabelField1"/>
+        <conditionalClick stepKey="defineStatus1"
+                          selector="{{AdminILNSettingsSection.CatalogPriceRuleEnablingSwitcher}}"
+                          dependentSelector="{{AdminILNSettingsSection.DependentToggle('0')}}"
+                          visible="true"/>
+    </actionGroup>
+
+</actionGroups>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+        	<block class="Magento\Framework\View\Element\Template" template="Dakha_OrderReport::salesitem/rangfilter.phtml" name="orderreport_salesitem_range"/>
+            <block class="Dakha\OrderReport\Block\Adminhtml\Salesitem" name="orderreport_salesitem_listing"/>
+        </referenceContainer>
+        <referenceContainer name="admin.orderreport.salesitem.grid"></referenceContainer>
+    </body>
+</page>

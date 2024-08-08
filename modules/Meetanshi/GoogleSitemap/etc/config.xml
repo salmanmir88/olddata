@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <google_sitemap>
+            <xml_settings>
+                <xml_sitemap>1</xml_sitemap>
+                <enable_homepage_optimization>1</enable_homepage_optimization>
+                <enable_additional_links>0</enable_additional_links>
+                <include_images>1</include_images>
+                <maximum_number_url>50000</maximum_number_url>
+                <maximum_file_size>10485760</maximum_file_size>
+            </xml_settings>
+            <auto_generation_settings>
+                <send_sitemap_error_email>0</send_sitemap_error_email>
+                <email_sender>general</email_sender>
+                <error_email_template>google_sitemap_auto_generation_settings_error_email_template</error_email_template>
+            </auto_generation_settings>
+            <html_settings>
+                <html_sitemap>1</html_sitemap>
+                <category_url>1</category_url>
+                <product_url>1</product_url>
+                <cms_page_url>1</cms_page_url>
+                <enable_additional_links>0</enable_additional_links>
+                <sitemap_link_to_footer>1</sitemap_link_to_footer>
+            </html_settings>
+        </google_sitemap>
+    </default>
+</config>

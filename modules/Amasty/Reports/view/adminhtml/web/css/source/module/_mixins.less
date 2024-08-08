@@ -1,0 +1,96 @@
+//
+//  Mixins
+//  _________________________
+
+.transition(@del: .3) {
+    transition: ~'@{del}s all ease-in';
+}
+
+.mage-icon(@icon-content) {
+    & {
+        .am-flex(center, center);
+
+        position: relative;
+    }
+
+    &:after {
+        .transition(.1);
+        display: block;
+        font-family: @icons-admin__font-name;
+        content: @icon-content;
+    }
+}
+
+.am-flex(@horiz-pos: none,
+         @vert-pos: none,
+         @wrap: none
+) {
+    & {
+        display: flex;
+    }
+
+    & when not (@horiz-pos = none) {
+        justify-content: @horiz-pos;
+    }
+
+    & when not (@vert-pos = none) {
+        align-items: @vert-pos;
+    }
+
+    & when not (@wrap = none) {
+        flex-wrap: @wrap;
+    }
+}
+
+.am-scrollbar(
+    @color: #ccc,
+    @second-color: #fff
+) {
+    & {
+        overflow: auto;
+
+        // Firefox Custom Scrollbar Styles
+        scrollbar-color: @color @second-color;
+        scrollbar-width: thin;
+        // (END) Firefox Custom Scrollbar Styles
+
+        // IE Custom Scrollbar Styles
+        scrollbar-face-color: @color;
+        scrollbar-highlight-color: @color;
+        scrollbar-shadow-color: @color;
+        scrollbar-track-color: @second-color;
+        // (END) IE Custom Scrollbar Styles
+    }
+
+    // Webkit Custom Scrollbar Styles
+    &::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 12px;
+        background: @color;
+    }
+    // (END) Webkit Custom Scrollbar Styles
+
+    > * {
+        max-width: none;
+    }
+}
+
+.am-word-break {
+    & {
+        word-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .ie11 & {
+        word-break: break-all;
+    }
+}

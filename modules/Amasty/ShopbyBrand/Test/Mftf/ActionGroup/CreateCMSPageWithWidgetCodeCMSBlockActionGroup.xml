@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="CreateCMSPageWithWidgetCodeCMSBlockActionGroup"
+                 extends="CreateCMSPageWithWidgetCodeActionGroup">
+        <arguments>
+            <argument name="widgetCode"/>
+        </arguments>
+        <remove keyForRemoval="grabCookie2"/>
+        <remove keyForRemoval="insertWidget1"/>
+        <click selector="{{TinyMCESection.InsertWidgetBtn}}"
+               stepKey="clickInsertWidgetButton1"
+               after="fillFieldContentHeading1"/>
+        <waitForPageLoad stepKey="waitForPageLoad3" after="clickInsertWidgetButton1"/>
+        <selectOption selector="{{WidgetSection.WidgetType}}"
+                      userInput="CMS Static Block"
+                      stepKey="selectCMSStaticBlock2"
+                      after="waitForPageLoad3"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskDisappear1" after="selectCMSStaticBlock2"/>
+        <selectOption selector="{{WidgetSection.WidgetTemplate}}"
+                      userInput="CMS Static Block Default Template"
+                      stepKey="selectTemplate1"
+                      after="waitForLoadingMaskDisappear1"/>
+        <click selector="{{WidgetSection.BtnChooser}}"
+               stepKey="clickSelectPageBtn1"
+               after="selectTemplate1"/>
+        <waitForElementVisible selector="{{WidgetSection.BlockPage(CMSBlockData3.title)}}"
+                               stepKey="waitForBlockTitle1"
+                               after="clickSelectPageBtn1"/>
+        <click selector="{{WidgetSection.BlockPage(CMSBlockData3.title)}}"
+               stepKey="selectPreCreateBlock1"
+               after="waitForBlockTitle1"/>
+        <wait time="3"
+              stepKey="wait1"
+              after="selectPreCreateBlock1"/>
+        <click selector="{{WidgetSection.InsertWidget}}"
+               stepKey="clickInsertWidgetBtn1"
+               after="wait1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" after="clickInsertWidgetBtn1"/>
+        <waitForPageLoad stepKey="waitForPageLoad4" after="waitForLoading1"/>
+        <waitForElementVisible selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}"
+                               stepKey="waitForSaveButtonVisible1"
+                               after="waitForPageLoad4"/>
+    </actionGroup>
+
+</actionGroups>
+
+

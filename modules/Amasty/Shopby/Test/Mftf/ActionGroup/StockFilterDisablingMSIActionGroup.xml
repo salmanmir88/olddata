@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="StockFilterDisablingMSIActionGroup" extends="StockFilterEnablingActionGroup">
+        <arguments>
+            <argument name="customFilter"/>
+            <argument name="customFilter3"/>
+            <argument name="filter_value1"/>
+            <argument name="filter_value2"/>
+        </arguments>
+        <waitForElement selector="{{AdminProductProfileSection.UnassignMSISource(filter_value1)}}"
+                        stepKey="waitForElement1"/>
+        <remove keyForRemoval="switchToOutOfStockSelectedProduct1"/>
+        <click selector="{{AdminProductProfileSection.UnassignMSISource(filter_value1)}}"
+               stepKey="clickOnUnassign1"
+               after="waitForElement1"/>
+        <waitForElement selector="{{AdminProductProfileSection.UnassignMSISource(filter_value2)}}"
+                        stepKey="waitForElement3"
+                        after="clickOnUnassign1"/>
+        <click selector="{{AdminProductProfileSection.UnassignMSISource(filter_value2)}}"
+               stepKey="clickOnUnassign2"
+               after="waitForElement3"/>
+        <selectOption selector="{{AdminILNSettingsSection.CustomFilterEnableSwitcher('stock')}}"
+                      userInput="{{customFilter.CustomFilterEnableSwitcher('stock')}}"
+                      stepKey="enableDisableStockFilter1"
+                      after="fillLabelField1"/>
+        <magentoCLI
+                command="config:set cataloginventory/options/show_out_of_stock 0"
+                stepKey="configureAllPerPageSetting1"/>
+    </actionGroup>
+
+</actionGroups>

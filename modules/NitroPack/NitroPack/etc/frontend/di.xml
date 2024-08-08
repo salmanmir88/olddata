@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<!-- Cookie service for easier access to cookies -->
+	<preference for="NitroPack\NitroPack\Api\NitroCookieInterface" type="NitroPack\NitroPack\Api\NitroCookie" />
+	<type name="NitroPack\NitroPack\Api\NitroService" shared="true"></type>
+
+	<!-- Check for local cache at the earliest possible time -->
+	<type name="Magento\Framework\App\FrontController">
+		<plugin name="nitropack_before_front_dispatch_intercept" type="NitroPack\NitroPack\Plugin\CacheDelivery\LocalCachePlugin" sortOrder="9999" disabled="false"/>
+	</type>
+	<!-- Check for remote cache / schedule for optimization once the request has been routed so we know the layout and page type -->
+	<type name="Magento\UrlRewrite\Controller\Router">
+		<plugin name="nitropack_urlrewrite_router_intercept" type="NitroPack\NitroPack\Plugin\CacheDelivery\RemoteCachePlugin" sortOrder="9999" disabled="false"/>
+	</type>
+	<type name="Magento\Framework\App\Router\Base">
+		<plugin name="nitropack_standard_router_intercept" type="NitroPack\NitroPack\Plugin\CacheDelivery\RemoteCachePlugin" sortOrder="9999" disabled="false"/>
+	</type>
+	<type name="Magento\Cms\Controller\Router">
+		<plugin name="nitropack_cms_router_intercept" type="NitroPack\NitroPack\Plugin\CacheDelivery\RemoteCachePlugin" sortOrder="9999" disabled="false"/>
+	</type>
+	<type name="Magento\Framework\App\Router\DefaultRouter">
+		<plugin name="nitropack_default_router_intercept" type="NitroPack\NitroPack\Plugin\CacheDelivery\RemoteCachePlugin" sortOrder="9999" disabled="false"/>
+	</type>
+	<!-- Handle validation of webhook requests -->
+	<type name="Magento\Framework\App\Request\CsrfValidator">
+		<plugin name="nitropack_webhook_csrf_override" type="NitroPack\NitroPack\Plugin\WebhookValidationPlugin" />
+	</type>
+
+	<!-- Handle overriding the store and currency for requests coming from NitroPack -->
+	<type name="Magento\Store\Model\StoreResolver">
+		<plugin name="nitropack_store_resolver_override" type="NitroPack\NitroPack\Plugin\CookieOverrides\StoreResolverPlugin" />
+	</type>
+	<type name="Magento\Store\Model\StoreSwitcher">
+		<plugin name="nitropack_store_switcher_cookie_updater" type="NitroPack\NitroPack\Plugin\CookieOverrides\StoreSwitcherPlugin" />
+	</type>
+	<type name="Magento\Store\Model\Store">
+		<plugin name="nitropack_store_currency_override" type="NitroPack\NitroPack\Plugin\CookieOverrides\CurrencyStorePlugin" />
+	</type>
+	<type name="Magento\Framework\App\Http\Context">
+		<plugin name="nitropack_http_context_currency_override" type="NitroPack\NitroPack\Plugin\CookieOverrides\CurrencyHttpContextPlugin" />
+	</type>
+	<type name="Magento\Framework\Session\SessionManagerInterface">
+		<plugin name="nitropack_session_currency_override" type="NitroPack\NitroPack\Plugin\CookieOverrides\CurrencySessionPlugin" />
+	</type>
+</config>

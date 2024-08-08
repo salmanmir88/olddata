@@ -1,0 +1,16 @@
+<?php
+/**
+* @author Amasty Team
+* @copyright Copyright (c) 2022 Amasty (https://www.amasty.com)
+* @package Affiliate for Magento 2
+*/
+?>
+<script>
+    require([
+        'jquery'
+    ], function ($) {
+        $('#user_is_custom_referring_code').mage('amastyLegacyFormFieldEnabler', {
+            depFields: '#user_referring_code'
+        });
+    });
+</script>

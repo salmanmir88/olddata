@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  Apptrian
+ * @package   Apptrian_FacebookPixel
+ * @author    Apptrian
+ * @copyright Copyright (c) Apptrian (http://www.apptrian.com)
+ * @license   http://www.apptrian.com/license Proprietary Software License EULA
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class="Apptrian\FacebookPixel\Block\Code" 
+                name="apptrian.facebookpixel" 
+                template="Apptrian_FacebookPixel::code.phtml" 
+                after="-" 
+                ifconfig="apptrian_facebookpixel/client/enabled" />
+        </referenceContainer>
+    </body>
+</page>

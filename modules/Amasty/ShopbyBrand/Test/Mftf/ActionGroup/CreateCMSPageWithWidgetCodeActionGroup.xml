@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbyBrand
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="CreateCMSPageWithWidgetCodeActionGroup">
+        <arguments>
+            <argument name="widgetCode"/>
+        </arguments>
+        <amOnPage url="{{CmsNewPagePage.url}}" stepKey="amOnCMSNewPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <fillField selector="{{CmsNewPagePageBasicFieldsSection.pageTitle}}"
+                   userInput="Test CMS Page"
+                   stepKey="fillFieldTitle1"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}"
+               stepKey="clickExpandContent1"/>
+        <fillField selector="{{CmsNewPagePageContentSection.contentHeading}}"
+                   userInput="Test CMS Page"
+                   stepKey="fillFieldContentHeading1"/>
+        <grabCookie userInput="{{widgetCode.CookieUserInput}}"
+                    stepKey="grabCookie2"/>
+        <fillField userInput="{$grabCookie2}"
+                   selector="{{CmsNewPagePageActionsSection.content}}"
+                   stepKey="insertWidget1"/>
+        <click selector="{{CmsNewPagePageSeoSection.header}}"
+               stepKey="clickExpandSearchEngineOptimization1"/>
+        <fillField selector="{{CmsNewPagePageSeoSection.urlKey}}"
+                   userInput="test-cms-page"
+                   stepKey="fillFieldURLKey1"/>
+        <grabValueFrom selector="{{CmsNewPagePageSeoSection.urlKey}}"
+                       stepKey="grabCMSPageUrl"/>
+        <setCookie userInput="setCMSPageURL"
+                   value="{$grabCMSPageUrl}"
+                   stepKey="setCookie1"/>
+        <click selector="{{CmsNewPagePiwSection.header}}"
+               stepKey="clickPageInWebsites1"/>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}"
+               stepKey="clickSaveCmsPage"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad1"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache1"/>
+    </actionGroup>
+
+</actionGroups>
+
+

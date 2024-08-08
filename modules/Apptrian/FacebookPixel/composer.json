@@ -1,0 +1,18 @@
+{
+  "name": "apptrian/facebook-pixel",
+  "description": "Adds Meta Pixel (Facebook Pixel) and Meta Conversions API (Facebook Conversions API / Facebook Server-Side API) with standard events and Dynamic Ads code on appropriate pages. Supports Advanced Matching (if the customer is logged in) and has the ability to add custom parameters. Passes W3C validation. Easy to install and use.",
+  "type": "magento2-module",
+  "version": "4.6.2",
+  "license": [
+    "EULA"
+  ],
+  "require": {
+    "php": "~5.5|~7.0|~8.0"
+  },
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+      "Apptrian\\FacebookPixel\\": ""
+    }
+  }
+}

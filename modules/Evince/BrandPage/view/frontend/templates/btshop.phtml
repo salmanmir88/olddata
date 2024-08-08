@@ -1,0 +1,67 @@
+<?php
+	echo $this->getLayout()
+		  ->createBlock('Magento\Cms\Block\Block')
+		  ->setBlockId('btshop-page-main-banner')
+		  ->toHtml();
+?>
+<!--BT21 section-->
+<?php
+	echo $this->getLayout()
+		  ->createBlock('Magento\Cms\Block\Block')
+		  ->setBlockId('btshop-page-after-banner-block')
+		  ->toHtml();
+?>
+<!--BT21 section end-->
+ 
+<!--Shop by category section-->
+<?php 	
+	echo $this->getLayout()
+			->createBlock("Eextensions\General\Block\ShopByCategory")
+			->setTemplate("Eextensions_General::btshop/shop_by_category.phtml")
+			->toHtml();
+?>
+<!--Shop by category section end-->
+
+<!--New Arrival PhotoCard section-->
+<?php
+	echo $this->getLayout()
+		  ->createBlock('Magento\Cms\Block\Block')
+		  ->setBlockId('btshop-page-after-shop-by-category-block')
+		  ->toHtml();
+?>
+<!--New Arrival PhotoCard section end-->
+
+<!--New Arrivals section-->
+<?php
+	echo $this->getLayout()
+          ->createBlock('Eextensions\General\Block\AttributeType')
+          ->setTitle(__('New Arrivals'))
+          ->setDescription(__('New Arrivals'))
+          ->setAttibuteCode('new_arrival')
+          ->setPageSize('10')
+          ->setTemplate('Eextensions_General::btshop/new-arrival-product.phtml')
+          ->toHtml();
+?>
+<!--New Arrivals section end-->
+
+<!--BT21 section-->
+<?php
+	echo $this->getLayout()
+		  ->createBlock('Magento\Cms\Block\Block')
+		  ->setBlockId('btshop-page-after-new-arrival-block')
+		  ->toHtml();
+?>
+<!--BT21 section end-->
+
+<!--The bestsellers section-->
+<?php
+	echo $this->getLayout()
+          ->createBlock('Eextensions\General\Block\AttributeType')
+          ->setTitle(__('The bestsellers'))
+          ->setDescription(__('The bestsellers'))
+          ->setAttibuteCode('best_seller')
+          ->setPageSize('10')
+          ->setTemplate('Eextensions_General::btshop/best-sellers-product.phtml')
+          ->toHtml();
+?>
+<!--Top selling products section end-->

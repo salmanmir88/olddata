@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_ShopbySeo
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureAttributesWithBrandForSeoActionGroup" extends="ConfigureAttributesForSeoActionGroup">
+        <arguments>
+            <argument name="attributeSeoScenario4"/>
+        </arguments>
+        <amOnPage url="{{AttributeProfilePage.url(attributeSeoScenario4.MaterialID)}}"
+                  stepKey="navigateToMaterialBrandAttributePage1"/>
+        <scrollToTopOfPage stepKey="scrollToTopOfPages7"/>
+        <click selector="{{AttributeProfileSection.ILNTab}}" stepKey="clickOnILNTab4"/>
+        <selectOption selector="{{AttributeProfileSection.EnableSeoSwitcher}}"
+                      userInput="{{attributeSeoScenario4.EnableSeoSwitcher}}" stepKey="enableSeoFriendly4"/>
+        <selectOption selector="{{AttributeProfileSection.AllowMultiSelectSwitcher}}"
+                      userInput="{{attributeSeoScenario4.AllowMultiSelectSwitcher}}" stepKey="allowMultiSelect3"/>
+        <selectOption selector="{{AttributeProfileSection.IndexModeSwitcher}}"
+                      userInput="{{RTC.IndexModeSwitcher}}" stepKey="enableIndexModeSwitcher4"/>
+        <selectOption selector="{{AttributeProfileSection.FollowModeSwitcher}}"
+                      userInput="{{RTC.FollowModeSwitcher}}" stepKey="enableFollowModeSwitcher4"/>
+        <selectOption selector="{{AttributeProfileSection.RelNoFollowSwitcher}}"
+                      userInput="{{RTC.RelNoFollowSwitcher}}" stepKey="enableRelNoFollowSwitcher4"/>
+        <scrollToTopOfPage stepKey="scrollToTopOfPages8"/>
+        <wait time="1" stepKey="wait1"/>
+        <click selector="{{AttributeProfileSection.StorefrontPropertiesTab}}"
+               stepKey="clickOnStoreFrontPropertiesTab4"/>
+        <selectOption selector="{{AttributeProfileSection.ShowFilterOnSRPSwitcher}}"
+                      userInput="{{attributeSeoScenario4.ShowFilterOnSRPSwitcher}}" stepKey="enableShowOnSRP4"/>
+        <click selector="{{AttributeProfileSection.Save}}" stepKey="clickSaveButton4"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad4"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache2"/>
+    </actionGroup>
+
+</actionGroups>

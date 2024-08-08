@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<schema
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mst_helpdesk_ticket" resource="default" engine="innodb" comment="mst_helpdesk_ticket">
+       <column xsi:type="varchar" name="order_number" nullable="false" length="255" comment="Order Number"/>
+       <column xsi:type="varchar" name="admin_user" nullable="false" length="255" comment="Admin User"/>
+       <column xsi:type="int" name="permanent_closed" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Permanent Closed"/>
+       <column xsi:type="int" name="sub_assign" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Sub Assign"/>
+    </table>
+    <table name="customwork_tickethistroy" resource="default" engine="innodb" comment="customwork_tickethistroy Table">
+      <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+      <constraint xsi:type="primary" referenceId="PRIMARY">
+         <column name="id"/>
+      </constraint>
+      <column name="ticket_id" nullable="true" xsi:type="int" comment="ticket_id" identity="false"/>
+      <column name="ticket_histroy" nullable="true" xsi:type="longtext" comment="ticket_histroy" />
+      <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Creation Time"/>
+      <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Update Time"/>
+   </table>
+</schema>           

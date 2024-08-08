@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © MagePal LLC. All rights reserved.
+ * See COPYING.txt for license details.
+ * https://www.magepal.com | support@magepal.com
+ */
+
+/** @var $block MagePal\EnhancedEcommerce\Block\Data\Checkout **/
+?>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "<?= /* @noEscape */ $block->getComponentName() ?>": {
+                "dataLayerName": "<?= /* @noEscape */ $block->getDataLayerName() ?>",
+                "products" : <?= /* @noEscape */ $block->getCartJson() ?>,
+                "checkoutBehaviorSteps" : <?= /* @noEscape */ $block->getCheckoutBehaviorStepsJson() ?>,
+                "currencyCode": "<?= /* @noEscape */ $block->getStoreCurrencyCode() ?>",
+                "isOneStepCheckout": <?= /* @noEscape */ $block->getIsOneStepCheckout() ? 1 : 0 ?>
+            }
+        }
+    }
+</script>

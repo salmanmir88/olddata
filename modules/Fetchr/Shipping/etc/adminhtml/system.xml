@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Fetchr
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is also available through the world-wide-web at this URL:
+ * https://fetchr.zendesk.com/hc/en-us/categories/200522821-Downloads
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to ws@fetchr.us so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Fetchr Magento Extension to newer
+ * versions in the future. If you wish to customize Fetchr Magento Extension (Fetchr Shipping) for your
+ * needs please refer to http://www.fetchr.us for more information.
+ *
+ * @author     Danish Kamal, Feiran Wang
+ * @package    Fetchr Shipping
+ * Used in creating options for fulfilment|delivery config value selection
+ * @copyright  Copyright (c) 2018 Fetchr (http://www.fetchr.us)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Config/etc/system_file.xsd">
+  <system>
+    <section id="carriers">
+      <group id="fetchr" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Fetchr Shipping Method</label>
+        
+        <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+               <label>Enabled</label> 
+               <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="showinfrontend" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Show in checkout page</label>
+               <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <!-- <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+               <label>Shipping Method Name</label>
+        </field> -->
+
+        <field id="accounttype" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Account Type</label>
+               <comment>Select account type provided by Fetchr</comment>
+               <source_model>Fetchr_Shipping_Model_Accounttype</source_model>
+        </field>
+
+        <field id="servicetype" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Service Type</label>
+               <comment>Select service type provided by Fetchr</comment>
+               <source_model>Fetchr_Shipping_Model_Servicetype</source_model>
+        </field>
+
+        <field id="addressid" translate="label tooltip comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Pickup Address Id</label>
+               <comment>Type The Pickup Address Id Provided By Fetchr</comment>
+               <tooltip>Type The Pickup Address Id Provided By Fetchr</tooltip>
+        </field>
+
+        <field id="token" translate="label tooltip comment" type="password" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Fetchr Token</label>
+               <comment>Type The Token Provided By Fetchr</comment>
+               <tooltip>Type The Token Provided By Fetchr</tooltip>
+        </field>
+
+        <field id="autocodpush" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Auto Push COD Orders</label>
+               <comment>Push the COD orders once the order is placed</comment>
+               <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="autoccpush" translate="label" type="select" sortOrder="53" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Auto Push CC Orders</label>
+               <comment>Push the CC orders once the payment is captured</comment>
+               <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="productbagcount" translate="label" type="select" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Product count as package count</label>
+               <comment>Only for Dropship. For example, if customer orders two items, the package count will be two.</comment>
+               <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+
+        <field id="samedaydeliveryrate" translate="label tooltip comment" type="text" sortOrder="56" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Same Day Delivery Rate</label>
+               <!-- <comment>Type The Username Provided By Fetchr</comment>
+               <tooltip>Type The Username Provided By Fetchr</tooltip> -->
+        </field>
+
+        <field id="nextdaydeliveryrate" translate="label tooltip comment" type="text" sortOrder="57" showInDefault="1" showInWebsite="1" showInStore="1">
+               <label>Next Day Delivery Rate</label>
+               <!-- <comment>Type The Username Provided By Fetchr</comment>
+               <tooltip>Type The Username Provided By Fetchr</tooltip> -->
+        </field>
+
+        <field id="shippingoption" translate="label" type="multiselect" sortOrder="59" showInDefault="1">
+               <label>Shipping Options</label>
+               <source_model>Fetchr_Shipping_Model_Shippingoption</source_model>
+               <can_be_empty>0</can_be_empty>
+        </field>
+
+        <field id="activeshippingmethods" translate="label" type="multiselect" sortOrder="58" showInDefault="1">
+               <label>Active Shipping Methods</label>
+               <source_model>Fetchr_Shipping_Model_Shippingoption</source_model>
+               <can_be_empty>0</can_be_empty>
+        </field>
+
+        <field id="sallowspecific" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+               <label>For selected countries only</label>
+               <frontend_class>shipping-applicable-country</frontend_class>
+               <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+        </field>
+
+        <field id="specificcountry" translate="label" type="multiselect" sortOrder="80" showInDefault="1" showInWebsite="0" showInStore="0">
+               <label>Ship to Specific Countries</label>
+               <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+               <can_be_empty>1</can_be_empty>
+        </field>
+      </group>
+    </section>
+  </system> 
+  <!-- <sections>
+    <carriers>
+      <groups>
+        <fetchr translate="label">
+          <label>Fetchr Shipping Method</label>
+          <sort_order>1</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>0</show_in_website>
+          <show_in_store>0</show_in_store>
+          <fields>
+            <active translate="label">
+              <label>Enabled</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </active>
+            <showinfrontend translate="label">
+              <label>Show in checkout page</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>13</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </showinfrontend> -->
+            <!-- <title translate="label">
+              <label>Shipping Method Name</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>20</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </title> -->
+            <!-- <accounttype translate="label comment">
+                <label>Account Type</label>
+                <comment>Select account type provided by Fetchr</comment>
+                <frontend_type>select</frontend_type>
+                <source_model>fetchr_shipping/accounttype</source_model>
+                <sort_order>15</sort_order>
+                <show_in_default>1</show_in_default>
+                <show_in_website>1</show_in_website>
+                <show_in_store>1</show_in_store>
+            </accounttype>
+            <servicetype translate="label comment">
+                <label>Service Type</label>
+                <comment>Select service type provided by Fetchr</comment>
+                <frontend_type>select</frontend_type>
+                <source_model>fetchr_shipping/servicetype</source_model>
+                <sort_order>20</sort_order>
+                <show_in_default>1</show_in_default>
+                <show_in_website>1</show_in_website>
+                <show_in_store>1</show_in_store>
+            </servicetype>
+            <address_id translate="label tooltip comment">
+                <label>Pickup Address Id</label>
+                <comment>Type The Pickup Address Id Provided By Fetchr</comment>
+                <tooltip>Type The Pickup Address Id Provided By Fetchr</tooltip>
+                <sort_order>30</sort_order>
+                <show_in_default>1</show_in_default>
+                <show_in_website>1</show_in_website>
+                <show_in_store>1</show_in_store>
+                <frontend_type>text</frontend_type>
+            </address_id>
+            <token translate="label tooltip comment">
+                <label>Fetchr Token</label>
+                <comment>Type The Token Provided By Fetchr</comment>
+                <tooltip>Type The Token Provided By Fetchr</tooltip>
+                <sort_order>40</sort_order>
+                <show_in_default>1</show_in_default>
+                <show_in_website>1</show_in_website>
+                <show_in_store>1</show_in_store>
+                <frontend_type>password</frontend_type>
+            </token>
+            <autocodpush translate="label">
+              <label>Auto Push COD Orders</label>
+              <comment>Push the COD orders once the order is placed</comment>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>50</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </autocodpush>
+            <autoccpush translate="label">
+              <label>Auto Push CC Orders</label>
+              <comment>Push the CC orders once the payment is captured</comment>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>53</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </autoccpush>
+            <productbagcount translate="label">
+              <label>Product count as package count</label>
+              <comment>Only for Dropship. For example, if customer orders two items, the package count will be two.</comment>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>55</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </productbagcount>
+            <samedaydeliveryrate translate="label tooltip comment">
+                <label>Same Day Delivery Rate</label> -->
+                <!-- <comment>Type The Username Provided By Fetchr</comment>
+                <tooltip>Type The Username Provided By Fetchr</tooltip> -->
+                <!-- <sort_order>56</sort_order>
+                <show_in_default>1</show_in_default>
+                <show_in_website>1</show_in_website>
+                <show_in_store>1</show_in_store>
+                <frontend_type>text</frontend_type>
+            </samedaydeliveryrate>
+            <nextdaydeliveryrate translate="label tooltip comment">
+                <label>Next Day Delivery Rate</label> -->
+                <!-- <comment>Type The Username Provided By Fetchr</comment>
+                <tooltip>Type The Username Provided By Fetchr</tooltip> -->
+                <!-- <sort_order>57</sort_order>
+                <show_in_default>1</show_in_default>
+                <show_in_website>1</show_in_website>
+                <show_in_store>1</show_in_store>
+                <frontend_type>text</frontend_type>
+            </nextdaydeliveryrate>
+            <shippingoption translate="label">
+              <label>Shipping Options</label>
+              <frontend_type>multiselect</frontend_type>
+              <source_model>fetchr_shipping/shippingoption</source_model>
+              <sort_order>59</sort_order>
+              <show_in_default>1</show_in_default>
+              <can_be_empty>0</can_be_empty>
+            </shippingoption>
+            <activeshippingmethods translate="label">
+              <label>Active Shipping Methods</label>
+              <frontend_type>multiselect</frontend_type>
+              <source_model>fetchr_shipping/activeshippingmethods</source_model>
+              <sort_order>58</sort_order>
+              <show_in_default>1</show_in_default>
+              <can_be_empty>0</can_be_empty>
+            </activeshippingmethods>
+            <sallowspecific translate="label">
+              <label>For selected countries only</label>
+              <frontend_type>select</frontend_type>
+              <frontend_class>shipping-applicable-country</frontend_class>
+              <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+              <sort_order>70</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+            </sallowspecific>
+            <specificcountry translate="label">
+              <label>Ship to Specific Countries</label>
+              <frontend_type>multiselect</frontend_type>
+              <sort_order>80</sort_order>
+              <source_model>adminhtml/system_config_source_country</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>0</show_in_website>
+              <show_in_store>0</show_in_store>
+              <can_be_empty>1</can_be_empty>
+            </specificcountry>
+          </fields>
+        </fetchr>
+      </groups>
+    </carriers>
+  </sections> -->
+</config>

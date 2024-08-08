@@ -1,0 +1,50 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="sales_order_columns">
+        <column name="country_id" class="Dakha\AddCountryColumn\Ui\Component\Listing\Column\Country" sortOrder="100">
+            <settings>
+                <label translate="true">Country</label>
+                <options class="Evince\CourierManager\Model\Source\CountryFilter"/>
+                <filter>multiselect</filter>
+                <dataType>select</dataType>
+            </settings>
+        </column>
+        <column name="status">
+            <settings>
+                <filter>multiselect</filter>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+    </columns>
+     <listingToolbar name="listing_top">
+        <filters name="listing_filters">
+            <filterSelect name="country_id" provider="${ $.parentName }" component="Magento_Ui/js/form/element/ui-select"
+                          template="ui/grid/filters/elements/ui-select">
+                <settings>
+                    <options class="Evince\CourierManager\Model\Source\CountryFilter"/>
+                    <caption translate="true">Select</caption>
+                    <label translate="true">Country</label>
+                    <dataScope>country_id</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
+                </settings>
+            </filterSelect>
+            <filterSelect name="status" provider="${ $.parentName }" component="Magento_Ui/js/form/element/ui-select"
+                          template="ui/grid/filters/elements/ui-select">
+                <settings>
+                    <!-- <options class="Magento\Sales\Model\Config\Source\Order\Status"/> -->
+                    <options class="Dakha\AddCountryColumn\Model\Config\Source\Order\Status"/>
+                    <caption translate="true">Select</caption>
+                    <label translate="true">Status</label>
+                    <dataScope>status</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
+                </settings>
+            </filterSelect>
+
+        </filters>
+    </listingToolbar>
+
+</listing>

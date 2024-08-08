@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+
+    <actionGroup name="ConfigureAttributeOptionMetaDataActionGroup">
+        <arguments>
+            <argument name="Attributes"/>
+        </arguments>
+        <amOnPage url="{{AttributeProfilePage.url(Attributes.Attribute)}}" stepKey="OpenAttributeProfilePagePage"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad4"/>
+        <scrollToTopOfPage stepKey="scrollToTopOfPages1"/>
+        <waitForElement
+                selector="{{AttributeProfileSection.OptionAttributeSettingsDeleteButton('settings',Attributes.OptionName)}}"
+                stepKey="waitForElement1"/>
+        <click selector="{{AttributeProfileSection.OptionAttributeSettingsDeleteButton('settings',Attributes.OptionName)}}"
+               stepKey="clickSettingsButton2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad5"/>
+        <waitForElement selector="{{AttributeProfileSection.MetaDescription}}" stepKey="waitPopup2"/>
+        <uncheckOption selector="{{AttributeProfileSection.UseDefaultMetaTitle}}" stepKey="UncheckUseDefaultValue2"/>
+        <fillField selector="{{AttributeProfileSection.MetaTitle}}"
+                   userInput="{{Attributes.MetaTitle}}"
+                   stepKey="FillMetaTitle2"/>
+        <fillField selector="{{AttributeProfileSection.MetaDescription}}"
+                   userInput="{{Attributes.MetaDescription}}"
+                   stepKey="FillMetaDescription2"/>
+        <fillField selector="{{AttributeProfileSection.MetaKeywords}}"
+                   userInput="{{Attributes.MetaKeywords}}"
+                   stepKey="FillMetaKeywords2"/>
+        <click selector="{{AttributeProfileSection.SaveProperty}}" stepKey="clickSaveButton2"/>
+        <waitForAjaxLoad stepKey="waitForAjaxLoad6"/>
+        <magentoCLI command="cache:clean" stepKey="flushCache2"/>
+    </actionGroup>
+
+</actionGroups>
+
+
+

@@ -1,0 +1,22 @@
+<?php
+/**
+ *
+ * Copyright © MagePal LLC. All rights reserved.
+ * See COPYING.txt for license details.
+ * https://www.magepal.com | support@magepal.com
+ */
+
+/** @var $block \MagePal\EnhancedEcommerce\Block\Adminhtml\Gtm **/
+$dataLayerName = $block->getDataLayerName();
+$accountId = $block->getAccountId();
+$containerCode = $block->getEmbeddedCode();
+?>
+
+<!-- Google Tag Manager by MagePal -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='<?= /* @noEscape */ $dataLayerName ?>'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl<?= $containerCode ? "+'{$containerCode}'" : '' ?>;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','<?= /* @noEscape */ $dataLayerName ?>','<?= /* @noEscape */ $accountId ?>');</script>
+<!-- End Google Tag Manager by MagePal -->
+
